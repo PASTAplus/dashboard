@@ -14,4 +14,4 @@ from flask import Flask
 from dashboard.users.views import users
 
 app = Flask(__name__)
-app.register_blueprint(users, url_prefix='/users')
+app.register_blueprint(users, url_prefix='/dashboard/users')
