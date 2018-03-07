@@ -6,8 +6,8 @@ After=network.target
 User=pasta
 Group=www-data
 WorkingDirectory=/home/pasta/dashboard
-Environment="PATH=/home/pasta/dashboard/venv/bin"
-ExecStart=/home/pasta/dashboard/venv/bin/uwsgi --ini deployment/dashboard.ini
+Environment="PATH=/home/pasta/anaconda3/envs/dashboard/bin"
+ExecStart=/home/pasta/anaconda3/envs/dashboard/bin/uwsgi --ini deployment/dashboard.ini
 
 [Install]
 WantedBy=multi-user.target
