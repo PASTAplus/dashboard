@@ -102,3 +102,6 @@ ENV/
 
 # Jetbrains
 .idea
+
+# Default properties.py
+properties.py
