@@ -1,0 +1,31 @@
+{
+  "metadata": [
+    {
+      "package_id": "edi.3.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/metadata/eml/edi/3/2",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>public</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "edi.121.1",
+      "resource_id": "",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=EDI,o=EDI,dc=edirepository,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=lkui,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=EDI,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=EDI,o=EDI,dc=edirepository,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    }
+  ],
+  "data": [
+    {
+      "package_id": "edi.0.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/edi/0/3/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n  <deny>\n    <principal>uid=nastyguy,o=LTER</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "edi.102.5",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/edi/102/5/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "edi.3002.9",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/edi/3002/9/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    }
+  ]
+}

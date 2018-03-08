@@ -13,6 +13,7 @@
         EDI Dashboard:
         <a href="{{ url_for('home.index') }}">Home</a>
         <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('reports.render') }}">Reports</a>
     </div>
     <hr>
     {% with messages = get_flashed_messages() %}

@@ -1,0 +1,30 @@
+{
+  "offline": [
+    {
+      "package_id": "knb-lter-hfr.220.1",
+      "resource_id": "http://localhost:8888/package/metadata/eml/knb-lter-hfr/220/1",
+      "object_name": "hf220-01-cwd.csv",
+      "medium_name": "hard drive"
+    },
+    {
+      "package_id": "knb-lter-nwk.99.5",
+      "resource_id": "http://localhost:8888/package/metadata/eml/knb-lter-nwk/99/5",
+      "object_name": "NoneSuchBugCount.txt",
+      "medium_name": "hard drive"
+    },
+    {
+      "package_id": "knb-lter-nwk.100.2",
+      "resource_id": "http://localhost:8888/package/metadata/eml/knb-lter-nwk/100/2",
+      "object_name": "NoneSuchBugCount.txt",
+      "medium_name": "hard drive"
+    }
+  ],
+  "unparsed": [
+    {
+      "package_id": "edi.101.8",
+      "resource_id": "http://localhost:8888/package/metadata/eml/edi/101/8",
+      "object_name": "",
+      "medium_name": ""
+    }
+  ]
+}
