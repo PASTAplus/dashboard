@@ -15,22 +15,27 @@ import os
 
 import daiquiri
 from flask import Flask
+from flask_login import LoginManager
 
-from webapp.config import Config
-from webapp.auth.views import auth
-from webapp.home.views import home
-from webapp.users.views import users
+from webapp import properties
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 logfile = cwd + '/dashboard.log'
-daiquiri.setup(level=logging.INFO, outputs=(daiquiri.output.File(logfile),
-                                            'stdout',))
+daiquiri.setup(level=logging.INFO,
+               outputs=(daiquiri.output.File(logfile), 'stdout',))
 logger = daiquiri.getLogger(__name__)
 
 app = Flask(__name__)
 
-app.config.from_object(Config)
+login = LoginManager(app)
 
+app.config.update(
+    DEBUG=properties.DEBUG,
+    SECRET_KEY=properties.SECRET_KEY
+)
+
+from webapp.auth.views import auth
 app.register_blueprint(auth, url_prefix='/dashboard/auth')
+
+from webapp.home.views import home
 app.register_blueprint(home, url_prefix='/dashboard')
-app.register_blueprint(users, url_prefix='/dashboard/users')
