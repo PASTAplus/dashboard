@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+""":Mod: properties.py
+
+:Synopsis:
+
+:Author:
+    servilla
+
+:Created:
+    3/7/18
+"""
+
+# Flask app configuration
+SECRET_KEY = 'SECRET_KEY'
+DEBUG = False
+
+# Webapp configuration
+USERS = ('USER_DN')
+EDI_DN = 'o=EDI,dc=edirepository,dc=org'
+LTER_DN = 'o=LTER,dc=ecoinformatics,dc=org'
