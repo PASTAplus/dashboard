@@ -23,3 +23,9 @@ class Config(object):
     USERS = ('USER_DN')
     DOMAINS = {'edi': 'o=EDI,dc=edirepository,dc=org',
                'lter':'o=LTER,dc=ecoinformatics,dc=org',}
+
+    # Test attributes
+    TEST_USER_DN = 'USER_DN'
+    TEST_USER_PW = 'SECRET_PASSWORD'
+    TEST_USER_UID = 'USER_UID'
+    TEST_USER_NAME = 'USER_NAME'
