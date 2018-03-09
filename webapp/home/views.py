@@ -13,6 +13,7 @@
 """
 
 from flask import Blueprint, render_template
+from flask_login import login_required
 
 home = Blueprint('home', __name__, template_folder='templates')
 
@@ -20,3 +21,8 @@ home = Blueprint('home', __name__, template_folder='templates')
 @home.route('/index')
 def index():
     return render_template('index.html')
+
+@home.route('/secret')
+@login_required
+def secret():
+    return 'This is a secret page for authenticated users only!'
