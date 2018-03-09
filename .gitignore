@@ -103,5 +103,5 @@ ENV/
 # Jetbrains
 .idea
 
-# Default properties.py
-properties.py
+# Default config.py
+config.py
