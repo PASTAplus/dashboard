@@ -19,6 +19,11 @@
         {% endif %}
         <a href="{{ url_for('reports.render') }}">Reports</a>
     </div>
+    <div>
+        {% if current_user.is_authenticated %}
+            <p>Active user: {{ current_user.get_username() }}</p>
+        {% endif %}
+    </div>
     <hr>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
