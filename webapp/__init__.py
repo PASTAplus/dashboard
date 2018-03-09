@@ -17,7 +17,7 @@ import daiquiri
 from flask import Flask
 from flask_login import LoginManager
 
-from webapp import properties
+from webapp.config import Config
 
 cwd = os.path.dirname(os.path.realpath(__file__))
 logfile = cwd + '/dashboard.log'
@@ -28,11 +28,9 @@ logger = daiquiri.getLogger(__name__)
 app = Flask(__name__)
 
 login = LoginManager(app)
+login.login_view = 'auth.login'
 
-app.config.update(
-    DEBUG=properties.DEBUG,
-    SECRET_KEY=properties.SECRET_KEY
-)
+app.config.from_object(Config)
 
 from webapp.auth.views import auth
 app.register_blueprint(auth, url_prefix='/dashboard/auth')
