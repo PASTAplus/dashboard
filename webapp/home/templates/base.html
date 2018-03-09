@@ -12,7 +12,11 @@
     <div>
         EDI Dashboard:
         <a href="{{ url_for('home.index') }}">Home</a>
+        {% if current_user.is_anonymous %}
         <a href="{{ url_for('auth.login') }}">Login</a>
+        {% else %}
+        <a href="{{ url_for('auth.logout') }}">Logout</a>
+        {% endif %}
     </div>
     <hr>
     {% with messages = get_flashed_messages() %}
