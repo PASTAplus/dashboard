@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+""":Mod: config.py
+
+:Synopsis:
+
+:Author:
+    servilla
+
+:Created:
+    3/7/18
+"""
+
+class Config(object):
+
+    # Flask app configuration
+    SECRET_KEY = 'SECRET_KEY'
+    DEBUG = False
+
+    # Webapp configuration
+    PASTA_URL = 'https://pasta.lternet.edu/package'
+    USERS = ('USER_DN')
+    DOMAINS = {'edi': 'o=EDI,dc=edirepository,dc=org',
+               'lter':'o=LTER,dc=ecoinformatics,dc=org',}
