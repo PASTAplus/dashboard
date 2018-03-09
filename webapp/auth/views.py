@@ -26,16 +26,16 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        flash('Dude, you are already logged in...')
+        flash(current_user.get_username() + ', you are already logged in...')
         return redirect(url_for('home.index'))
     form = LoginForm()
     if form.validate_on_submit():
         domain = form.domain.data # Never None
-        user_id = 'uid=' + form.username.data + ',' + Config.DOMAINS[domain]
+        user_dn = 'uid=' + form.username.data + ',' + Config.DOMAINS[domain]
         password = form.password.data
         user = None
-        if user_id in Config.USERS:
-            auth_token = User.authenticate(user_id=user_id, password=password)
+        if user_dn in Config.USERS:
+            auth_token = User.authenticate(user_dn=user_dn, password=password)
             if auth_token is not None:
                 user = User(auth_token=auth_token)
                 login_user(user)
