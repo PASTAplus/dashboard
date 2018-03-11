@@ -1,56 +1,91 @@
 {% extends 'bootstrap/base.html' %}
 
 {% block title %}
-    {% if title %}{{ title }} - EDI Dashboard{% endif %}
+{% if title %}{{ title }} - EDI Dashboard{% endif %}
 {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('home.index') }}">Dashboard</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('home.index') }}">Home</a></li>
-                    <li><a href="{{ url_for('reports.render') }}">Reports</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if current_user.is_anonymous %}
-                        <li><a href="{{ url_for('auth.login') }}">Login</a></li>
-                    {% else %}
-                        <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-            {% if current_user.is_authenticated %}
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
-                <ul class="nav navbar-nav">
-                    <li><span class="font-weight-bold">Active user: {{ current_user.get_username() }}</span></li>
-                </ul>
-            </div>
-            {% endif %}
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false"
+                    class="navbar-toggle collapsed" data-target="#top-navbar"
+                    data-toggle="collapse" type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('home.index') }}">EDI Dashboard</a>
         </div>
-    </nav>
+        <div class="navbar-collapse collapse" id="top-navbar">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="{{ url_for('home.index') }}" title="About">About</a>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">Reports
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('reports.render') }}"
+                               title="No public access">No public access</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">EDI Portals
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="https://portal-d.edirepository.org/nis">Development</a>
+                        </li>
+                        <li>
+                            <a href="https://portal-s.edirepository.org/nis">Staging</a>
+                        </li>
+                        <li>
+                            <a href="https://portal.edirepository.org/nis">Production</a>
+                        </li>
+                    </ul>
+                </li>
+           </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_anonymous %}
+                <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+                {% else %}
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% if current_user.is_authenticated %}
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <li><span class="font-weight-bold">Active user: {{ current_user.get_username() }}</span>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</nav>
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    </div>
+    {# application content needs to be provided in the app_content block #}
+    {% block app_content %}{% endblock %}
+</div>
 {% endblock %}
