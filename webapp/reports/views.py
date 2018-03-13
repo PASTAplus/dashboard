@@ -19,10 +19,17 @@ from flask_login import login_required
 reports = Blueprint('reports', __name__, template_folder='templates')
 
 
-@reports.route('/render', methods=['GET', 'POST'])
+@reports.route('/render_no_public', methods=['GET', 'POST'])
 @login_required
-def render():
-    report_html = generate_report()
+def render_no_public():
+    report_html = generate_report(report_type='no_public')
+    return render_template('report.html', report_html=report_html)
+
+
+@reports.route('/render_offline', methods=['GET', 'POST'])
+@login_required
+def render_offline():
+    report_html = generate_report(report_type='offline')
     return render_template('report.html', report_html=report_html)
 
 

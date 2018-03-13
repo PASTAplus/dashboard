@@ -31,8 +31,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{ url_for('reports.render') }}"
+                            <a href="{{ url_for('reports.render_no_public') }}"
                                title="No public access">No public access</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('reports.render_offline') }}"
+                               title="Offline data">Offline data</a>
                         </li>
                     </ul>
                 </li>
