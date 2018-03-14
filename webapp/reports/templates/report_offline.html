@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>PASTA Data Entities with Offline Distribution</h1>
+    <h2>Offline Data Resources</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Resource ID</th>
+        <th>Object Name</th>
+        <th>Medium Name</th>
+    </tr>
+    {% for offline_dict in offline_resources %}
+        <tr>
+            <td>{{ offline_dict["package_id"] }}</td>
+            <td>{{ offline_dict["resource_id"] }}</td>
+            <td>{{ offline_dict["object_name"] }}</td>
+            <td>{{ offline_dict["medium_name"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Data Resources</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Resource ID</th>
+        <th>Object Name</th>
+        <th>Medium Name</th>
+    </tr>
+    {% for unparsed_dict in unparsed_resources %}
+        <tr>
+            <td>{{ unparsed_dict["package_id"] }}</td>
+            <td>{{ unparsed_dict["resource_id"] }}</td>
+            <td>Not parsed</td>
+            <td>Not parsed</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

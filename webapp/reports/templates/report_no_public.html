@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>PASTAplus Resources Lacking Public Read Access</h1>
+    <h2>Metadata Resources</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Resource ID</th>
+        <th>ACL XML</th>
+    </tr>
+    {% for metadata_dict in metadata_resources %}
+        <tr>
+            <td>{{ metadata_dict["package_id"] }}</td>
+            <td>{{ metadata_dict["resource_id"] }}</td>
+            <td>{{ metadata_dict["acl_xml"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Data Resources</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Resource ID</th>
+        <th>ACL XML</th>
+    </tr>
+    {% for data_dict in data_resources %}
+        <tr>
+            <td>{{ data_dict["package_id"] }}</td>
+            <td>{{ data_dict["resource_id"] }}</td>
+            <td>{{ data_dict["acl_xml"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}
