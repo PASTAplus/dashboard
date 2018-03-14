@@ -14,13 +14,16 @@
 from flask import Blueprint, render_template
 
 
+from state_of_health import status_level_2
+
+
 home = Blueprint('home', __name__, template_folder='templates')
 
 
 @home.route('/')
 @home.route('/index')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', status =status_level_2.status)
 
 
 @home.route('/about')
