@@ -70,7 +70,8 @@
         {% if current_user.is_authenticated %}
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
             <ul class="nav navbar-nav">
-                <li><span class="font-weight-bold">Active user: {{ current_user.get_username() }}</span>
+                <li>
+                    <strong>Active user: {{ current_user.get_username() }}</strong>
                 </li>
             </ul>
         </div>
@@ -91,5 +92,7 @@
 
     {# application content needs to be provided in the app_content block #}
     {% block app_content %}{% endblock %}
+
 </div>
+
 {% endblock %}
