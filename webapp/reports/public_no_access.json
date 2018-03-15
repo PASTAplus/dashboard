@@ -9,6 +9,21 @@
       "package_id": "edi.121.1",
       "resource_id": "",
       "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=EDI,o=EDI,dc=edirepository,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=lkui,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=EDI,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=EDI,o=EDI,dc=edirepository,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-atz.2.1",
+      "resource_id": "",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=NIN,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=NIN,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-atz.3.1",
+      "resource_id": "",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=NIN,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=NIN,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-bes.1410.110",
+      "resource_id": "",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=BES,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=BES,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n</access:access>"
     }
   ],
   "data": [
@@ -26,6 +41,326 @@
       "package_id": "edi.3002.9",
       "resource_id": "https://pasta-d.lternet.edu/package/data/eml/edi/3002/9/a9201a0755fc45ae514abb12469c03a0",
       "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-atz.4.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-atz/4/1/67e99349d1666e6f4955e9dda42c3cc2",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=NIN,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=NIN,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-fce.1196.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-fce/1196/3/a9be26904fe678aa67a38e2f608b82c5",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=FCE,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=FCE,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-mcr.1036.5",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-mcr/1036/5/1e45a05c19a19a4ae47b70b4db9a1065",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=mgastilbuhl,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=MCR,o=lter,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-mcr.1036.5",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-mcr/1036/5/d0808e49e90f5c9d0feabb494e725968",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=mgastilbuhl,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=MCR,o=lter,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-mcr.5013.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-mcr/5013/2/28c6c36ed93e699e0550361ee871bdc9",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=MCR,o=lter,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.100.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/100/2/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1002.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1002/3/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=lter,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1043.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1043/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1192.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1192/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=dcosta,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1201.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1201/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1202.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1202/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1244.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1244/2/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1316.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1316/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1319.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1319/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1325.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1325/2/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1424.51",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1424/51/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n  <deny>\n    <principal>uid=nastyguy,o=LTER</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1453.5",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1453/5/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1504.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1504/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.1838.14",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/1838/14/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.3002.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/3002/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.5004.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/5004/3/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.5030.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/5030/2/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.5037.2",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/5037/2/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.5041.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/5041/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.5044.4",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/5044/4/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.10044.10",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/10044/10/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.10045.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/10045/3/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.10045.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/10045/3/12739c840dd81976ce81d0775da6076f",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.10045.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/10045/3/39a105a77d4941e3023d008be84f5289",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-nwk.10045.3",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-nwk/10045/3/5d7af36b2edab58f7269da6784175f37",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.21.14",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/21/14/93d3c16363869ec959e721f0d8e8bf67",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.21.14",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/21/14/deda1113621aed5222052449ebe84fa3",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.21.14",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/21/14/6acc94c69d830b20b90f40754d2eb6b4",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/5740106c54f21f53dd2c3b684ceb0468",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/80fe84aba8c58b4fb5ca9af0d04a5d43",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/12ff8f226221c44ff5b1d6172e361d0a",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/81785af386830cfa10fc1a64fba2e0f4",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/01efe09cb091b5fb13436777edfc0009",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/70d16a8cef087a10afb6bb82110040a6",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/ecf1547e8fbd2844e307b58baf456a2c",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/e7aff4f62b93b47d22eb6aa60604561a",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/a3d9146dfbeadaab2ef9647899795449",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/0c87577439cdaedde5ca70f14ce7f21a",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/21a173a398142a27bce0d4dfefa4b73f",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/4ce64630cdca8737d85f04cdb15120cb",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/e5b83151139f00afcb9fea496997ec75",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/4dbaac177f8894a0f77aeaab1cb69bda",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/338cd6a14261d6e99ace65f93177d816",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/34a9aafb19eda07252c62cdc6a0b6bf9",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/da21ea736200cc296dc0cf61a41e9600",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/43ecff3f2f012c43b992d1fe6e0f2e8d",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/b39f89afe2b1463565d29354c190b72f",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/9b4b03133540c7d736bc4d7ed246d569",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/86387c19722a1e1cbdda60787da50ad5",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/1ac7ce9e5a2afbdd7ce70d0774927bfb",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/93581a7595a7579461591ae2f5f20203",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/b8d1183f7044789b6ec8c9bcc36d5728",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/b63dfede3492f8d60a2403da24222845",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/7caa48797b2fb4ab71624886f1aa4262",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/89b64a4d7ed26a766ea0335770b5e3f2",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-sbc.54.6",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-sbc/54/6/360d850733ec2feb1fb82ce6941d3b64",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=SBC,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>authenticated</principal>\n    <permission>read</permission>\n  </allow>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-xyz.55.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-xyz/55/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-xyz.204.1",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-xyz/204/1/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=dcosta,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
+    },
+    {
+      "package_id": "knb-lter-xyz.10044.9",
+      "resource_id": "https://pasta-d.lternet.edu/package/data/eml/knb-lter-xyz/10044/9/a9201a0755fc45ae514abb12469c03a0",
+      "acl_xml": "<access:access xmlns:access=\"eml://ecoinformatics.org/access-2.1.0\" authSystem=\"https://pasta.edirepository.org/authentication\" order=\"allowFirst\" system=\"https://pasta.edirepository.org\">\n  <allow>\n    <principal>uid=ucarroll,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>changePermission</permission>\n  </allow>\n  <allow>\n    <principal>uid=LNO,o=LTER,dc=ecoinformatics,dc=org</principal>\n    <permission>write</permission>\n  </allow>\n  <deny>\n    <principal>public</principal>\n    <permission>read</permission>\n  </deny>\n</access:access>"
     }
   ]
 }
