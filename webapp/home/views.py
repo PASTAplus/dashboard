@@ -13,8 +13,8 @@
 """
 from flask import Blueprint, render_template
 
-
-from webapp.state_of_health import status_level_2
+from soh.config import Config as soh_Config
+from webapp.health.health_check import SystemState
 
 
 home = Blueprint('home', __name__, template_folder='templates')
@@ -23,7 +23,9 @@ home = Blueprint('home', __name__, template_folder='templates')
 @home.route('/')
 @home.route('/index')
 def index():
-    return render_template('index.html', status =status_level_2.status)
+    servers = soh_Config.servers
+    system = SystemState()
+    return render_template('index.html', system=system, servers=servers)
 
 
 @home.route('/about')
