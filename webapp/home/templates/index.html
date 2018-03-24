@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block metas %}
+{{ super() }}
+    <meta http-equiv="refresh" content="300">
+{% endblock %}
+
 {% block app_content %}
 <h1 align="center">State of Health at a glance</h1>
 <h4 align="center">As of: {{ system.timestamp(True) }}</h4>
