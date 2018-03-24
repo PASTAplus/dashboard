@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block metas %}
+{{ super() }}
+    <meta http-equiv="refresh" content="300">
+{% endblock %}
+
+{% block app_content %}
+<h1 align="center">State of Health at a glance</h1>
+<h4 align="center">As of: {{ system.timestamp(True) }}</h4>
+
+<h3 align="left">PASTA Server Infrastructure</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">Production</td>
+        <td class="{{ system.tier_status('PRODUCTION')[0] }}">
+                {{ system.tier_status('PRODUCTION')[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Staging</td>
+        <td class="{{ system.tier_status('STAGING')[0] }}">
+                {{ system.tier_status('STAGING')[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Development</td>
+        <td class="{{ system.tier_status('DEVELOPMENT')[0] }}">
+                {{ system.tier_status('DEVELOPMENT')[1] }}
+        </td>
+    </tr>
+</table>
+
+<h3 align="left">EDI Portals</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">Production</td>
+        <td class="{{ system.server_status(servers['PORTAL_EDI'])[0] }}">
+                {{ system.server_status(servers['PORTAL_EDI'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Staging</td>
+        <td class="{{ system.server_status(servers['PORTAL_S_EDI'])[0] }}">
+                {{ system.server_status(servers['PORTAL_S_EDI'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Development</td>
+        <td class="{{ system.server_status(servers['PORTAL_D_EDI'])[0] }}">
+                {{ system.server_status(servers['PORTAL_D_EDI'])[1] }}
+        </td>
+    </tr>
+</table>
+
+<h3 align="left">LTER Portals</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">Production</td>
+        <td class="{{ system.server_status(servers['PORTAL_LTER'])[0] }}">
+                {{ system.server_status(servers['PORTAL_LTER'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Staging</td>
+        <td class="{{ system.server_status(servers['PORTAL_S_LTER'])[0] }}">
+                {{ system.server_status(servers['PORTAL_S_LTER'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Development</td>
+        <td class="{{ system.server_status(servers['PORTAL_D_LTER'])[0] }}">
+                {{ system.server_status(servers['PORTAL_D_LTER'])[1] }}
+        </td>
+    </tr>
+</table>
+
+<h3 align="left">EDI GMN</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">Production</td>
+        <td class="{{ system.server_status(servers['GMN_EDI'])[0] }}">
+                {{ system.server_status(servers['GMN_EDI'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Staging</td>
+        <td class="{{ system.server_status(servers['GMN_S_EDI'])[0] }}">
+                {{ system.server_status(servers['GMN_S_EDI'])[1] }}
+        </td>
+    </tr>
+</table>
+
+<h3 align="left">LTER GMN</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">Production</td>
+        <td class="{{ system.server_status(servers['GMN_LTER'])[0] }}">
+                {{ system.server_status(servers['GMN_LTER'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Staging</td>
+        <td class="{{ system.server_status(servers['GMN_S_LTER'])[0] }}">
+                {{ system.server_status(servers['GMN_S_LTER'])[1] }}
+        </td>
+    </tr>
+</table>
+
+<h3 align="left">Related Services</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Service</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+     <tr>
+        <td align="center">EDI LDAP</td>
+        <td class="{{ system.server_status(servers['LDAP_EDI'])[0] }}">
+                {{ system.server_status(servers['LDAP_EDI'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">LTER LDAP</td>
+        <td class="{{ system.server_status(servers['LDAP_LTER'])[0] }}">
+                {{ system.server_status(servers['LDAP_LTER'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Unit Registry</td>
+        <td class="{{ system.server_status(servers['UNIT'])[0] }}">
+                {{ system.server_status(servers['UNIT'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">Controlled Vocabulary</td>
+        <td class="{{ system.server_status(servers['VOCAB'])[0] }}">
+                {{ system.server_status(servers['VOCAB'])[1] }}
+        </td>
+    </tr>
+</table>
+
+{% endblock %}
