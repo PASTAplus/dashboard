@@ -43,6 +43,19 @@
                 <li class="dropdown">
                     <a aria-expanded="false" aria-haspopup="true"
                        class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">Health
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('health.glance') }}"
+                               title="No public access">Health at a glance</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
                        role="button">EDI Portals
                         <span class="caret"></span>
                     </a>
