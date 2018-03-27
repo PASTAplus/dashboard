@@ -11,7 +11,7 @@
 :Created:
     3/24/18
 """
-from flask import Blueprint, render_template
+from flask import abort, Blueprint, render_template
 
 from soh.config import Config as soh_Config
 from webapp.health.health_check import SystemState
@@ -23,3 +23,11 @@ def glance():
     servers = soh_Config.servers
     system = SystemState()
     return render_template('glance.html', system=system, servers=servers)
+
+@health.route('/server/<name>')
+def server(name=None):
+    servers = [soh_Config.servers[_] for _ in soh_Config.servers]
+    if name in servers:
+        return render_template('server.html', server=name)
+    else:
+        abort(404)
