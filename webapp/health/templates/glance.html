@@ -16,19 +16,31 @@
         <th style="text-align: center">Status</th>
     </tr>
     <tr>
-        <td align="center">Production</td>
+        <td align="center">
+            <a href="/dashboard/health/tier/PRODUCTION">
+                Production
+            </a>
+        </td>
         <td class="{{ system.tier_status('PRODUCTION')[0] }}">
                 {{ system.tier_status('PRODUCTION')[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Staging</td>
+        <td align="center">
+            <a href="/dashboard/health/tier/STAGING">
+                Staging
+            </a>
+        </td>
         <td class="{{ system.tier_status('STAGING')[0] }}">
                 {{ system.tier_status('STAGING')[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Development</td>
+        <td align="center">
+            <a href="/dashboard/health/tier/DEVELOPMENT">
+                Development
+            </a>
+        </td>
         <td class="{{ system.tier_status('DEVELOPMENT')[0] }}">
                 {{ system.tier_status('DEVELOPMENT')[1] }}
         </td>
@@ -43,7 +55,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/portal.edirepository.org">
+            <a href="/dashboard/health/server/portal.edirepository.org">
                 Production
             </a>
         </td>
@@ -53,7 +65,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/portal-s.edirepository.org">
+            <a href="/dashboard/health/server/portal-s.edirepository.org">
                 Staging
             </a>
         </td>
@@ -63,7 +75,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/portal-d.edirepository.org">
+            <a href="/dashboard/health/server/portal-d.edirepository.org">
                 Development
             </a>
         </td>
@@ -81,7 +93,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/portal.lternet.edu">
+            <a href="/dashboard/health/server/portal.lternet.edu">
                 Production
             </a>
         </td>
@@ -91,7 +103,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/portal-s.lternet.edu">
+            <a href="/dashboard/health/server/portal-s.lternet.edu">
                 Staging
             </a>
         </td>
@@ -101,7 +113,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/portal-d.lternet.edu">
+            <a href="/dashboard/health/server/portal-d.lternet.edu">
                 Development
             </a>
         </td>
@@ -119,7 +131,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/gmn.edirepository.org">
+            <a href="/dashboard/health/server/gmn.edirepository.org">
                 Production
             </a>
         </td>
@@ -129,7 +141,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/gmn-s.edirepository.org">
+            <a href="/dashboard/health/server/gmn-s.edirepository.org">
                 Staging</a>
         </td>
         <td class="{{ system.server_status(servers['GMN_S_EDI'])[0] }}">
@@ -146,7 +158,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/gmn.lternet.edu">
+            <a href="/dashboard/health/server/gmn.lternet.edu">
                 Production
             </a>
         </td>
@@ -156,7 +168,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/gmn-s.lternet.edu">
+            <a href="/dashboard/health/server/gmn-s.lternet.edu">
                 Staging
             </a>
         </td>
@@ -174,7 +186,7 @@
     </tr>
      <tr>
         <td align="center">
-            <a href="./server/ldap.edirepository.org">
+            <a href="/dashboard/health/server/ldap.edirepository.org">
                 EDI LDAP
             </a>
         </td>
@@ -184,7 +196,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/ldap.lternet.edu">
+            <a href="/dashboard/health/server/ldap.lternet.edu">
                 LTER LDAP
             </a>
         </td>
@@ -194,7 +206,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/unit.lternet.edu">
+            <a href="/dashboard/health/server/unit.lternet.edu">
                 Unit Registry
             </a>
         </td>
@@ -204,7 +216,7 @@
     </tr>
     <tr>
         <td align="center">
-            <a href="./server/vocab.lternet.edu">
+            <a href="/dashboard/health/server/vocab.lternet.edu">
                 Controlled Vocabulary
             </a>
         </td>
