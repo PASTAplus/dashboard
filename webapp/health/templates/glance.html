@@ -42,19 +42,31 @@
         <th style="text-align: center">Status</th>
     </tr>
     <tr>
-        <td align="center">Production</td>
+        <td align="center">
+            <a href="./server/portal.edirepository.org">
+                Production
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['PORTAL_EDI'])[0] }}">
                 {{ system.server_status(servers['PORTAL_EDI'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Staging</td>
+        <td align="center">
+            <a href="./server/portal-s.edirepository.org">
+                Staging
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['PORTAL_S_EDI'])[0] }}">
                 {{ system.server_status(servers['PORTAL_S_EDI'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Development</td>
+        <td align="center">
+            <a href="./server/portal-d.edirepository.org">
+                Development
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['PORTAL_D_EDI'])[0] }}">
                 {{ system.server_status(servers['PORTAL_D_EDI'])[1] }}
         </td>
@@ -68,19 +80,31 @@
         <th style="text-align: center">Status</th>
     </tr>
     <tr>
-        <td align="center">Production</td>
+        <td align="center">
+            <a href="./server/portal.lternet.edu">
+                Production
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['PORTAL_LTER'])[0] }}">
                 {{ system.server_status(servers['PORTAL_LTER'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Staging</td>
+        <td align="center">
+            <a href="./server/portal-s.lternet.edu">
+                Staging
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['PORTAL_S_LTER'])[0] }}">
                 {{ system.server_status(servers['PORTAL_S_LTER'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Development</td>
+        <td align="center">
+            <a href="./server/portal-d.lternet.edu">
+                Development
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['PORTAL_D_LTER'])[0] }}">
                 {{ system.server_status(servers['PORTAL_D_LTER'])[1] }}
         </td>
@@ -94,13 +118,20 @@
         <th style="text-align: center">Status</th>
     </tr>
     <tr>
-        <td align="center">Production</td>
+        <td align="center">
+            <a href="./server/gmn.edirepository.org">
+                Production
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['GMN_EDI'])[0] }}">
                 {{ system.server_status(servers['GMN_EDI'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Staging</td>
+        <td align="center">
+            <a href="./server/gmn-s.edirepository.org">
+                Staging</a>
+        </td>
         <td class="{{ system.server_status(servers['GMN_S_EDI'])[0] }}">
                 {{ system.server_status(servers['GMN_S_EDI'])[1] }}
         </td>
@@ -114,13 +145,21 @@
         <th style="text-align: center">Status</th>
     </tr>
     <tr>
-        <td align="center">Production</td>
+        <td align="center">
+            <a href="./server/gmn.lternet.edu">
+                Production
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['GMN_LTER'])[0] }}">
                 {{ system.server_status(servers['GMN_LTER'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Staging</td>
+        <td align="center">
+            <a href="./server/gmn-s.lternet.edu">
+                Staging
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['GMN_S_LTER'])[0] }}">
                 {{ system.server_status(servers['GMN_S_LTER'])[1] }}
         </td>
@@ -134,25 +173,41 @@
         <th style="text-align: center">Status</th>
     </tr>
      <tr>
-        <td align="center">EDI LDAP</td>
+        <td align="center">
+            <a href="./server/ldap.edirepository.org">
+                EDI LDAP
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['LDAP_EDI'])[0] }}">
                 {{ system.server_status(servers['LDAP_EDI'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">LTER LDAP</td>
+        <td align="center">
+            <a href="./server/ldap.lternet.edu">
+                LTER LDAP
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['LDAP_LTER'])[0] }}">
                 {{ system.server_status(servers['LDAP_LTER'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Unit Registry</td>
+        <td align="center">
+            <a href="./server/unit.lternet.edu">
+                Unit Registry
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['UNIT'])[0] }}">
                 {{ system.server_status(servers['UNIT'])[1] }}
         </td>
     </tr>
     <tr>
-        <td align="center">Controlled Vocabulary</td>
+        <td align="center">
+            <a href="./server/vocab.lternet.edu">
+                Controlled Vocabulary
+            </a>
+        </td>
         <td class="{{ system.server_status(servers['VOCAB'])[0] }}">
                 {{ system.server_status(servers['VOCAB'])[1] }}
         </td>
