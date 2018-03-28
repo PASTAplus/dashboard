@@ -53,9 +53,10 @@ class SystemState:
 
     def server_assertions(self, host=None):
         assertions = {}
-        for assertion in soh_Config.assertions:
-            assertions[assertion] = self.server_state(host=host) & \
-                                    soh_Config.assertions[assertion]
+        if host in self._state:
+            for assertion in soh_Config.assertions:
+                assertions[assertion] = self._state[host] & \
+                                        soh_Config.assertions[assertion]
         return assertions
 
     def server_state(self, host=None):
