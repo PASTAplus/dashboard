@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-<h3 align="left">{{ server }}</h3>
+<h3 align="left">{{ server }} as of: {{ system.timestamp(local=True) }}</h3>
 <table class="table table-bordered">
     <tr>
         <th width="20%" style="text-align: center">Assertion</th>
@@ -11,9 +11,11 @@
     {%  for assertion in system.server_assertions(server) %}
     <tr>
         <td align="center">{{ assertion }}</td>
-        <td class="text-success">
-                {{ system.server_assertions(server)[assertion] }}
-        </td>
+        {% if system.server_assertions(server)[assertion] %}
+            <td class="text-danger">True</td>
+        {% else %}
+            <td class="text-success">False</td>
+        {% endif %}
     </tr>
     {% endfor %}
 
