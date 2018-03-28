@@ -15,6 +15,7 @@ from flask import abort, Blueprint, render_template
 
 from soh.config import Config as soh_Config
 from webapp.health.health_check import SystemState
+from webapp.health.health_check import tiers
 
 health = Blueprint('health', __name__, template_folder='templates')
 
@@ -32,5 +33,14 @@ def server(server=None):
     if server in servers:
         system = SystemState()
         return render_template('server.html', system=system, server=server)
+    else:
+        abort(404)
+
+
+@health.route('/tier/<tier>')
+def tier(tier=None):
+    if tier in tiers:
+        system = SystemState()
+        return render_template('tier.html', system=system, tier=tiers[tier])
     else:
         abort(404)
