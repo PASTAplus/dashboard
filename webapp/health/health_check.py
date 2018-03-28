@@ -27,6 +27,27 @@ status_code = {
     'text_danger': ['text-danger', 'problem']
 }
 
+production_servers = [soh_Config.servers['PASTA'],
+                      soh_Config.servers['PACKAGE'],
+                      soh_Config.servers['AUDIT'],
+                      soh_Config.servers['SOLR']]
+
+staging_servers = [soh_Config.servers['PASTA_S'],
+                   soh_Config.servers['PACKAGE_S'],
+                   soh_Config.servers['AUDIT_S'],
+                   soh_Config.servers['SOLR_S']]
+
+development_servers = [soh_Config.servers['PASTA_D'],
+                       soh_Config.servers['PACKAGE_D'],
+                       soh_Config.servers['AUDIT_D'],
+                       soh_Config.servers['SOLR_D']]
+
+tiers = {
+    'PRODUCTION': ['Production', '', production_servers],
+    'STAGING': ['Staging', '-s', staging_servers],
+    'DEVELOPMENT': ['Development', '-d', development_servers]
+}
+
 
 class SystemState:
 
@@ -75,32 +96,12 @@ class SystemState:
         return status
 
     def tier_state(self, tier=None):
-        production = [soh_Config.servers['PASTA'],
-                      soh_Config.servers['PACKAGE'],
-                      soh_Config.servers['AUDIT'],
-                      soh_Config.servers['SOLR']]
 
-        staging = [soh_Config.servers['PASTA_S'],
-                   soh_Config.servers['PACKAGE_S'],
-                   soh_Config.servers['AUDIT_S'],
-                   soh_Config.servers['SOLR_S']]
-
-        development = [soh_Config.servers['PASTA_D'],
-                       soh_Config.servers['PACKAGE_D'],
-                       soh_Config.servers['AUDIT_D'],
-                       soh_Config.servers['SOLR_D']]
-
-        if tier == 'PRODUCTION':
-            tier_servers = production
-        elif tier == 'STAGING':
-            tier_servers = staging
-        elif tier == 'DEVELOPMENT':
-            tier_servers = development
-        else:
+        if tier not in tiers:
             raise NameError('{tier} not recognized'.format(tier=tier))
 
         state = 0
-        for server in tier_servers:
+        for server in tiers[tier][2]:
             if server in self._state:
                 state = state | self._state[server]
             else:
