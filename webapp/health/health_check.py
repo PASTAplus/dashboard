@@ -47,19 +47,16 @@ class SystemState:
             servers = soh_db.get_soh_status_by_event(event_id=self._event_id)
             for server in servers:
                 self._state[server.server] = int(server.status)
-
     @property
     def state(self):
         return self._state
 
-    def timestamp(self, local=False):
-        if local:
-            tz = pendulum.now().timezone
-            dt = pendulum.instance(self._event_timestamp)
-            lt = dt.astimezone(tz)
-            return lt.to_day_datetime_string()
-        else:
-            return self._event_timestamp
+    def server_assertions(self, host=None):
+        assertions = {}
+        for assertion in soh_Config.assertions:
+            assertions[assertion] = self.server_state(host=host) & \
+                                    soh_Config.assertions[assertion]
+        return assertions
 
     def server_state(self, host=None):
         if host in self._state:
@@ -82,15 +79,15 @@ class SystemState:
                       soh_Config.servers['AUDIT'],
                       soh_Config.servers['SOLR']]
 
-        staging    = [soh_Config.servers['PASTA_S'],
-                      soh_Config.servers['PACKAGE_S'],
-                      soh_Config.servers['AUDIT_S'],
-                      soh_Config.servers['SOLR_S']]
+        staging = [soh_Config.servers['PASTA_S'],
+                   soh_Config.servers['PACKAGE_S'],
+                   soh_Config.servers['AUDIT_S'],
+                   soh_Config.servers['SOLR_S']]
 
         development = [soh_Config.servers['PASTA_D'],
-                      soh_Config.servers['PACKAGE_D'],
-                      soh_Config.servers['AUDIT_D'],
-                      soh_Config.servers['SOLR_D']]
+                       soh_Config.servers['PACKAGE_D'],
+                       soh_Config.servers['AUDIT_D'],
+                       soh_Config.servers['SOLR_D']]
 
         if tier == 'PRODUCTION':
             tier_servers = production
@@ -114,8 +111,18 @@ class SystemState:
         status = status_code['text_muted']
         state = self.tier_state(tier)
         if state is not None:
-            if  state == soh_Config.UP:
+            if state == soh_Config.UP:
                 status = status_code['text_success']
             else:
                 status = status_code['text_danger']
         return status
+
+    def timestamp(self, local=False):
+        if local:
+            tz = pendulum.now().timezone
+            dt = pendulum.instance(self._event_timestamp)
+            lt = dt.astimezone(tz)
+            return lt.to_day_datetime_string()
+        else:
+            return self._event_timestamp
+
