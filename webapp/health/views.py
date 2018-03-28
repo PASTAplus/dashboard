@@ -18,16 +18,19 @@ from webapp.health.health_check import SystemState
 
 health = Blueprint('health', __name__, template_folder='templates')
 
+
 @health.route('/glance')
 def glance():
     servers = soh_Config.servers
     system = SystemState()
     return render_template('glance.html', system=system, servers=servers)
 
-@health.route('/server/<name>')
-def server(name=None):
+
+@health.route('/server/<server>')
+def server(server=None):
     servers = [soh_Config.servers[_] for _ in soh_Config.servers]
-    if name in servers:
-        return render_template('server.html', server=name)
+    if server in servers:
+        system = SystemState()
+        return render_template('server.html', system=system, server=server)
     else:
         abort(404)
