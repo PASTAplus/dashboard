@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
+{% block metas %}
+{{ super() }}
+    <meta http-equiv="refresh" content="300">
+{% endblock %}
+
 {% block app_content %}
-<h3 align="left">{% filter upper %}{{ server }}{% endfilter %} as of: {{ system.timestamp(local=True) }}</h3>
+<h1 align="center">{{ server }}</h1>
+<h4 align="center">As of: {{ system.timestamp(local=True) }}</h4>
+
 <table class="table table-bordered">
     <tr>
         <th width="20%" style="text-align: center">Assertion</th>
