@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>{{ server }}</h1>
+<h3 align="left">{{ server }}</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Assertion</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+
+    {%  for assertion in system.server_assertions(server) %}
+    <tr>
+        <td align="center">{{ assertion }}</td>
+        <td class="text-success">
+                {{ system.server_assertions(server)[assertion] }}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
 {% endblock %}
