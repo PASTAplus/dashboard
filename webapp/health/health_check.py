@@ -74,8 +74,24 @@ class SystemState:
 
     def server_assertions(self, host=None):
         assertions = {}
-        if host in self._state:
-            for assertion in soh_Config.assertions:
+        server_type = None
+        if host in soh_Config.server_types['SERVER']:
+            server_type = 'SERVER'
+        elif host in soh_Config.server_types['JETTY']:
+            server_type = 'JETTY'
+        elif host in soh_Config.server_types['TOMCAT']:
+            server_type = 'TOMCAT'
+        elif host in soh_Config.server_types['SOLR']:
+            server_type = 'SOLR'
+        elif host in soh_Config.server_types['LDAP']:
+            server_type = 'LDAP'
+        elif host in soh_Config.server_types['APACHE']:
+            server_type = 'APACHE'
+        elif host in soh_Config.server_types['APACHE_TOMCAT']:
+            server_type = 'APACHE_TOMCAT'
+
+        if host in self._state and server_type is not None:
+            for assertion in soh_Config.server_assertions[server_type]:
                 assertions[assertion] = self._state[host] & \
                                         soh_Config.assertions[assertion]
         return assertions
