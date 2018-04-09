@@ -31,12 +31,28 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="{{ url_for('reports.render_no_public') }}"
-                               title="No public access">No public access</a>
+                            <a href="{{ url_for('reports.render_no_public') }}">
+                                No public access
+                            </a>
                         </li>
                         <li>
-                            <a href="{{ url_for('reports.render_offline') }}"
-                               title="Offline data">Offline data</a>
+                            <a href="{{ url_for('reports.render_offline') }}">
+                                Offline data
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">Health
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('health.glance') }}">
+                                Health at a glance
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -48,13 +64,13 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="https://portal-d.edirepository.org/nis">Development</a>
+                            <a href="https://portal.edirepository.org/nis">Production</a>
                         </li>
                         <li>
                             <a href="https://portal-s.edirepository.org/nis">Staging</a>
                         </li>
                         <li>
-                            <a href="https://portal.edirepository.org/nis">Production</a>
+                            <a href="https://portal-d.edirepository.org/nis">Development</a>
                         </li>
                     </ul>
                 </li>

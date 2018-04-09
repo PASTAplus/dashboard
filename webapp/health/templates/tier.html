@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block metas %}
+{{ super() }}
+    <meta http-equiv="refresh" content="300">
+{% endblock %}
+
+{% block app_content %}
+<h1 align="center">{{ tier[0] }} Tier</h1>
+<h4 align="center">As of: {{ system.timestamp(local=True) }}</h4>
+
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Service</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+
+    {% for server in tier[2] %}
+        <tr>
+            <td align="center">
+                <a href="/dashboard/health/server/{{ server }}">
+                    {{ server }}
+                </a>
+            </td>
+            <td class="{{ system.server_status(server)[0] }}">
+                {{ system.server_status(server)[1] }}
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

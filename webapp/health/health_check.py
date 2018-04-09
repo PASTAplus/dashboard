@@ -27,6 +27,27 @@ status_code = {
     'text_danger': ['text-danger', 'problem']
 }
 
+production_servers = [soh_Config.servers['PASTA'],
+                      soh_Config.servers['PACKAGE'],
+                      soh_Config.servers['AUDIT'],
+                      soh_Config.servers['SOLR']]
+
+staging_servers = [soh_Config.servers['PASTA_S'],
+                   soh_Config.servers['PACKAGE_S'],
+                   soh_Config.servers['AUDIT_S'],
+                   soh_Config.servers['SOLR_S']]
+
+development_servers = [soh_Config.servers['PASTA_D'],
+                       soh_Config.servers['PACKAGE_D'],
+                       soh_Config.servers['AUDIT_D'],
+                       soh_Config.servers['SOLR_D']]
+
+tiers = {
+    'PRODUCTION': ['Production', '', production_servers],
+    'STAGING': ['Staging', '-s', staging_servers],
+    'DEVELOPMENT': ['Development', '-d', development_servers]
+}
+
 
 class SystemState:
 
@@ -47,19 +68,33 @@ class SystemState:
             servers = soh_db.get_soh_status_by_event(event_id=self._event_id)
             for server in servers:
                 self._state[server.server] = int(server.status)
-
     @property
     def state(self):
         return self._state
 
-    def timestamp(self, local=False):
-        if local:
-            tz = pendulum.now().timezone
-            dt = pendulum.instance(self._event_timestamp)
-            lt = dt.astimezone(tz)
-            return lt.to_day_datetime_string()
-        else:
-            return self._event_timestamp
+    def server_assertions(self, host=None):
+        assertions = {}
+        server_type = None
+        if host in soh_Config.server_types['SERVER']:
+            server_type = 'SERVER'
+        elif host in soh_Config.server_types['JETTY']:
+            server_type = 'JETTY'
+        elif host in soh_Config.server_types['TOMCAT']:
+            server_type = 'TOMCAT'
+        elif host in soh_Config.server_types['SOLR']:
+            server_type = 'SOLR'
+        elif host in soh_Config.server_types['LDAP']:
+            server_type = 'LDAP'
+        elif host in soh_Config.server_types['APACHE']:
+            server_type = 'APACHE'
+        elif host in soh_Config.server_types['APACHE_TOMCAT']:
+            server_type = 'APACHE_TOMCAT'
+
+        if host in self._state and server_type is not None:
+            for assertion in soh_Config.server_assertions[server_type]:
+                assertions[assertion] = self._state[host] & \
+                                        soh_Config.assertions[assertion]
+        return assertions
 
     def server_state(self, host=None):
         if host in self._state:
@@ -77,32 +112,12 @@ class SystemState:
         return status
 
     def tier_state(self, tier=None):
-        production = [soh_Config.servers['PASTA'],
-                      soh_Config.servers['PACKAGE'],
-                      soh_Config.servers['AUDIT'],
-                      soh_Config.servers['SOLR']]
 
-        staging    = [soh_Config.servers['PASTA_S'],
-                      soh_Config.servers['PACKAGE_S'],
-                      soh_Config.servers['AUDIT_S'],
-                      soh_Config.servers['SOLR_S']]
-
-        development = [soh_Config.servers['PASTA_D'],
-                      soh_Config.servers['PACKAGE_D'],
-                      soh_Config.servers['AUDIT_D'],
-                      soh_Config.servers['SOLR_D']]
-
-        if tier == 'PRODUCTION':
-            tier_servers = production
-        elif tier == 'STAGING':
-            tier_servers = staging
-        elif tier == 'DEVELOPMENT':
-            tier_servers = development
-        else:
+        if tier not in tiers:
             raise NameError('{tier} not recognized'.format(tier=tier))
 
         state = 0
-        for server in tier_servers:
+        for server in tiers[tier][2]:
             if server in self._state:
                 state = state | self._state[server]
             else:
@@ -114,8 +129,18 @@ class SystemState:
         status = status_code['text_muted']
         state = self.tier_state(tier)
         if state is not None:
-            if  state == soh_Config.UP:
+            if state == soh_Config.UP:
                 status = status_code['text_success']
             else:
                 status = status_code['text_danger']
         return status
+
+    def timestamp(self, local=False):
+        if local:
+            tz = pendulum.now().timezone
+            dt = pendulum.instance(self._event_timestamp)
+            lt = dt.astimezone(tz)
+            return lt.to_day_datetime_string()
+        else:
+            return self._event_timestamp
+
