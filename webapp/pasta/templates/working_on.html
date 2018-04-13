@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>PASTA is Working On:</h1>
+
+    <h2>Production Tier</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Start Date/Time</th>
+    </tr>
+    {% for key in production_dict %}
+        <tr><td>{{ key }}</td> <td>{{ production_dict[key] }}</td></tr>
+    {% endfor %}
+    </table>
+
+    <h2>Staging Tier</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Start Date/Time</th>
+    </tr>
+    {% for key in staging_dict %}
+        <tr><td>{{ key }}</td> <td>{{ staging_dict[key] }}</td></tr>
+    {% endfor %}
+    </table>
+
+    <h2>Development Tier</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+        <th>Start Date/Time</th>
+    </tr>
+    {% for key in development_dict %}
+        <tr><td>{{ key }}</td> <td>{{ development_dict[key] }}</td></tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
