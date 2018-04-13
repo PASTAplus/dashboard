@@ -21,7 +21,6 @@ pasta = Blueprint('pasta', __name__, template_folder='templates')
 
 
 @pasta.route('/render_working_on', methods=['GET', 'POST'])
-@login_required
 def render_working_on():
     production_dict = working_on('https://pasta.lternet.edu')
     staging_dict = working_on('https://pasta-s.lternet.edu')
