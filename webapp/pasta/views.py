@@ -15,6 +15,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required
 import xml.etree.ElementTree as ET
+import pendulum
 import requests
 
 pasta = Blueprint('pasta', __name__, template_folder='templates')
@@ -22,14 +23,21 @@ pasta = Blueprint('pasta', __name__, template_folder='templates')
 
 @pasta.route('/render_working_on', methods=['GET', 'POST'])
 def render_working_on():
+    datetime_str = get_datetime_str()
     production_dict = working_on('https://pasta.lternet.edu')
     staging_dict = working_on('https://pasta-s.lternet.edu')
     development_dict = working_on('https://pasta-d.lternet.edu')
     return render_template('working_on.html', 
                             production_dict=production_dict, 
                             staging_dict=staging_dict, 
-                            development_dict=development_dict)
-                            
+                            development_dict=development_dict,
+                            datetime_str=datetime_str)
+
+
+def get_datetime_str():
+    now = pendulum.now()
+    return now.to_day_datetime_string()
+                           
           
 def working_on(base_url=None):
     working_on_dict = {}
