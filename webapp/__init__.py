@@ -46,5 +46,8 @@ app.register_blueprint(reports, url_prefix='/dashboard/reports')
 from webapp.pasta.views import pasta
 app.register_blueprint(pasta, url_prefix='/dashboard/pasta')
 
+from webapp.reservations.views import reservations
+app.register_blueprint(reservations, url_prefix='/dashboard/reservations')
+
 from webapp.health.views import health
 app.register_blueprint(health, url_prefix='/dashboard/health')

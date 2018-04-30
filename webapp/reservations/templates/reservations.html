@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block metas %}
+{{ super() }}
+    <meta http-equiv="refresh" content="300">
+{% endblock %}
+
+{% block app_content %}
+<h1 align="center">PASTA Reserved Identifiers</h1>
+<h4 align="center">As of: {{ datetime_str }}</h4>
+
+    <h2>Production Tier</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Document Identifier</th>
+        <th>Principal</th>
+        <th>Date Reserved</th>
+    </tr>
+    {% for key in production_dict %}
+        <tr><td>{{ key }}</td> <td>{{ production_dict[key][0] }} <td>{{ production_dict[key][1] }}</td></tr>
+    {% endfor %}
+    </table>
+
+    <h2>Staging Tier</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Document Identifier</th>
+        <th>Principal</th>
+        <th>Date Reserved</th>
+    </tr>
+    {% for key in staging_dict %}
+        <tr><td>{{ key }}</td> <td>{{ staging_dict[key][0] }} <td>{{ staging_dict[key][1] }}</td></tr>
+    {% endfor %}
+    </table>
+
+    <h2>Development Tier</h2>
+    <table class="table table-striped">
+    <tr>
+        <th>Document Identifier</th>
+        <th>Principal</th>
+        <th>Date Reserved</th>
+    </tr>
+    {% for key in development_dict %}
+        <tr><td>{{ key }}</td> <td>{{ development_dict[key][0] }} <td>{{ development_dict[key][1] }}</td></tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
