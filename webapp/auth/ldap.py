@@ -12,7 +12,7 @@
     5/22/18
 """
 import daiquiri
-from ldap3 import Server, Connection, ALL, HASHED_SALTED_SHA
+from ldap3 import Server, Connection, ALL, HASHED_SALTED_SHA, MODIFY_REPLACE
 from ldap3.utils.hashed import hashed
 
 from config import Config
@@ -20,52 +20,116 @@ from config import Config
 logger = daiquiri.getLogger('ldap: ' + __name__)
 
 
-class LDAP(object):
-
-    def __init__(self, uid=None):
-        self._uid = uid
-
-    def is_registered(self):
-        search_result = False
-        server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
-        try:
-            conn = Connection(server, auto_bind=True, receive_timeout=30)
-            search_result = conn.search(Config.LDAP_BASE,
-                                Config.LDAP_FILTER.replace('USER', self._uid))
-        except Exception as e:
-            logger.error(e)
-        return search_result
-
-    def add(self, gn=None, sn=None, email=None, passwd=None):
-        add_result = False
-        dn = 'uid=' + self._uid + ',o=EDI,dc=edirepository,dc=org'
-        ldap_class = 'inetOrgPerson'
-        attributes = {
-            'givenName': gn,
-            'sn': sn,
-            'cn': gn + ' ' + sn,
-            'mail': email,
-            'o': 'EDI',
-            'userPassword': hashed(HASHED_SALTED_SHA, passwd)
-        }
-        server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
-        try:
-            conn = Connection(server, Config.LDAP_ADMIN, Config.LDAP_ADMIN_PASSWORD, auto_bind=True, receive_timeout=30)
-            add_result = conn.add(dn, ldap_class, attributes)
-        except Exception as e:
-            logger.error(e)
-        return add_result
+def is_registered(uid=None):
+    result = False
+    server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
+    filter = Config.LDAP_FILTER.replace(Config.LDAP_UID, uid)
+    try:
+        conn = Connection(server=server, auto_bind=True, receive_timeout=30)
+        result = conn.search(Config.LDAP_BASE, filter)
+        conn.unbind()
+    except Exception as e:
+        logger.error(e)
+    return result
 
 
-    def delete(self):
-        pass
+def add(uid=None, gn=None, sn=None, email=None, passwd=None):
+    result = False
+    dn = Config.LDAP_DN.replace(Config.LDAP_UID, uid)
+    ldap_class = 'inetOrgPerson'
+    attributes = {
+        'givenName': gn,
+        'sn': sn,
+        'cn': gn + ' ' + sn,
+        'mail': email,
+        'o': 'EDI',
+        'userPassword': hashed(HASHED_SALTED_SHA, passwd)
+    }
+    server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
+    try:
+        conn = Connection(server=server, user=Config.LDAP_ADMIN,
+                          password=Config.LDAP_ADMIN_PASSWORD,
+                          auto_bind=True, receive_timeout=30)
+        result = conn.add(dn, ldap_class, attributes)
+        conn.unbind()
+    except Exception as e:
+        logger.error(e)
+    return result
 
-    def reset_password(self):
-        pass
 
-    def reset_email(self):
-        pass
+def delete(uid=None):
+    result = False
+    dn = Config.LDAP_DN.replace(Config.LDAP_UID, uid)
+    server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
+    try:
+        conn = Connection(server=server, user=Config.LDAP_ADMIN,
+                          password=Config.LDAP_ADMIN_PASSWORD,
+                          auto_bind=True, receive_timeout=30)
+        result = conn.delete(dn)
+        conn.unbind()
+    except Exception as e:
+        logger.error(e)
+    return result
 
+
+def reset_password(uid=None, new_passwd=None):
+    result = False
+    dn = Config.LDAP_DN.replace(Config.LDAP_UID, uid)
+    user_password = {'userPassword': [
+        (MODIFY_REPLACE, [hashed(HASHED_SALTED_SHA, new_passwd)])]}
+    server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
+    try:
+        conn = Connection(server=server, user=Config.LDAP_ADMIN,
+                          password=Config.LDAP_ADMIN_PASSWORD,
+                          auto_bind=True, receive_timeout=30)
+        result = conn.modify(dn, user_password)
+        conn.unbind()
+    except Exception as e:
+        logger.error(e)
+    return result
+
+
+def change_password(uid=None, passwd=None, new_passwd=None):
+    result = False
+    dn = Config.LDAP_DN.replace(Config.LDAP_UID, uid)
+    user_password = {'userPassword': [
+        (MODIFY_REPLACE, [hashed(HASHED_SALTED_SHA, new_passwd)])]}
+    try:
+        conn = bind(uid=uid, passwd=passwd)
+        result = conn.modify(dn, user_password)
+        conn.unbind()
+    except Exception as e:
+        logger.error(e)
+    return result
+
+
+# TODO: need to provide email verification for changes to email addresses
+def reset_email(uid=None, new_email=None):
+    result = False
+    dn = Config.LDAP_DN.replace(Config.LDAP_UID, uid)
+    email = {'mail': [(MODIFY_REPLACE, [new_email])]}
+    server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
+    try:
+        conn = Connection(server=server, user=Config.LDAP_ADMIN,
+                          password=Config.LDAP_ADMIN_PASSWORD,
+                          auto_bind=True, receive_timeout=30)
+        result = conn.modify(dn, email)
+        conn.unbind()
+    except Exception as e:
+        logger.error(e)
+    return result
+
+
+def bind(uid=None, passwd=None):
+    conn = None
+    dn = Config.LDAP_DN.replace(Config.LDAP_UID, uid)
+    server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
+    try:
+        conn = Connection(server=server, user=dn, password=passwd,
+                          auto_bind=True, receive_timeout=30)
+    except Exception as e:
+        logger.error(e)
+    return conn
 
 
 def main():
