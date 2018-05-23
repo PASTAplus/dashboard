@@ -13,10 +13,11 @@
     <table class="table table-striped">
     <tr>
         <th>Package ID</th>
+        <th>Operation</th>
         <th>Start Date/Time</th>
     </tr>
     {% for key in production_dict %}
-        <tr><td>{{ key }}</td> <td>{{ production_dict[key] }}</td></tr>
+        <tr><td>{{ key }}</td> <td>{{ production_dict[key][0] }}</td> <td>{{ production_dict[key][1] }}</td></tr>
     {% endfor %}
     </table>
 
@@ -24,10 +25,11 @@
     <table class="table table-striped">
     <tr>
         <th>Package ID</th>
+        <th>Operation</th>
         <th>Start Date/Time</th>
     </tr>
     {% for key in staging_dict %}
-        <tr><td>{{ key }}</td> <td>{{ staging_dict[key] }}</td></tr>
+        <tr><td>{{ key }}</td> <td>{{ staging_dict[key][0] }}</td> <td>{{ staging_dict[key][1] }}</td></tr>
     {% endfor %}
     </table>
 
@@ -35,10 +37,11 @@
     <table class="table table-striped">
     <tr>
         <th>Package ID</th>
+        <th>Operation</th>
         <th>Start Date/Time</th>
     </tr>
     {% for key in development_dict %}
-        <tr><td>{{ key }}</td> <td>{{ development_dict[key] }}</td></tr>
+        <tr><td>{{ key }}</td> <td>{{ development_dict[key][0] }}</td> <td>{{ development_dict[key][1] }}</td></tr>
     {% endfor %}
     </table>
 

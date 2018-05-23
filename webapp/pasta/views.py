@@ -58,14 +58,21 @@ def working_on(base_url=None):
                 has_permission_read = False
                 if child.tag == 'dataPackage':
                     package_id = ''
+                    service_method = ''
                     start_date = ''
                     for grandchild in child:
                         if grandchild.tag == 'packageId':
                             package_id = grandchild.text
+                        if grandchild.tag == 'serviceMethod':
+                            service_method = grandchild.text[:-11]
                         if grandchild.tag == 'startDate':
                             start_date = grandchild.text
                     if (package_id and start_date):
-                        working_on_dict[package_id] = start_date
+                        value_list = []
+                        value_list.append(service_method)
+                        value_list.append(start_date)
+                        working_on_dict[package_id] = value_list
+
     except Exception as e:
         logger.error(e)
     return working_on_dict
