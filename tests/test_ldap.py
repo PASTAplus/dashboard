@@ -62,6 +62,9 @@ class TestLdap(unittest.TestCase):
     def test_bind(self):
         self.assertIsNotNone(ldap.bind(uid=uid, passwd=passwd))
 
+    def test_get_email(self):
+        self.assertEqual(email, ldap.get_email(uid=uid))
+
 
 if __name__ == '__main__':
     unittest.main()
