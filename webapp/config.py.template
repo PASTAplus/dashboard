@@ -24,6 +24,17 @@ class Config(object):
     DOMAINS = {'edi': 'o=EDI,dc=edirepository,dc=org',
                'lter':'o=LTER,dc=ecoinformatics,dc=org',}
 
+    # LDAP configuration
+    LDAP = 'ldap.edirepository.org'
+    LDAP_ADMIN = 'LDAP_ADMIN_DN'
+    LDAP_ADMIN_PASSWORD = 'LDAP_ADMIN_PASSWORD'
+    LDAP_DN = 'uid=EDIUSER,o=EDI,dc=edirepository,dc=org'
+    LDAP_UID = 'EDIUSER'
+
+    # Email configuration
+    HOVER_MAIL = 'SUPPORT_EMAIL_ADDRESS'
+    HOVER_PASSWORD = 'SUPPORT_EMAIL_PASSWORD'
+
     # Test attributes
     TEST_USER_DN = 'USER_DN'
     TEST_USER_PW = 'SECRET_PASSWORD'
