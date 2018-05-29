@@ -12,7 +12,6 @@
     5/24/18
 """
 import base64
-from time import sleep
 
 import daiquiri
 import nacl.encoding

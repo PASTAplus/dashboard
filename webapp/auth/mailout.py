@@ -15,15 +15,14 @@ import smtplib
 
 import daiquiri
 
-from config import Config
-from webapp.auth import ldap_user
+from webapp.config import Config
 from webapp.auth.ldap_user import LdapUser
-from webapp.auth import token_uid
 
 logger = daiquiri.getLogger('mailout: ' + __name__)
 
 
 def send_mail(subject=None, msg=None, to=None):
+    result = False
     # Convert subject and msg to byte array
     body = ('Subject: ' + subject + '\n').encode() + \
            ('To: ' + to + '\n').encode() + \
@@ -36,15 +35,13 @@ def send_mail(subject=None, msg=None, to=None):
         smtpObj.starttls()
         smtpObj.login(Config.HOVER_MAIL, Config.HOVER_PASSWORD)
         smtpObj.sendmail(from_addr=Config.HOVER_MAIL, to_addrs=to, msg=body)
-        response = 'Sending email to ' + to + ' succeeded'
-        logger.info(response)
-        return response
+        result = True
     except Exception as e:
         response = 'Sending email failed - ' + str(e)
         logger.error(response)
-        return response
     finally:
         smtpObj.quit()
+    return result
 
 
 def reset_password_mail_body(ldap_user=None):
@@ -60,13 +57,6 @@ def reset_password_mail_body(ldap_user=None):
 
 
 def main():
-    ldap_user = LdapUser(uid='chase', gn='chase', sn='gaucho', email='chase.gaucho@gmail.com')
-    subject = 'EDI account password reset...'
-    msg = reset_password_mail_body(ldap_user=ldap_user)
-    to = 'servilla@unm.edu'
-
-    r = send_mail(subject=subject, msg=msg, to=to)
-    print(r)
     return 0
 
 

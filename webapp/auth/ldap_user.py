@@ -18,7 +18,7 @@ import daiquiri
 from ldap3 import Server, Connection, ALL, HASHED_SALTED_SHA, MODIFY_REPLACE
 from ldap3.utils.hashed import hashed
 
-from config import Config
+from webapp.config import Config
 from webapp.auth import token_uid
 
 logger = daiquiri.getLogger('ldap_user: ' + __name__)
