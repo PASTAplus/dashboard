@@ -105,3 +105,6 @@ ENV/
 
 # Default config.py
 config.py
+
+*.sqlite
+.pytest_cache
