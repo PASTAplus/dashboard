@@ -44,13 +44,12 @@ def send_mail(subject=None, msg=None, to=None):
     return result
 
 
-def reset_password_mail_body(ldap_user=None):
+def reset_password_mail_body(ldap_user=None, url=None):
     gn = ldap_user.gn
     msg = 'Hi ' + gn + ',\n\n' + \
         'Please use the following URL to reset your EDI account ' + \
         'password:\n\n' + \
-        'https://dashboard.edirepository.org/dashboard/auth/reset?token=' + \
-        ldap_user.token.decode() + \
+        url + \
         '\n\nIf you have received this email in error, please ignore.' + \
         '\n\nSincerely,\nThe EDI Team\n'
     return msg
