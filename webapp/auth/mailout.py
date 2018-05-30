@@ -47,7 +47,7 @@ def send_mail(subject=None, msg=None, to=None):
 def reset_password_mail_body(ldap_user=None, url=None):
     gn = ldap_user.gn
     msg = 'Hi ' + gn + ',\n\n' + \
-        'Please use the following URL to reset your EDI account ' + \
+        'Please use the following URL to reset your EDI user ' + \
         'password:\n\n' + \
         url + \
         '\n\nIf you have received this email in error, please ignore.' + \
