@@ -16,6 +16,7 @@ import base64
 import daiquiri
 import nacl.encoding
 import nacl.signing
+from nacl.exceptions import BadSignatureError
 import pendulum
 
 
@@ -37,11 +38,16 @@ def is_valid(token=None):
     signed_token = base64.b64decode(token.decode().split(':')[0].encode())
     verify_key_hex = token.decode().split(':')[1].encode()
     verify_key = nacl.signing.VerifyKey(verify_key_hex, encoder=nacl.encoding.HexEncoder)
-    token_str = verify_key.verify(signed_token).decode()
+    try:
+        token_str = verify_key.verify(signed_token).decode()
+    except BadSignatureError as e:
+        logger.error(e)
+        msg = 'Password reset token has bad digital signature'
+        raise BadSignatureError(msg)
     uid = token_str.split(',')[0]
     ttl = token_str.split(',')[1]
     if is_expired(ttl=ttl):
-        msg = 'Expired token TTL'
+        msg = 'Expired password reset token TTL'
         raise TTLException(msg)
     return uid
 
@@ -61,6 +67,8 @@ def to_token(uid=None):
 class TTLException(Exception):
     pass
 
+class BadSignatureError(Exception):
+    pass
 
 def main():
 
