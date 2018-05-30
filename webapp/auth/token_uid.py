@@ -18,7 +18,6 @@ import daiquiri
 import nacl.encoding
 import nacl.signing
 import nacl.hash
-from nacl.exceptions import BadSignatureError
 import pendulum
 
 
@@ -27,10 +26,10 @@ logger = daiquiri.getLogger('token_uid: ' + __name__)
 
 def is_expired(ttl=None):
     expired = False
-    ts = pendulum.fromtimestamp(float(ttl))
-    ts_add = ts.add(minutes=30).timestamp()
+    timestamp = pendulum.fromtimestamp(float(ttl))
+    future = timestamp.add(minutes=30).timestamp()
     now = pendulum.now().timestamp()
-    if  ts_add <= now:
+    if  future <= now:
         expired = True
     return expired
 
@@ -54,6 +53,7 @@ def remove_token(token=None):
     except Exception as e:
         logger.error(e)
 
+
 def to_token(uid=None):
     HASHER = nacl.hash.sha256
     timestamp = str(pendulum.now().timestamp())
@@ -67,7 +67,6 @@ def to_token(uid=None):
 
 class TTLException(Exception):
     pass
-
 
 
 def main():
