@@ -51,3 +51,6 @@ app.register_blueprint(reservations, url_prefix='/dashboard/reservations')
 
 from webapp.health.views import health
 app.register_blueprint(health, url_prefix='/dashboard/health')
+
+from webapp.errors.handler import errors
+app.register_blueprint(errors, url_prefix='/dashboard/error')
