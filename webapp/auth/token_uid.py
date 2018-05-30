@@ -12,10 +12,12 @@
     5/24/18
 """
 import base64
+import os
 
 import daiquiri
 import nacl.encoding
 import nacl.signing
+import nacl.hash
 from nacl.exceptions import BadSignatureError
 import pendulum
 
@@ -26,49 +28,47 @@ logger = daiquiri.getLogger('token_uid: ' + __name__)
 def is_expired(ttl=None):
     expired = False
     ts = pendulum.fromtimestamp(float(ttl))
-    ts_add = ts.add(minutes=60).timestamp()
+    ts_add = ts.add(minutes=30).timestamp()
     now = pendulum.now().timestamp()
     if  ts_add <= now:
         expired = True
     return expired
 
 
-def is_valid(token=None):
-    token = base64.b64decode(token)
-    signed_token = base64.b64decode(token.decode().split(':')[0].encode())
-    verify_key_hex = token.decode().split(':')[1].encode()
-    verify_key = nacl.signing.VerifyKey(verify_key_hex, encoder=nacl.encoding.HexEncoder)
-    try:
-        token_str = verify_key.verify(signed_token).decode()
-    except BadSignatureError as e:
-        logger.error(e)
-        msg = 'Password reset token has bad digital signature'
-        raise BadSignatureError(msg)
-    uid = token_str.split(',')[0]
-    ttl = token_str.split(',')[1]
+def decode_uid(token=None):
+    uid = None
+    token_file = './tokens/' + token
+    with open(token_file, 'rb') as t:
+        token_pair = t.read().decode()
+    uid, ttl = token_pair.split(',')
     if is_expired(ttl=ttl):
-        msg = 'Expired password reset token TTL'
-        raise TTLException(msg)
+        remove_token(token=token)
+        raise TTLException()
     return uid
 
 
+def remove_token(token=None):
+    try:
+        token_file = './tokens/' + token
+        os.remove(token_file)
+    except Exception as e:
+        logger.error(e)
+
 def to_token(uid=None):
-    token = None
-    signing_key = nacl.signing.SigningKey.generate()
-    verify_key = signing_key.verify_key
-    verify_key_hex = verify_key.encode(encoder=nacl.encoding.HexEncoder)
-    token_ts = str(pendulum.now().timestamp())
-    token_str = (uid + ',' + token_ts).encode()
-    signed_token = base64.b64encode(signing_key.sign(token_str))
-    token = base64.b64encode(signed_token + b':' + verify_key_hex)
+    HASHER = nacl.hash.sha256
+    timestamp = str(pendulum.now().timestamp())
+    token_pair = (uid + ',' + timestamp).encode()
+    token = HASHER(token_pair, encoder=nacl.encoding.HexEncoder)
+    token_file = './tokens/' + token.decode()
+    with open(token_file, 'wb') as t:
+        t.write(token_pair)
     return token
 
 
 class TTLException(Exception):
     pass
 
-class BadSignatureError(Exception):
-    pass
+
 
 def main():
 
