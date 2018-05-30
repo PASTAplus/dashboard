@@ -25,7 +25,6 @@ from webapp.auth.forms import LoginForm
 from webapp.auth.forms import ResetLdapPassword
 from webapp.auth.ldap_user import LdapUser
 from webapp.auth.ldap_user import AttributeError, UidError
-from webapp.auth.token_uid import BadSignatureError, TTLException
 from webapp.auth.user import User
 from webapp.config import Config
 
@@ -106,14 +105,13 @@ def create_ldap_user():
 def reset_password(token=None):
     uid = None
     try:
-        uid = token_uid.is_valid(token=token)
-    except (BadSignatureError, TTLException) as e:
+        uid = token_uid.decode_uid(token=token)
+    except Exception as e:
         logger.error(e)
         abort(400)
     form = ResetLdapPassword()
     # Process POST
     if form.validate_on_submit():
-        uid = token_uid.is_valid(token=token)
         password = form.password.data
         confirm_password = form.confirm_password.data
         if password != confirm_password:
@@ -124,13 +122,14 @@ def reset_password(token=None):
             return redirect(url)
         try:
             ldap_user = LdapUser(uid=uid)
+            ldap_user.password = password
+            reset = ldap_user.reset_password()
+            token_uid.remove_token(token=token)
+            if not reset:
+                abort(500)
         except UidError as e:
             logger.error(e)
             abort(400)
-        ldap_user.password = password
-        reset = ldap_user.reset_password()
-        if not reset:
-            abort(500)
         return redirect(url_for('auth.welcome_user', uid=ldap_user.uid))
     # Process GET
     return render_template('reset_ldap_password.html', title='Password Rest',
