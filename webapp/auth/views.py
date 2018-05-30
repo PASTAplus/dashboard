@@ -28,6 +28,7 @@ from webapp.auth.token_uid import BadSignatureError, TTLException
 from webapp.auth.user import User
 from webapp.config import Config
 
+
 auth = Blueprint('auth', __name__, template_folder='templates')
 
 
@@ -59,6 +60,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('home.index'))
+
 
 @auth.route('/create_ldap_user', methods=['GET', 'POST'])
 @login_required
