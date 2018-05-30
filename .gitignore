@@ -108,3 +108,4 @@ config.py
 
 *.sqlite
 .pytest_cache
+tokens/
