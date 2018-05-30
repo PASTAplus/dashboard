@@ -1,0 +1,25 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+{% if title %}{{ title }} - EDI Dashboard{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% block app_content %}
+
+    <h3 align="center">Welcome <b><em>{{ ldap_user.cn }}</em></b>, to the Environmental
+        Data Initiative!</b></h3>
+    <br/>
+    <h4>Please user your <em>user ID</em> (<b>{{ ldap_user.uid }}</b>) and
+        <em>password</em> to login for access to EDI resources.</h4>
+    <br/>
+    <h4>You may find the following links of interest:</h4>
+    <ul>
+        <li><em>Environmental Data Initiative</em> <a href="https://www.environmentaldatainitiative.org">Home Page</a></li>
+        <li><em>Environmental Data Initiative</em> <a href="https://portal.edirepository.org/nis">Data Portal</a></li>
+    </ul>
+
+    {% endblock %}
+</div>
+{% endblock %}
