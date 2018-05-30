@@ -24,3 +24,18 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     domain = SelectField('Domain', choices=domain_choices)
     submit = SubmitField('Sign In')
+
+
+class CreateLdapUser(FlaskForm):
+    uid = StringField('User ID', validators=[DataRequired()])
+    gn = StringField('Given name', validators=[DataRequired()])
+    sn = StringField('Surname', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    confirm_email = StringField('Confirm Email', validators=[DataRequired()])
+    submit = SubmitField('Create User')
+
+
+class ResetLdapPassword(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
+    submit = SubmitField('Reset Password')
