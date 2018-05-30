@@ -93,7 +93,19 @@
                         </li>
                     </ul>
                 </li>
-           </ul>
+                 <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">User Management
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('auth.create_ldap_user') }}">Create LDAP User</a>
+                        </li>
+                    </ul>
+                </li>
+          </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_anonymous %}
                 <li><a href="{{ url_for('auth.login') }}">Login</a></li>
