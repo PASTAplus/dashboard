@@ -11,8 +11,9 @@
 :Created:
     3/6/18
 """
-
+import daiquiri
 from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import abort
 from flask_login import current_user, login_user, logout_user, login_required
 
 from werkzeug.urls import url_parse
@@ -29,6 +30,7 @@ from webapp.auth.user import User
 from webapp.config import Config
 
 
+logger = daiquiri.getLogger('views: ' + __name__)
 auth = Blueprint('auth', __name__, template_folder='templates')
 
 
@@ -37,6 +39,7 @@ def login():
     if current_user.is_authenticated:
         flash(current_user.get_username() + ', you are already logged in...')
         return redirect(url_for('home.index'))
+    # Process POST
     form = LoginForm()
     if form.validate_on_submit():
         domain = form.domain.data # Never None
@@ -54,6 +57,7 @@ def login():
                 return redirect(next_page)
         flash('Invalid username or password')
         return redirect(url_for('auth.login'))
+    # Process GET
     return render_template('login.html', title='Sign In', form=form)
 
 @auth.route('/logout', methods=['GET'])
@@ -66,6 +70,7 @@ def logout():
 @login_required
 def create_ldap_user():
     form = CreateLdapUser()
+    # Process POST
     if form.validate_on_submit():
         ldap_user = LdapUser()
         ldap_user.uid = form.uid.data
@@ -77,24 +82,25 @@ def create_ldap_user():
         ldap_user.email = form.email.data
         try:
             created = ldap_user.create()
+            if not created:
+                msg = 'User ID "{0}" already in use'.format(ldap_user.uid)
+                flash(msg)
+                return redirect(url_for('auth.create_ldap_user'))
         except AttributeError as e:
             flash('Attribute error - ' + e)
             return redirect(url_for('auth.create_ldap_user'))
         except Exception as e:
-            flash('Unknown LDAP error - ' + e)
-            return redirect(url_for('auth.create_ldap_user'))
-        if not created:
-            msg = 'User ID "{0}" already in use'.format(ldap_user.uid)
-            flash(msg)
-            return redirect(url_for('auth.create_ldap_user'))
+            abort(500)
         url = request.host_url + \
               url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
         msg = mailout.reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
         mailout.send_mail(subject=subject, msg=msg,to=ldap_user.email)
-        return redirect(url_for('home.index'))
+        return redirect(url_for('auth.user_created', uid=ldap_user.uid))
+    # Process GET
     return render_template('create_ldap_user.html', title='Create LDAP User',
                            form=form)
+
 
 @auth.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token=None):
@@ -102,9 +108,10 @@ def reset_password(token=None):
     try:
         uid = token_uid.is_valid(token=token)
     except (BadSignatureError, TTLException) as e:
-        flash(e)
-        return redirect(url_for('home.about'))
+        logger.error(e)
+        abort(400)
     form = ResetLdapPassword()
+    # Process POST
     if form.validate_on_submit():
         uid = token_uid.is_valid(token=token)
         password = form.password.data
@@ -118,19 +125,25 @@ def reset_password(token=None):
         try:
             ldap_user = LdapUser(uid=uid)
         except UidError as e:
-            flash(e)
-            url = request.host_url + \
-                  url_for('auth.reset_password', token=token)[1:]
-            return redirect(url)
+            logger.error(e)
+            abort(400)
         ldap_user.password = password
         reset = ldap_user.reset_password()
         if not reset:
-            msg = 'Password reset failed'
-            flash(msg)
-            url = request.host_url + \
-                  url_for('auth.reset_password', token=token)[1:]
-            return redirect(url)
-        # TODO: should render to use welcome page, not 'about'
-        return redirect(url_for('home.about'))
+            abort(500)
+        return redirect(url_for('auth.welcome_user', uid=ldap_user.uid))
+    # Process GET
     return render_template('reset_ldap_password.html', title='Password Rest',
                            form=form)
+
+
+@auth.route('/welcome_user/<uid>')
+def welcome_user(uid=None):
+    ldap_user = LdapUser(uid=uid)
+    return render_template('welcome_user.html', ldap_user=ldap_user)
+
+
+@auth.route('/user_created/<uid>')
+def user_created(uid=None):
+    ldap_user = LdapUser(uid=uid)
+    return render_template('user_created.html', ldap_user=ldap_user)
