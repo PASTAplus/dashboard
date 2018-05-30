@@ -50,6 +50,8 @@ def reset_password_mail_body(ldap_user=None, url=None):
         'Please use the following URL to reset your EDI user ' + \
         'password:\n\n' + \
         url + \
+        '\n\n This URL provides a one time password reset and will expire ' + \
+        'in 30 minutes.' + \
         '\n\nIf you have received this email in error, please ignore.' + \
         '\n\nSincerely,\nThe EDI Team\n'
     return msg
