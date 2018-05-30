@@ -27,18 +27,18 @@ uid = 'dduck'
 class TestTokenUid(unittest.TestCase):
 
     def setUp(self):
-        pass
+        self.token = token_uid.to_token(uid=uid)
 
     def tearDown(self):
-        pass
+        token_uid.remove_token(token=self.token.decode())
 
     def test_token(self):
         token = token_uid.to_token(uid=uid)
         self.assertIsNotNone(token)
+        token_uid.remove_token(token=token.decode())
 
     def test_is_valid(self):
-        token = token_uid.to_token(uid=uid)
-        self.assertTrue(token_uid.decode_uid(token=token))
+        self.assertTrue(token_uid.decode_uid(token=self.token.decode()))
 
 
 if __name__ == '__main__':
