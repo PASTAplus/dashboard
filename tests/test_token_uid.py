@@ -38,8 +38,7 @@ class TestTokenUid(unittest.TestCase):
 
     def test_is_valid(self):
         token = token_uid.to_token(uid=uid)
-        self.assertTrue(token_uid.is_valid(token=token))
-
+        self.assertTrue(token_uid.decode_uid(token=token))
 
 
 if __name__ == '__main__':
