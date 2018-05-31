@@ -25,25 +25,22 @@ logger = daiquiri.getLogger('token_uid: ' + __name__)
 
 
 def is_expired(ttl, expiry):
-    expired = False
     timestamp = pendulum.fromtimestamp(float(ttl))
     future = timestamp.add(minutes=expiry).timestamp()
     now = pendulum.now().timestamp()
-    if  future <= now:
-        expired = True
-    return expired
+    return future <= now
 
 
-def decode_uid(token, expiry=60):
-    uid = None
+def decode_token(token):
     token_file = './tokens/' + token
-    with open(token_file, 'rb') as t:
-        token_pair = t.read().decode()
-    uid, ttl = token_pair.split(',')
-    if is_expired(ttl=ttl, expiry=expiry):
-        remove_token(token=token)
-        raise TTLException()
-    return uid
+    try:
+        with open(token_file, 'r') as t:
+            token_pair = t.read()
+        uid, ttl = token_pair.split(',')
+        return uid, ttl
+    except Exception as e:
+        logger.error(e)
+    return None, None
 
 
 def remove_token(token=None):
@@ -57,10 +54,10 @@ def remove_token(token=None):
 def to_token(uid=None):
     HASHER = nacl.hash.sha256
     timestamp = str(pendulum.now().timestamp())
-    token_pair = (uid + ',' + timestamp).encode()
-    token = HASHER(token_pair, encoder=nacl.encoding.HexEncoder)
+    token_pair = uid + ',' + timestamp
+    token = HASHER(token_pair.encode(), encoder=nacl.encoding.HexEncoder)
     token_file = './tokens/' + token.decode()
-    with open(token_file, 'wb') as t:
+    with open(token_file, 'w') as t:
         t.write(token_pair)
     return token
 
