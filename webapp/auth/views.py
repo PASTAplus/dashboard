@@ -94,7 +94,9 @@ def create_ldap_user():
               url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
         msg = mailout.reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
-        mailout.send_mail(subject=subject, msg=msg,to=ldap_user.email)
+        sent = mailout.send_mail(subject=subject, msg=msg, to=ldap_user.email)
+        if not sent:
+            abort(500)
         return redirect(url_for('auth.user_created', uid=ldap_user.uid))
     # Process GET
     return render_template('create_ldap_user.html', title='Create LDAP User',
@@ -102,10 +104,11 @@ def create_ldap_user():
 
 
 @auth.route('/reset_password/<token>', methods=['GET', 'POST'])
+# Test token for valid uid and ttl
 def reset_password(token=None):
     uid = None
     try:
-        uid = token_uid.decode_uid(token=token)
+        uid = token_uid.decode_uid(token=token, expiry=1440)
     except Exception as e:
         logger.error(e)
         abort(400)
