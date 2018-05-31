@@ -104,14 +104,7 @@ def create_ldap_user():
 
 
 @auth.route('/reset_password/<token>', methods=['GET', 'POST'])
-# Test token for valid uid and ttl
 def reset_password(token=None):
-    uid = None
-    try:
-        uid = token_uid.decode_uid(token=token, expiry=1440)
-    except Exception as e:
-        logger.error(e)
-        abort(400)
     form = ResetLdapPassword()
     # Process POST
     if form.validate_on_submit():
@@ -123,19 +116,28 @@ def reset_password(token=None):
             url = request.host_url + \
                   url_for('auth.reset_password', token=token)[1:]
             return redirect(url)
+        uid, _ = token_uid.decode_token(token=token)
+        token_uid.remove_token(token=token)
         try:
             ldap_user = LdapUser(uid=uid)
             ldap_user.password = password
             reset = ldap_user.reset_password()
-            token_uid.remove_token(token=token)
             if not reset:
                 abort(500)
+            return redirect(url_for('auth.welcome_user', uid=ldap_user.uid))
         except UidError as e:
             logger.error(e)
             abort(400)
-        return redirect(url_for('auth.welcome_user', uid=ldap_user.uid))
     # Process GET
-    return render_template('reset_ldap_password.html', title='Password Rest',
+    token_file, ttl = token_uid.decode_token(token=token)
+    # Ensure token file and ttl are valid
+    if token_file is None:
+        abort(400)
+    elif token_uid.is_expired(ttl=ttl, expiry=1440): # Expiry is 24 hours
+        token_uid.remove_token(token=token)
+        abort(400)
+    else:
+       return render_template('reset_ldap_password.html', title='Password Rest',
                            form=form)
 
 
