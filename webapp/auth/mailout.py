@@ -45,15 +45,16 @@ def send_mail(subject=None, msg=None, to=None):
 
 
 def reset_password_mail_body(ldap_user=None, url=None):
-    gn = ldap_user.gn
-    msg = 'Hi ' + gn + ',\n\n' + \
-        'Please use the following URL to reset your EDI user ' + \
-        'password:\n\n' + \
-        url + \
-        '\n\n This URL provides a one time password reset and will expire ' + \
-        'in 30 minutes.' + \
-        '\n\nIf you have received this email in error, please ignore.' + \
-        '\n\nSincerely,\nThe EDI Team\n'
+    msg = 'Hello ' + ldap_user.cn + ',\n\n' + \
+          'A user account with the identifier "' + ldap_user.uid + \
+          '" was created on your behalf for you to access the ' + \
+          'Environmental Data Initiative data repository, namely through ' + \
+          'the EDI Data Portal. Please use the following URL to set ' + \
+          'your password:\n\n' + url + '\n\n' + \
+          'This URL provides a one-time password reset and will expire ' + \
+          'in 24 hours.\n\nIf you have received this email in error, ' + \
+          'please ignore.\n\nSincerely,\nThe EDI Team'
+
     return msg
 
 
