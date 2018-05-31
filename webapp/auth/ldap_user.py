@@ -60,8 +60,8 @@ class LdapUser(object):
         return self._sn
 
     @sn.setter
-    def sn(self, new_sn=None):
-        self._sn = new_sn
+    def sn(self, sn=None):
+        self._sn = sn
 
     @property
     def cn(self):
@@ -72,16 +72,16 @@ class LdapUser(object):
         return self._password
 
     @password.setter
-    def password(self, new_password=None):
-        self._password = new_password
+    def password(self, password=None):
+        self._password = password
 
     @property
     def email(self):
         return self._email
 
     @email.setter
-    def email(self, new_email=None):
-        self._email = new_email
+    def email(self, email=None):
+        self._email = email
 
     @property
     def token(self):
