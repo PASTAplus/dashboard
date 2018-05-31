@@ -24,23 +24,23 @@ import pendulum
 logger = daiquiri.getLogger('token_uid: ' + __name__)
 
 
-def is_expired(ttl=None):
+def is_expired(ttl, expiry):
     expired = False
     timestamp = pendulum.fromtimestamp(float(ttl))
-    future = timestamp.add(minutes=30).timestamp()
+    future = timestamp.add(minutes=expiry).timestamp()
     now = pendulum.now().timestamp()
     if  future <= now:
         expired = True
     return expired
 
 
-def decode_uid(token=None):
+def decode_uid(token, expiry=60):
     uid = None
     token_file = './tokens/' + token
     with open(token_file, 'rb') as t:
         token_pair = t.read().decode()
     uid, ttl = token_pair.split(',')
-    if is_expired(ttl=ttl):
+    if is_expired(ttl=ttl, expiry=expiry):
         remove_token(token=token)
         raise TTLException()
     return uid
