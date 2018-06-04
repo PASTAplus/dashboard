@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+  #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 """:Mod: forms.py
@@ -7,6 +7,7 @@
 
 :Author:
     servilla
+    costa
 
 :Created:
     3/6/18
@@ -39,3 +40,8 @@ class ResetLdapPassword(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
+
+
+class DeleteLdapUser(FlaskForm):
+    uid = StringField('User ID', validators=[DataRequired()])
+    submit = SubmitField('Delete User')

@@ -7,6 +7,7 @@
 
 :Author:
     servilla
+    costa
 
 :Created:
     3/6/18
@@ -23,6 +24,7 @@ from webapp.auth import token_uid
 from webapp.auth.forms import CreateLdapUser
 from webapp.auth.forms import LoginForm
 from webapp.auth.forms import ResetLdapPassword
+from webapp.auth.forms import DeleteLdapUser
 from webapp.auth.ldap_user import LdapUser
 from webapp.auth.ldap_user import AttributeError, UidError
 from webapp.auth.user import User
@@ -141,6 +143,31 @@ def reset_password(token=None):
                            form=form)
 
 
+@auth.route('/delete_ldap_user', methods=['GET', 'POST'])
+@login_required
+def delete_ldap_user():
+    form = DeleteLdapUser()
+    # Process POST
+    if form.validate_on_submit():
+        ldap_user = LdapUser()
+        ldap_user.uid = form.uid.data
+        try:
+            deleted = ldap_user.delete()
+            if not deleted:
+                msg = 'User ID "{0}" was not found in the LDAP directory'.format(ldap_user.uid)
+                flash(msg)
+                return redirect(url_for('auth.delete_ldap_user'))
+        except AttributeError as e:
+            flash('Attribute error - ' + e)
+            return redirect(url_for('auth.delete_ldap_user'))
+        except Exception as e:
+            abort(500)
+        return redirect(url_for('auth.user_deleted', uid=ldap_user.uid))
+    # Process GET
+    return render_template('delete_ldap_user.html', title='Delete LDAP User',
+                           form=form)
+
+
 @auth.route('/welcome_user/<uid>')
 def welcome_user(uid=None):
     ldap_user = LdapUser(uid=uid)
@@ -151,3 +178,8 @@ def welcome_user(uid=None):
 def user_created(uid=None):
     ldap_user = LdapUser(uid=uid)
     return render_template('user_created.html', ldap_user=ldap_user)
+
+
+@auth.route('/user_deleted/<uid>')
+def user_deleted(uid=None):
+    return render_template('user_deleted.html', uid=uid)

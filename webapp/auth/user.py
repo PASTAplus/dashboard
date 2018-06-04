@@ -58,4 +58,4 @@ class User(UserMixin):
 @login.user_loader
 def load_user(id):
     auth_token = id
-    return User(auth_token=id)
+    return User(auth_token=auth_token)
