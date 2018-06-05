@@ -24,6 +24,7 @@ from webapp.auth import token_uid
 from webapp.auth.forms import CreateLdapUser
 from webapp.auth.forms import LoginForm
 from webapp.auth.forms import ResetLdapPassword
+from webapp.auth.forms import ModifyLdapUser
 from webapp.auth.forms import DeleteLdapUser
 from webapp.auth.ldap_user import LdapUser
 from webapp.auth.ldap_user import AttributeError, UidError
@@ -60,6 +61,7 @@ def login():
         return redirect(url_for('auth.login'))
     # Process GET
     return render_template('login.html', title='Sign In', form=form)
+
 
 @auth.route('/logout', methods=['GET'])
 def logout():
@@ -143,6 +145,37 @@ def reset_password(token=None):
                            form=form)
 
 
+@auth.route('/modify_ldap_user', methods=['GET', 'POST'])
+def modify_ldap_user():
+    form = ModifyLdapUser()
+    # Process POST
+    if form.validate_on_submit():
+        ldap_user = LdapUser()
+        ldap_user.uid = form.uid.data
+        ldap_user.password = form.password.data
+        ldap_user.gn = form.gn.data
+        ldap_user.sn = form.sn.data
+        if form.email.data != form.confirm_email.data:
+            flash('Emails do not match')
+            return redirect(url_for('auth.modify_ldap_user'))
+        ldap_user.email = form.email.data
+        try:
+            modified = ldap_user.modify()
+            if not modified:
+                msg = 'User ID "{0}" could not be updated'.format(ldap_user.uid)
+                flash(msg)
+                return redirect(url_for('auth.modify_ldap_user'))
+        except AttributeError as e:
+            flash('Attribute error - ' + e)
+            return redirect(url_for('auth.modify_ldap_user'))
+        except Exception as e:
+            abort(500)
+        return redirect(url_for('auth.user_modified', uid=ldap_user.uid))
+    # Process GET
+    return render_template('modify_ldap_user.html', title='Modify LDAP User',
+                           form=form)
+
+
 @auth.route('/delete_ldap_user', methods=['GET', 'POST'])
 @login_required
 def delete_ldap_user():
@@ -178,6 +211,12 @@ def welcome_user(uid=None):
 def user_created(uid=None):
     ldap_user = LdapUser(uid=uid)
     return render_template('user_created.html', ldap_user=ldap_user)
+
+
+@auth.route('/user_modified/<uid>')
+def user_modified(uid=None):
+    ldap_user = LdapUser(uid=uid)
+    return render_template('user_modified.html', ldap_user=ldap_user)
 
 
 @auth.route('/user_deleted/<uid>')

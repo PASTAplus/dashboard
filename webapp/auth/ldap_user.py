@@ -160,6 +160,7 @@ class LdapUser(object):
             attrs = ', '.join([_ for _ in none_attributes])
             msg = 'The following user attributes are None: {0}'.format(attrs)
             raise AttributeError(msg)
+        self._cn = self._gn + ' ' + self._sn
         attributes = {
             'givenName': [(MODIFY_REPLACE, [self._gn])],
             'sn': [(MODIFY_REPLACE, [self._sn])],

@@ -42,6 +42,16 @@ class ResetLdapPassword(FlaskForm):
     submit = SubmitField('Reset Password')
 
 
+class ModifyLdapUser(FlaskForm):
+    uid = StringField('User ID', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    gn = StringField('Given name', validators=[DataRequired()])
+    sn = StringField('Surname', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired()])
+    confirm_email = StringField('Confirm Email', validators=[DataRequired()])
+    submit = SubmitField('Update User')
+
+
 class DeleteLdapUser(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
     submit = SubmitField('Delete User')
