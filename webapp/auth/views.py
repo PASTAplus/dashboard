@@ -24,6 +24,7 @@ from webapp.auth import token_uid
 from webapp.auth.forms import CreateLdapUser
 from webapp.auth.forms import LoginForm
 from webapp.auth.forms import ResetLdapPassword
+from webapp.auth.forms import ChangeLdapPassword
 from webapp.auth.forms import ModifyLdapUser
 from webapp.auth.forms import DeleteLdapUser
 from webapp.auth.ldap_user import LdapUser
@@ -145,6 +146,34 @@ def reset_password(token=None):
                            form=form)
 
 
+@auth.route('/change_password', methods=['GET', 'POST'])
+def change_password():
+    form = ChangeLdapPassword()
+    # Process POST
+    if form.validate_on_submit():
+        ldap_user = LdapUser()
+        ldap_user.uid = form.uid.data
+        ldap_user.password = form.password.data
+        if form.new_password.data != form.confirm_new_password.data:
+            flash('New password values do not match')
+            return redirect(url_for('auth.change_password'))
+        try:
+            changed = ldap_user.change_password(form.new_password.data)
+            if not changed:
+                msg = 'Password for User ID "{0}" could not be changed'.format(ldap_user.uid)
+                flash(msg)
+                return redirect(url_for('auth.change_password'))
+        except AttributeError as e:
+            flash('Attribute error - ' + e)
+            return redirect(url_for('auth.change_password'))
+        except Exception as e:
+            abort(500)
+        return redirect(url_for('auth.password_changed', uid=ldap_user.uid))
+    # Process GET
+    return render_template('change_password.html', title='Change EDI Password',
+                           form=form)
+
+
 @auth.route('/modify_ldap_user', methods=['GET', 'POST'])
 def modify_ldap_user():
     form = ModifyLdapUser()
@@ -211,6 +240,11 @@ def welcome_user(uid=None):
 def user_created(uid=None):
     ldap_user = LdapUser(uid=uid)
     return render_template('user_created.html', ldap_user=ldap_user)
+
+
+@auth.route('/password_changed/<uid>')
+def password_changed(uid=None):
+    return render_template('password_changed.html', uid=uid)
 
 
 @auth.route('/user_modified/<uid>')
