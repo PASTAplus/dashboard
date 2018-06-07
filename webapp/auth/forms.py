@@ -36,6 +36,11 @@ class CreateLdapUser(FlaskForm):
     submit = SubmitField('Create User')
 
 
+class ResetPasswordInit(FlaskForm):
+    uid = StringField('User ID', validators=[DataRequired()])
+    submit = SubmitField('Reset Password')
+
+
 class ResetLdapPassword(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])

@@ -23,6 +23,7 @@ from webapp.auth import mailout
 from webapp.auth import token_uid
 from webapp.auth.forms import CreateLdapUser
 from webapp.auth.forms import LoginForm
+from webapp.auth.forms import ResetPasswordInit
 from webapp.auth.forms import ResetLdapPassword
 from webapp.auth.forms import ChangeLdapPassword
 from webapp.auth.forms import ModifyLdapUser
@@ -108,6 +109,25 @@ def create_ldap_user():
                            form=form)
 
 
+@auth.route('/reset_password_init', methods=['GET', 'POST'])
+def reset_password_init():
+    form = ResetPasswordInit()
+    # Process POST
+    if form.validate_on_submit():
+        ldap_user = LdapUser(uid=form.uid.data)
+        url = request.host_url + \
+              url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
+        msg = mailout.reset_password_mail_body(ldap_user=ldap_user, url=url)
+        subject = 'EDI reset password...'
+        sent = mailout.send_mail(subject=subject, msg=msg, to=ldap_user.email)
+        if not sent:
+            abort(500)
+        return redirect(url_for('auth.password_reset', uid=ldap_user.uid))
+    # Process GET
+    return render_template('reset_password_init.html', title='Reset EDI Password',
+                           form=form)
+
+
 @auth.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token=None):
     form = ResetLdapPassword()
@@ -142,7 +162,7 @@ def reset_password(token=None):
         token_uid.remove_token(token=token)
         abort(400)
     else:
-       return render_template('reset_ldap_password.html', title='Password Rest',
+       return render_template('reset_ldap_password.html', title='Password Reset',
                            form=form)
 
 
@@ -240,6 +260,12 @@ def welcome_user(uid=None):
 def user_created(uid=None):
     ldap_user = LdapUser(uid=uid)
     return render_template('user_created.html', ldap_user=ldap_user)
+
+
+@auth.route('/password_reset/<uid>')
+def password_reset(uid=None):
+    ldap_user = LdapUser(uid=uid)
+    return render_template('password_reset.html', ldap_user=ldap_user)
 
 
 @auth.route('/password_changed/<uid>')
