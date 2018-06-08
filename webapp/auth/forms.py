@@ -16,7 +16,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
     SelectField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 class LoginForm(FlaskForm):
@@ -45,9 +45,11 @@ class ResetPasswordInit(FlaskForm):
 
 class ResetLdapPassword(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired(), 
-                EqualTo('confirm_password', message='Passwords must match')])
+                EqualTo('confirm_password', message='Passwords must match'),
+        Length(min=8, message='Password must have a minimum of 8 characters')])
     confirm_password = PasswordField('Confirm Password', 
-                                validators=[DataRequired()])
+                                validators=[DataRequired(),
+        Length(min=8, message='Password must have a minimum of 8 characters')])
     submit = SubmitField('Reset Password')
 
 
@@ -55,9 +57,11 @@ class ChangeLdapPassword(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
     password = PasswordField('Old Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired(), 
-            EqualTo('confirm_new_password', message='Passwords must match')])
+            EqualTo('confirm_new_password', message='Passwords must match'),
+        Length(min=8, message='Password must have a minimum of 8 characters')])
     confirm_new_password = PasswordField('Confirm New Password', 
-                                validators=[DataRequired()])
+                                validators=[DataRequired(),
+        Length(min=8, message='Password must have a minimum of 8 characters')])
     submit = SubmitField('Change Password')
 
 
