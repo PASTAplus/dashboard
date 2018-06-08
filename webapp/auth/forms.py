@@ -16,7 +16,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, \
     SelectField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Email, EqualTo
 
 
 class LoginForm(FlaskForm):
@@ -31,8 +31,10 @@ class CreateLdapUser(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
     gn = StringField('Given name', validators=[DataRequired()])
     sn = StringField('Surname', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    confirm_email = StringField('Confirm Email', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email(), 
+                    EqualTo('confirm_email', message='Emails must match')])
+    confirm_email = StringField('Confirm Email', 
+                                validators=[DataRequired(), Email()])
     submit = SubmitField('Create User')
 
 
@@ -42,16 +44,20 @@ class ResetPasswordInit(FlaskForm):
 
 
 class ResetLdapPassword(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired(), 
+                EqualTo('confirm_password', message='Passwords must match')])
+    confirm_password = PasswordField('Confirm Password', 
+                                validators=[DataRequired()])
     submit = SubmitField('Reset Password')
 
 
 class ChangeLdapPassword(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
     password = PasswordField('Old Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired()])
-    confirm_new_password = PasswordField('Confirm New Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired(), 
+            EqualTo('confirm_new_password', message='Passwords must match')])
+    confirm_new_password = PasswordField('Confirm New Password', 
+                                validators=[DataRequired()])
     submit = SubmitField('Change Password')
 
 
@@ -60,8 +66,10 @@ class ModifyLdapUser(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     gn = StringField('Given name', validators=[DataRequired()])
     sn = StringField('Surname', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    confirm_email = StringField('Confirm Email', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email(), 
+                    EqualTo('confirm_email', message='Emails must match')])
+    confirm_email = StringField('Confirm Email', 
+                                validators=[DataRequired(), Email()])
     submit = SubmitField('Update User')
 
 
