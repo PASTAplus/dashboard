@@ -38,8 +38,10 @@ class TestTokenUid(unittest.TestCase):
         token_uid.remove_token(token=token.decode())
 
     def test_is_valid(self):
-        self.assertTrue(token_uid.decode_uid(token=self.token.decode()))
-
+        token = self.token.decode()
+        uid, ttl = token_uid.decode_token(token=token)
+        self.assertIsNotNone(uid)
+        self.assertIsNotNone(ttl)
 
 if __name__ == '__main__':
     unittest.main()

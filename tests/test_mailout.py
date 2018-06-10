@@ -36,7 +36,7 @@ class TestMailOut(unittest.TestCase):
         uid = 'chase'
         ldap_user = LdapUser(uid=uid)
         subject = 'EDI account password reset...'
-        msg = mailout.reset_password_mail_body(ldap_user=ldap_user)
+        msg = mailout.reset_password_mail_body(ldap_user=ldap_user, url='https://dashboard.edirepository.org/dashboard/auth/deadlink')
         to = ldap_user.email
         self.assertTrue(mailout.send_mail(subject=subject, msg=msg, to=to))
 
