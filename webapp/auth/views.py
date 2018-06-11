@@ -28,6 +28,7 @@ from webapp.auth.forms import ResetLdapPassword
 from webapp.auth.forms import ChangeLdapPassword
 from webapp.auth.forms import ModifyLdapUser
 from webapp.auth.forms import DeleteLdapUser
+from webapp.auth.ldap_directory import LdapDirectory
 from webapp.auth.ldap_user import LdapUser
 from webapp.auth.ldap_user import AttributeError, UidError
 from webapp.auth.user import User
@@ -248,6 +249,14 @@ def delete_ldap_user():
     # Process GET
     return render_template('delete_ldap_user.html', title='Delete LDAP User',
                            form=form)
+
+
+@auth.route('/list_ldap_users')
+@login_required
+def list_ldap_users():
+    ldap_directory = LdapDirectory()
+    users_list = ldap_directory.list_ldap_users()
+    return render_template('list_ldap_users.html', users_list=users_list)
 
 
 @auth.route('/welcome_user/<uid>')
