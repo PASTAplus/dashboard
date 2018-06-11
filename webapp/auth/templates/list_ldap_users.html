@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <h1>Directory of EDI LDAP Users</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-striped">
+                {% for user in users_list %}
+                <tr>
+                    <td>{{ user }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
