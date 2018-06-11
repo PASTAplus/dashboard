@@ -5,7 +5,18 @@
     <h1>Update EDI LDAP User</h1>
     <div class="row">
         <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
+            <form method="POST" action="" class="form" role="form">
+                {{ form.csrf_token }}
+                <h5>Please enter User ID and Password for the user whose info is to be updated:</h5>
+                {{ wtf.form_field(form.uid) }}
+                {{ wtf.form_field(form.password) }}
+                <h5>Please fill in <em>all fields</em> below. Previously stored user info will be updated with these values:</h5>
+                {{ wtf.form_field(form.gn) }}
+                {{ wtf.form_field(form.sn) }}
+                {{ wtf.form_field(form.email) }}
+                {{ wtf.form_field(form.confirm_email) }}
+                {{ wtf.form_field(form.submit) }}
+            </form>
         </div>
     </div>
 {% endblock %}
