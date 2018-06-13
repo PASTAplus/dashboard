@@ -5,7 +5,17 @@
     <h1>Create EDI LDAP User</h1>
     <div class="row">
         <div class="col-md-4">
-            {{ wtf.quick_form(form) }}
+            <form method="POST" action="" class="form" role="form">
+                {{ form.csrf_token }}
+                <h5>Please fill in <em>all fields</em> below:</h5>
+                {{ wtf.form_field(form.uid) }}
+                {{ wtf.form_field(form.gn) }}
+                {{ wtf.form_field(form.sn) }}
+                {{ wtf.form_field(form.email) }}
+                {{ wtf.form_field(form.confirm_email) }}
+                <input class="btn btn-primary" type="submit" value="Create User"/>
+                <input class="btn btn-primary" type="reset" value="Clear"/>
+            </form>
         </div>
     </div>
 {% endblock %}

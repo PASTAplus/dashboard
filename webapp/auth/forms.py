@@ -35,12 +35,10 @@ class CreateLdapUser(FlaskForm):
                     EqualTo('confirm_email', message='Emails must match')])
     confirm_email = StringField('Confirm Email', 
                                 validators=[DataRequired(), Email()])
-    submit = SubmitField('Create User')
 
 
 class ResetPasswordInit(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
-    submit = SubmitField('Reset Password')
 
 
 class ResetLdapPassword(FlaskForm):
@@ -50,7 +48,6 @@ class ResetLdapPassword(FlaskForm):
     confirm_password = PasswordField('Confirm Password', 
                                 validators=[DataRequired(),
         Length(min=8, message='Password must have a minimum of 8 characters')])
-    submit = SubmitField('Reset Password')
 
 
 class ChangeLdapPassword(FlaskForm):
@@ -62,7 +59,6 @@ class ChangeLdapPassword(FlaskForm):
     confirm_new_password = PasswordField('Confirm New Password', 
                                 validators=[DataRequired(),
         Length(min=8, message='Password must have a minimum of 8 characters')])
-    submit = SubmitField('Change Password')
 
 
 class ModifyLdapUser(FlaskForm):
@@ -74,9 +70,8 @@ class ModifyLdapUser(FlaskForm):
                     EqualTo('confirm_email', message='Emails must match')])
     confirm_email = StringField('Confirm Email', 
                                 validators=[DataRequired(), Email()])
-    submit = SubmitField('Update User')
+
 
 
 class DeleteLdapUser(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
-    submit = SubmitField('Delete User')
