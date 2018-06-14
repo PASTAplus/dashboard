@@ -26,6 +26,7 @@ from webapp.auth.forms import LoginForm
 from webapp.auth.forms import ResetPasswordInit
 from webapp.auth.forms import ResetLdapPassword
 from webapp.auth.forms import ChangeLdapPassword
+from webapp.auth.forms import ModifyLdapUserInit
 from webapp.auth.forms import ModifyLdapUser
 from webapp.auth.forms import DeleteLdapUser
 from webapp.auth.ldap_directory import LdapDirectory
@@ -195,35 +196,67 @@ def change_password():
                            form=form)
 
 
-@auth.route('/modify_ldap_user', methods=['GET', 'POST'])
-def modify_ldap_user():
-    form = ModifyLdapUser()
+@auth.route('/modify_ldap_user_init', methods=['GET', 'POST'])
+def modify_ldap_user_init():
+    form = ModifyLdapUserInit()
     # Process POST
     if form.validate_on_submit():
-        ldap_user = LdapUser()
-        ldap_user.uid = form.uid.data
-        ldap_user.password = form.password.data
-        ldap_user.gn = form.gn.data
-        ldap_user.sn = form.sn.data
-        if form.email.data != form.confirm_email.data:
-            flash('Emails do not match')
-            return redirect(url_for('auth.modify_ldap_user'))
-        ldap_user.email = form.email.data
+        uid = form.uid.data
+        password = form.password.data
         try:
-            modified = ldap_user.modify()
-            if not modified:
-                msg = 'User ID "{0}" could not be updated'.format(ldap_user.uid)
-                flash(msg)
-                return redirect(url_for('auth.modify_ldap_user'))
+            ldap_user = LdapUser(uid=uid)
+            ldap_user.password = password
+            is_valid = ldap_user._valid_password()
         except AttributeError as e:
             flash('Attribute error - ' + e)
             return redirect(url_for('auth.modify_ldap_user'))
         except Exception as e:
             abort(500)
-        return redirect(url_for('auth.user_modified', uid=ldap_user.uid))
+        if is_valid:
+            return redirect(url_for('auth.modify_ldap_user', uid=uid, 
+                                                            password=password))
+        else:
+            msg = 'User ID "{0}" could not be updated'.format(ldap_user.uid)
+            flash(msg)
+            return redirect(url_for('auth.modify_ldap_user_init'))
     # Process GET
+    return render_template('modify_ldap_user_init.html',
+                            title='Modify LDAP User',
+                            form=form)
+
+
+@auth.route('/modify_ldap_user/<uid>', methods=['GET', 'POST'])
+def modify_ldap_user(uid=None):
+    form = ModifyLdapUser()
+    ldap_user = LdapUser(uid=uid)
+    # Process POST
+    if form.validate_on_submit():
+        if form.email.data != form.confirm_email.data:
+            flash('Emails do not match')
+            return redirect(url_for('auth.modify_ldap_user'))
+        ldap_user.gn = form.gn.data
+        ldap_user.sn = form.sn.data
+        ldap_user.email = form.email.data
+        ldap_user.password = form.password.data
+        try:
+            modified = ldap_user.modify()
+            if not modified:
+                msg = 'User ID "{0}" could not be updated'.format(ldap_user.uid)
+                flash(msg)
+                return redirect(url_for('auth.modify_ldap_user_init'))
+        except AttributeError as e:
+            flash('Attribute error - ' + e)
+            return redirect(url_for('auth.modify_ldap_user_init'))
+        except Exception as e:
+            abort(500)
+        return redirect(url_for('auth.user_modified', uid=uid))
+    # Process GET
+    form.gn.data = ldap_user.gn
+    form.sn.data = ldap_user.sn
+    form.email.data = ldap_user.email
+    form.confirm_email.data = form.email.data
     return render_template('modify_ldap_user.html', title='Modify LDAP User',
-                           form=form)
+                           form=form, uid=uid)
 
 
 @auth.route('/delete_ldap_user', methods=['GET', 'POST'])

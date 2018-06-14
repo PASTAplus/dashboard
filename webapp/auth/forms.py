@@ -61,8 +61,12 @@ class ChangeLdapPassword(FlaskForm):
         Length(min=8, message='Password must have a minimum of 8 characters')])
 
 
-class ModifyLdapUser(FlaskForm):
+class ModifyLdapUserInit(FlaskForm):
     uid = StringField('User ID', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+
+
+class ModifyLdapUser(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     gn = StringField('Given name', validators=[DataRequired()])
     sn = StringField('Surname', validators=[DataRequired()])
@@ -70,7 +74,6 @@ class ModifyLdapUser(FlaskForm):
                     EqualTo('confirm_email', message='Emails must match')])
     confirm_email = StringField('Confirm Email', 
                                 validators=[DataRequired(), Email()])
-
 
 
 class DeleteLdapUser(FlaskForm):

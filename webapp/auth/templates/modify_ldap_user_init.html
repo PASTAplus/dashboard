@@ -7,13 +7,10 @@
         <div class="col-md-4">
             <form method="POST" action="" class="form" role="form">
                 {{ form.csrf_token }}
-                <h5>Please re-enter the Password for user <em>{{ uid }}</em> and update info in the other fields below as necessary:</h5>
+                <h5>Please enter User ID and Password for the user whose info is to be updated:</h5>
+                {{ wtf.form_field(form.uid) }}
                 {{ wtf.form_field(form.password) }}
-                {{ wtf.form_field(form.gn) }}
-                {{ wtf.form_field(form.sn) }}
-                {{ wtf.form_field(form.email) }}
-                {{ wtf.form_field(form.confirm_email) }}
-                <input class="btn btn-primary" type="submit" value="Update User"/>
+                <input class="btn btn-primary" type="submit" value="Continue"/>
                 <input class="btn btn-primary" type="reset" value="Clear"/>
             </form>
         </div>
