@@ -26,6 +26,20 @@
                 <li class="dropdown">
                     <a aria-expanded="false" aria-haspopup="true"
                        class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">Health
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('health.glance') }}">
+                                Health at a glance
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
                        role="button">Reports
                         <span class="caret"></span>
                     </a>
@@ -38,20 +52,6 @@
                         <li>
                             <a href="{{ url_for('reports.render_offline') }}">
                                 Offline data
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true"
-                       class="dropdown-toggle" data-toggle="dropdown" href="#"
-                       role="button">Health
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ url_for('health.glance') }}">
-                                Health at a glance
                             </a>
                         </li>
                     </ul>
@@ -75,6 +75,33 @@
                         </li>
                     </ul>
                 </li>
+                 <li class="dropdown">
+                    <a aria-expanded="false" aria-haspopup="true"
+                       class="dropdown-toggle" data-toggle="dropdown" href="#"
+                       role="button">User Management
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('auth.create_ldap_user') }}">Create User (admin)</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.delete_ldap_user') }}">Delete User (admin)</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.list_ldap_users') }}">List Users (admin)</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.modify_ldap_user_init') }}">Update User</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.change_password') }}">Change Password</a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('auth.reset_password_init') }}">Reset Password</a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a aria-expanded="false" aria-haspopup="true"
                        class="dropdown-toggle" data-toggle="dropdown" href="#"
@@ -90,33 +117,6 @@
                         </li>
                         <li>
                             <a href="https://portal-d.edirepository.org/nis">Development</a>
-                        </li>
-                    </ul>
-                </li>
-                 <li class="dropdown">
-                    <a aria-expanded="false" aria-haspopup="true"
-                       class="dropdown-toggle" data-toggle="dropdown" href="#"
-                       role="button">User Management
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="{{ url_for('auth.create_ldap_user') }}">Create LDAP User</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('auth.modify_ldap_user_init') }}">Update LDAP User</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('auth.change_password') }}">Change Password</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('auth.reset_password_init') }}">Reset Password</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('auth.delete_ldap_user') }}">Delete LDAP User</a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('auth.list_ldap_users') }}">List LDAP Users</a>
                         </li>
                     </ul>
                 </li>
