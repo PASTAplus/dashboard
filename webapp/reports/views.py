@@ -41,16 +41,16 @@ def render_report(report_type=None):
     if report_type:
         if report_type == 'no_public':
             metadata_resources, data_resources = load_no_public()
-            return render_template('report_no_public.html', 
-                                   metadata_resources=metadata_resources, 
+            return render_template('report_no_public.html',
+                                   metadata_resources=metadata_resources,
                                    data_resources=data_resources)
         elif report_type == 'offline':
             offline_resources, unparsed_resources = load_offline()
-            return render_template('report_offline.html', 
-                                   offline_resources=offline_resources, 
+            return render_template('report_offline.html',
+                                   offline_resources=offline_resources,
                                    unparsed_resources=unparsed_resources)
-            
-           
+
+
 def load_no_public():
     with open('webapp/reports/public_no_access.json') as fh:
         resource_dict = json.load(fh)
@@ -74,7 +74,8 @@ def recent_uploads():
     days = int(request.args.get('days'))
     if days is None:
         days = 7
-    stats = UploadStats(hours_in_past=days*24)
+    stats = UploadStats(hours_in_past=days * 24)
+    count = stats.count
 
     # Create webapp static directory if not exists
     if not os.path.exists(Config.STATIC):
@@ -91,5 +92,5 @@ def recent_uploads():
         pid = result[0]
         dt = pendulum.instance(result[1]).to_datetime_string()
         result_set.append((i, pid, dt))
-    return render_template('recent_uploads.html', result_set=result_set, plot=plot, days=days)
-
+    return render_template('recent_uploads.html', result_set=result_set,
+                           count=count, plot=plot, days=days)

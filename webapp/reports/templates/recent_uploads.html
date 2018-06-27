@@ -3,7 +3,11 @@
 {% block app_content %}
     <img class="center-block" src="{{ plot }}" />
     <br/>
-    <h2 align="center">Recent Uploads (past days: {{ days }})</h2>
+    {% if days == 1 %}
+        <h2 align="center">{{ count }} Recent Uploads (past {{ days }} day)</h2>
+    {% else %}
+        <h2 align="center">{{ count }} Recent Uploads (past {{ days }} days)</h2>
+    {% endif %}
     <table align="center" class="table table-striped table-bordered">
     <tr>
         <th width="10%" style="text-align: center"> </th>
