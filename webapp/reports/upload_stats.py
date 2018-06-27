@@ -12,7 +12,6 @@
     6/25/18
 """
 from datetime import datetime
-import uuid
 
 import matplotlib as mpl
 mpl.use('Agg')
@@ -66,7 +65,7 @@ class UploadStats(object):
         return result_set
 
 
-    def plot(self, file_name):
+    def plot(self, file_path):
         now = self._now
         _ = pendulum.datetime(year=now.year, month=now.month, day=now.day, hour=now.hour)
 
@@ -95,5 +94,5 @@ class UploadStats(object):
             plt.gca().set_yticks([0.0,1.0])
         plt.gca().grid(True)
         plt.gcf().autofmt_xdate()
-        plt.savefig(file_name)
+        plt.savefig(file_path)
         plt.close()
