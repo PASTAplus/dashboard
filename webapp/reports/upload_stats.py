@@ -70,7 +70,7 @@ class UploadStats(object):
         _ = pendulum.datetime(year=now.year, month=now.month, day=now.day, hour=now.hour)
 
         dt_tbl = {}
-        for hour in range(self._hours_in_past):
+        for hour in range(self._hours_in_past + 2):
             dt_tbl[_.subtract(hours=hour)] = 0
 
         for result in self._result_set:
