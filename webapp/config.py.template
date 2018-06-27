@@ -40,3 +40,10 @@ class Config(object):
     TEST_USER_PW = 'SECRET_PASSWORD'
     TEST_USER_UID = 'USER_UID'
     TEST_USER_NAME = 'USER_NAME'
+
+    # PASTA database connection
+    DB_USER = 'DB_USER'
+    DB_PW = 'SECRET_PASSWORD'
+    DB_HOST = 'DB_HOST'
+    DB_DB = 'pasta'
+    DB_DRIVER = 'postgres+psycopg2'
