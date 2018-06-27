@@ -1,6 +1,10 @@
 # Dashboard
 PASTA system dashboard and utilities
 
+The PASTA Dashboard is a Flask driven web application using Ngnix as its frontend
+web server. Some routes require administration rights to access, but most routes
+are publicly accessible.
+
 ## Deployment notes
 - To install `uwsgi` with Conda: `conda install -c conda-forge uwsgi`
 - To restart service: `sudo service dashboard restart`
