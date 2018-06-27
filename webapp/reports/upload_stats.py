@@ -20,7 +20,7 @@ from matplotlib.ticker import MaxNLocator
 import pendulum
 from sqlalchemy import create_engine
 
-from config import Config
+from webapp.config import Config
 
 
 class UploadStats(object):
