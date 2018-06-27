@@ -54,7 +54,22 @@
                                 Offline data
                             </a>
                         </li>
-                    </ul>
+                        <li>
+                            <a href="{{ url_for('reports.recent_uploads') + '?days=1' }}">
+                                Recent uploads (1 day)
+                            </a>
+                        </li>
+                         <li>
+                            <a href="{{ url_for('reports.recent_uploads') + '?days=7' }}">
+                                Recent uploads (7 days)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('reports.recent_uploads') + '?days=30' }}">
+                                Recent uploads (30 days)
+                            </a>
+                        </li>
+                   </ul>
                 </li>
                 <li class="dropdown">
                     <a aria-expanded="false" aria-haspopup="true"
