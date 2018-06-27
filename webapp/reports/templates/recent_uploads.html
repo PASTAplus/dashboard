@@ -12,8 +12,10 @@
     </tr>
     {% for result in result_set %}
         <tr>
+            {% set scope,identifier,revision = result[1].split('.') %}
+            {% set href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
             <td style="text-align: center">{{ result[0] }}</td>
-            <td style="text-align: center">{{ result[1] }}</td>
+            <td style="text-align: center"><a href="{{ href }}">{{ result[1] }}</a></td>
             <td style="text-align: center">{{ result[2] }}</td>
         </tr>
     {% endfor %}
