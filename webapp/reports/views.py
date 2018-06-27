@@ -14,7 +14,10 @@
 import json
 
 from flask import Blueprint, render_template
+from flask import request
 from flask_login import login_required
+import pendulum
+from webapp.reports.upload_stats import UploadStats
 
 reports = Blueprint('reports', __name__, template_folder='templates')
 
@@ -61,3 +64,24 @@ def load_offline():
         unparsed_resources = resource_dict["unparsed"]
     fh.close()
     return (offline_resources, unparsed_resources)
+
+
+@reports.route('/recent_uploads', methods=['GET'])
+def recent_uploads():
+    days = int(request.args.get('days'))
+    if days is None:
+        days = 7
+    stats = UploadStats(hours_in_past=days*24)
+    file_name = str(stats.now_as_integer) + '.png'
+    file_path = 'webapp/static/' + file_name
+    plot = '/static/' + file_name
+    stats.plot(file_name=file_path)
+    result_set = []
+    i = 0
+    for result in stats.result_set:
+        i += 1
+        pid = result[0]
+        dt = pendulum.instance(result[1]).to_datetime_string()
+        result_set.append((i, pid, dt))
+    return render_template('recent_uploads.html', result_set=result_set, plot=plot, days=days)
+
