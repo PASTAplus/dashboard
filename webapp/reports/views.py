@@ -12,11 +12,14 @@
     3/6/18
 """
 import json
+import os
 
 from flask import Blueprint, render_template
 from flask import request
 from flask_login import login_required
 import pendulum
+
+from webapp.config import Config
 from webapp.reports.upload_stats import UploadStats
 
 reports = Blueprint('reports', __name__, template_folder='templates')
@@ -72,10 +75,15 @@ def recent_uploads():
     if days is None:
         days = 7
     stats = UploadStats(hours_in_past=days*24)
+
+    # Create webapp static directory if not exists
+    if not os.path.exists(Config.STATIC):
+        os.makedirs(Config.STATIC)
+
     file_name = str(stats.now_as_integer) + '.png'
-    file_path = 'webapp/static/' + file_name
+    file_path = Config.STATIC + '/' + file_name
     plot = '/static/' + file_name
-    stats.plot(file_name=file_path)
+    stats.plot(file_path=file_path)
     result_set = []
     i = 0
     for result in stats.result_set:
