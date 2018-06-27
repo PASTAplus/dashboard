@@ -32,6 +32,10 @@ class UploadStats(object):
         self._result_set = self._get_recent_past()
 
     @property
+    def count(self):
+        return len(self._result_set)
+
+    @property
     def now_as_integer(self):
         return self._now.int_timestamp
 
