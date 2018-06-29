@@ -26,8 +26,9 @@ from webapp.config import Config
 
 class UploadStats(object):
 
-    def __init__(self, hours_in_past):
+    def __init__(self, hours_in_past, scope=None):
         self._hours_in_past = hours_in_past
+        self._scope = scope
         self._now = pendulum.now()
         self._result_set = self._get_recent_past()
 
@@ -57,13 +58,19 @@ class UploadStats(object):
         _ = ('select datapackagemanager.resource_registry.package_id,'
                'datapackagemanager.resource_registry.date_created from '
                'datapackagemanager.resource_registry where date_created > '
-               '\'TIME_IN_PAST\''
-               ' and resource_type=\'dataPackage\' '
+               '\'TIME_IN_PAST\' '
+               'SCOPE '
+               'and resource_type=\'dataPackage\' '
                'order by date_created desc')
 
         now = pendulum.now()
         past = now.subtract(hours=self._hours_in_past)
         sql = _.replace('TIME_IN_PAST', past.to_iso8601_string())
+        if self._scope is None:
+            sql = sql.replace('SCOPE ', '')
+        else:
+            scope = 'and scope=\'' + self._scope + '\' '
+            sql = sql.replace('SCOPE', scope )
         result_set = connection.execute(sql).fetchall()
 
         return result_set

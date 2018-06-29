@@ -74,7 +74,8 @@ def recent_uploads():
     days = int(request.args.get('days'))
     if days is None:
         days = 7
-    stats = UploadStats(hours_in_past=days * 24)
+    scope = request.args.get('scope')
+    stats = UploadStats(hours_in_past=days * 24, scope=scope)
     count = stats.count
 
     # Create webapp static directory if not exists
