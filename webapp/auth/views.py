@@ -19,7 +19,6 @@ from flask_login import current_user, login_user, logout_user, login_required
 
 from werkzeug.urls import url_parse
 
-from webapp.auth import mailout
 from webapp.auth import token_uid
 from webapp.auth.forms import CreateLdapUser
 from webapp.auth.forms import LoginForm
@@ -34,6 +33,7 @@ from webapp.auth.ldap_user import LdapUser
 from webapp.auth.ldap_user import AttributeError, UidError
 from webapp.auth.user import User
 from webapp.config import Config
+from webapp import mailout
 
 
 logger = daiquiri.getLogger('views: ' + __name__)
@@ -100,7 +100,7 @@ def create_ldap_user():
             abort(500)
         url = request.host_url + \
               url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
-        msg = mailout.reset_password_mail_body(ldap_user=ldap_user, url=url)
+        msg = reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
         sent = mailout.send_mail(subject=subject, msg=msg, to=ldap_user.email)
         if not sent:
@@ -119,7 +119,7 @@ def reset_password_init():
         ldap_user = LdapUser(uid=form.uid.data)
         url = request.host_url + \
               url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
-        msg = mailout.reset_password_mail_body(ldap_user=ldap_user, url=url)
+        msg = reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
         sent = mailout.send_mail(subject=subject, msg=msg, to=ldap_user.email)
         if not sent:
@@ -324,3 +324,17 @@ def user_modified(uid=None):
 @auth.route('/user_deleted/<uid>')
 def user_deleted(uid=None):
     return render_template('user_deleted.html', uid=uid)
+
+
+def reset_password_mail_body(ldap_user=None, url=None):
+    msg = 'Hello ' + ldap_user.cn + ',\n\n' + \
+          'A user account with the identifier "' + ldap_user.uid + \
+          '" was created on your behalf for you to access the ' + \
+          'Environmental Data Initiative data repository, namely through ' + \
+          'the EDI Data Portal. Please use the following URL to set ' + \
+          'your password:\n\n' + url + '\n\n' + \
+          'This URL provides a one-time password reset and will expire ' + \
+          'in 24 hours.\n\nIf you have received this email in error, ' + \
+          'please ignore.\n\nSincerely,\nThe EDI Team'
+
+    return msg

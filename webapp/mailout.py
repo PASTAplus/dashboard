@@ -16,7 +16,7 @@ import smtplib
 import daiquiri
 
 from webapp.config import Config
-from webapp.auth.ldap_user import LdapUser
+
 
 logger = daiquiri.getLogger('mailout: ' + __name__)
 
@@ -42,20 +42,6 @@ def send_mail(subject=None, msg=None, to=None):
     finally:
         smtpObj.quit()
     return result
-
-
-def reset_password_mail_body(ldap_user=None, url=None):
-    msg = 'Hello ' + ldap_user.cn + ',\n\n' + \
-          'A user account with the identifier "' + ldap_user.uid + \
-          '" was created on your behalf for you to access the ' + \
-          'Environmental Data Initiative data repository, namely through ' + \
-          'the EDI Data Portal. Please use the following URL to set ' + \
-          'your password:\n\n' + url + '\n\n' + \
-          'This URL provides a one-time password reset and will expire ' + \
-          'in 24 hours.\n\nIf you have received this email in error, ' + \
-          'please ignore.\n\nSincerely,\nThe EDI Team'
-
-    return msg
 
 
 def main():
