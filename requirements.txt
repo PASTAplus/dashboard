@@ -27,7 +27,7 @@ mkl-random==1.0.1
 numpy==1.15.2
 paramiko==2.4.2
 parso==0.1.1
-pastaplus.soh==2018.11.22
+pastaplus.soh==2018.11.25
 pendulum==1.4.2
 pluggy==0.6.0
 prompt-toolkit==1.0.15
