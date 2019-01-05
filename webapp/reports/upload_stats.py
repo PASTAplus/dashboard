@@ -70,11 +70,10 @@ class UploadStats(object):
             sql = sql.replace('SCOPE ', '')
         else:
             scope = 'and scope=\'' + self._scope + '\' '
-            sql = sql.replace('SCOPE', scope )
+            sql = sql.replace('SCOPE', scope)
         result_set = connection.execute(sql).fetchall()
 
         return result_set
-
 
     def plot(self, file_path):
         now = self._now
