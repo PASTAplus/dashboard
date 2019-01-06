@@ -21,10 +21,10 @@ Jinja2==2.10
 kiwisolver==1.0.1
 ldap3==2.4.1
 MarkupSafe==1.1.0
-matplotlib==3.0.0
+matplotlib==3.0.2
 mkl-fft==1.0.6
-mkl-random==1.0.1
-numpy==1.15.2
+mkl-random==1.0.2
+numpy==1.15.4
 paramiko==2.4.2
 parso==0.1.1
 pastaplus.soh==2018.11.26
