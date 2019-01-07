@@ -14,12 +14,13 @@
 import json
 import os
 
-from flask import Blueprint, render_template
-from flask import request
+from flask import Blueprint, flash, render_template, request, redirect, url_for
 from flask_login import login_required
 import pendulum
 
 from webapp.config import Config
+from webapp.reports.forms import PackageIdentifier
+from webapp.reports.package_tracker import PackageStatus
 from webapp.reports.upload_stats import UploadStats
 
 reports = Blueprint('reports', __name__, template_folder='templates')
@@ -66,7 +67,25 @@ def load_offline():
         offline_resources = resource_dict["offline"]
         unparsed_resources = resource_dict["unparsed"]
     fh.close()
-    return (offline_resources, unparsed_resources)
+    return offline_resources, unparsed_resources
+
+
+@reports.route('/package_tracker', methods=['GET', 'POST'])
+def package_tracker():
+    form = PackageIdentifier()
+    if form.validate_on_submit():
+        # Process POST
+        package_identifier = form.package_identifier.data
+        if len(package_identifier.split('.')) != 3:
+            msg = 'should be in the form of scope.identifier.revision'
+            flash(f'"{package_identifier}" {msg}')
+            return redirect(url_for('reports.package_tracker'))
+        package_status = PackageStatus(package_identifier)
+        return render_template('package_status.html', package_status=package_status)
+    # Process GET
+    return render_template('package_tracker.html', form=form)
+
+
 
 
 @reports.route('/recent_uploads', methods=['GET'])
