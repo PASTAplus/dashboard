@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<h1 align="left">Data Package Status: {{ package_status.package_identifier }}</h1>
+
+{% if package_status.is_real %}
+    <h3 align="left">PASTA</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th width="25%" style="text-align: center">Attribute</th>
+            <th style="text-align: center">Value</th>
+        </tr>
+        <tr>
+            <td align="right">
+                Package Identifier:
+            </td>
+            <td>
+                {{ package_status.package_identifier }}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                DOI:
+            </td>
+            <td>
+                {{ package_status.package_resources[-1] }}
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Created:
+            </td>
+            <td>
+                {{ package_status.date_created_utc }} UTC <br/>
+                {{ package_status.date_created_mt }} American/Denver
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Package resources:
+            </td>
+            <td>
+                {% for resource in package_status.package_resources[:-1] %}
+                    {{ resource }} <br/>
+                {% endfor %}
+             </td>
+        </tr>
+    </table>
+
+    <h3 align="left">GMN ({{ package_status.gmn_url }})</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th style="text-align: center">Resource</th>
+            <th style="text-align: center">Created</th>
+        </tr>
+        {% for resource in package_status.gmn_resources %}
+            <tr>
+                <td align="center">
+                     {{ resource }}
+                </td>
+                <td align="center">
+                    {{ package_status.gmn_resources[resource] }} UTC
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h3 align="left">DataONE CN ({{ package_status.cn_url }})</h3>
+    <table class="table table-bordered">
+        <tr>
+            <th style="text-align: center">Resource</th>
+            <th style="text-align: center">Synchronized</th>
+        </tr>
+        {% for resource in package_status.cn_sync_times %}
+            <tr>
+                <td align="center">
+                     {{ resource }}
+                </td>
+                <td align="center">
+                    {{ package_status.cn_sync_times[resource] }} UTC
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% if package_status.cn_index_status %}
+        The data package metadata IS indexed
+    {% else %}
+        The data package metadata IS NOT indexed
+    {% endif %}
+{% else %}
+        Data package was not found in PASTA
+{% endif %}
+
+{% endblock %}
