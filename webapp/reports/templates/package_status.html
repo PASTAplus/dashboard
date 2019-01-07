@@ -32,8 +32,8 @@
                 Created:
             </td>
             <td>
-                {{ package_status.date_created_utc }} UTC <br/>
-                {{ package_status.date_created_mt }} American/Denver
+                {{ package_status.date_created_utc }}<br/>
+                {{ package_status.date_created_mt }}
             </td>
         </tr>
         <tr>
@@ -60,7 +60,7 @@
                      {{ resource }}
                 </td>
                 <td align="center">
-                    {{ package_status.gmn_resources[resource] }} UTC
+                    {{ package_status.gmn_resources[resource] }}
                 </td>
             </tr>
         {% endfor %}
@@ -78,7 +78,7 @@
                      {{ resource }}
                 </td>
                 <td align="center">
-                    {{ package_status.cn_sync_times[resource] }} UTC
+                    {{ package_status.cn_sync_times[resource] }}
                 </td>
             </tr>
         {% endfor %}
