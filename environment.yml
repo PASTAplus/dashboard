@@ -41,6 +41,8 @@ dependencies:
   - libuuid=1.0.3
   - libxcb=1.13
   - libxml2=2.9.8
+  - libxslt=1.1.32
+  - lxml=4.2.5
   - markupsafe=1.1.0
   - matplotlib=3.0.2
   - mkl=2019.1
