@@ -6,7 +6,7 @@ web server. Some routes require administration rights to access, but most routes
 are publicly accessible.
 
 ## Deployment notes
-- To install `uwsgi` with Conda: `conda install -c conda-forge uwsgi`
+- To install `uwsgi` with Conda: `conda install -c conda-forge libiconv uwsgi`
 - To restart service: `sudo service dashboard restart`
 - Flask requires all static content to be in `<webapp>/static`
   (see Config.STATIC)
