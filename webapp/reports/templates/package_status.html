@@ -16,7 +16,7 @@
                 Package Identifier:
             </td>
             <td>
-                {{ package_status.package_identifier }}
+                {{ package_status.package_resources[-1] }}
             </td>
         </tr>
         <tr>
@@ -24,7 +24,7 @@
                 DOI:
             </td>
             <td>
-                {{ package_status.package_resources[-1] }}
+                {{ package_status.package_resources[-2] }}
             </td>
         </tr>
         <tr>
@@ -41,7 +41,7 @@
                 Package resources:
             </td>
             <td>
-                {% for resource in package_status.package_resources[:-1] %}
+                {% for resource in package_status.package_resources[:-2] %}
                     {{ resource }} <br/>
                 {% endfor %}
              </td>
