@@ -167,7 +167,7 @@ class PackageStatus(object):
 
     def get_cn_sync_times(self):
         resources = dict()
-        for resource in self._package_resources:
+        for resource in self._package_resources[:-1]:
             success, response = get_d1_sysmeta(resource, self._cn_url)
             if success:
                 dt_utc = pendulum.parse(get_d1_date_replica_verified(response))
@@ -179,7 +179,7 @@ class PackageStatus(object):
 
     def get_cn_indexed_status(self):
         status = False
-        for resource in self._package_resources:
+        for resource in self._package_resources[:-1]:
             if 'metadata/eml' in resource:
                 break
             success, response = get_d1_solr_result(resource, self._cn_url)
@@ -191,7 +191,7 @@ class PackageStatus(object):
 
     def get_gmn_resource_times(self):
         resources = dict()
-        for resource in self._package_resources:
+        for resource in self._package_resources[:-1]:
             success, response = get_d1_sysmeta(resource, self._gmn_url)
             if success:
                 dt_utc = pendulum.parse(get_d1_date_uploaded(response))
@@ -228,6 +228,7 @@ class PackageStatus(object):
                                           self._auth)
         if success:
             resources = response.strip().split('\n')
-            resources[-1] = get_package_doi(self._pid, self._pasta_url,
+            resources.append(resources[-1])
+            resources[-2] = get_package_doi(self._pid, self._pasta_url,
                                             self._auth)
         return resources
