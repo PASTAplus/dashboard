@@ -42,14 +42,40 @@ def render_report(report_type=None):
     if report_type:
         if report_type == 'no_public':
             metadata_resources, data_resources = load_no_public()
+
+            if metadata_resources is None:
+                len_metadata_resources = 0
+            else:
+                len_metadata_resources = len(metadata_resources)
+
+            if data_resources is None:
+                len_data_resources = 0
+            else:
+                len_data_resources = len(data_resources)
+
             return render_template('report_no_public.html',
                                    metadata_resources=metadata_resources,
-                                   data_resources=data_resources)
+                                   data_resources=data_resources,
+                                   len_metadata_resources=len_metadata_resources,
+                                   len_data_resources=len_data_resources)
         elif report_type == 'offline':
             offline_resources, unparsed_resources = load_offline()
+
+            if offline_resources is None:
+                len_offline_resources = 0
+            else:
+                len_offline_resources = len(offline_resources)
+
+            if unparsed_resources is None:
+                len_unparsed_resources = 0
+            else:
+                len_unparsed_resources = len(unparsed_resources)
+
             return render_template('report_offline.html',
                                    offline_resources=offline_resources,
-                                   unparsed_resources=unparsed_resources)
+                                   unparsed_resources=unparsed_resources,
+                                   len_offline_resources=len_offline_resources,
+                                   len_unparsed_resources=len_unparsed_resources)
 
 
 def load_no_public():
