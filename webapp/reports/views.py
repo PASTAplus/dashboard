@@ -11,6 +11,7 @@
 :Created:
     3/6/18
 """
+import time
 import json
 import os
 
@@ -41,7 +42,7 @@ def render_offline():
 def render_report(report_type=None):
     if report_type:
         if report_type == 'no_public':
-            metadata_resources, data_resources = load_no_public()
+            metadata_resources, data_resources, md = load_no_public()
 
             if metadata_resources is None:
                 len_metadata_resources = 0
@@ -57,9 +58,10 @@ def render_report(report_type=None):
                                    metadata_resources=metadata_resources,
                                    data_resources=data_resources,
                                    len_metadata_resources=len_metadata_resources,
-                                   len_data_resources=len_data_resources)
+                                   len_data_resources=len_data_resources,
+                                   modification_date=md)
         elif report_type == 'offline':
-            offline_resources, unparsed_resources = load_offline()
+            offline_resources, unparsed_resources, md = load_offline()
 
             if offline_resources is None:
                 len_offline_resources = 0
@@ -75,25 +77,36 @@ def render_report(report_type=None):
                                    offline_resources=offline_resources,
                                    unparsed_resources=unparsed_resources,
                                    len_offline_resources=len_offline_resources,
-                                   len_unparsed_resources=len_unparsed_resources)
+                                   len_unparsed_resources=len_unparsed_resources,
+                                   modification_date=md)
 
 
 def load_no_public():
-    with open('webapp/reports/public_no_access.json') as fh:
+    filename = 'webapp/reports/public_no_access.json'
+    with open(filename) as fh:
         resource_dict = json.load(fh)
         metadata_resources = resource_dict["metadata"]
         data_resources = resource_dict["data"]
     fh.close()
-    return (metadata_resources, data_resources)
+    md = modification_date(filename)
+    return (metadata_resources, data_resources, md)
 
 
 def load_offline():
-    with open('webapp/reports/offline_data.json') as fh:
+    filename = 'webapp/reports/offline_data.json'
+    with open(filename) as fh:
         resource_dict = json.load(fh)
         offline_resources = resource_dict["offline"]
         unparsed_resources = resource_dict["unparsed"]
     fh.close()
-    return offline_resources, unparsed_resources
+    md = modification_date(filename)
+    return (offline_resources, unparsed_resources, md)
+
+
+def modification_date(filename):
+    t = os.path.getmtime(filename)
+    mod_date = time.strftime("%m/%d/%Y %I:%M:%S %p", time.localtime(t))
+    return mod_date
 
 
 @reports.route('/package_tracker', methods=['GET', 'POST'])
