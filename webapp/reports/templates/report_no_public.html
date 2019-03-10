@@ -2,7 +2,8 @@
 
 {% block app_content %}
     <h1>PASTAplus Resources Lacking Public Read Access</h1>
-    <h2>Metadata Resources</h2>
+    <h4>Report Generated: {{ modification_date }}</h4>
+    <h2>Metadata Resources ({{ len_metadata_resources }})</h2>
     <table class="table table-striped">
     <tr>
         <th>Package ID</th>
@@ -18,7 +19,7 @@
     {% endfor %}
     </table>
 
-    <h2>Data Resources</h2>
+    <h2>Data Resources ({{ len_data_resources }})</h2>
     <table class="table table-striped">
     <tr>
         <th>Package ID</th>

@@ -2,7 +2,8 @@
 
 {% block app_content %}
     <h1>PASTA Data Entities with Offline Distribution</h1>
-    <h2>Offline Data Resources</h2>
+    <h4>Report Generated: {{ modification_date }}</h4>
+    <h2>Offline Data Resources ({{ len_offline_resources }})</h2>
     <table class="table table-striped">
     <tr>
         <th>Package ID</th>
@@ -20,7 +21,7 @@
     {% endfor %}
     </table>
 
-    <h2>Inaccessible PASTA Data Packages</h2>
+    <h2>Inaccessible PASTA Data Packages ({{ len_unparsed_resources }})</h2>
     <p>Metadata for the following data packages could not be read</p>
     <table class="table table-striped">
     <tr>
