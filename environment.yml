@@ -86,7 +86,7 @@ dependencies:
     - markupsafe==1.0
     - paramiko==2.4.2
     - parso==0.1.1
-    - pastaplus-soh==2018.11.26
+    - pastaplus.soh==2018.11.26
     - pendulum==1.4.2
     - pip==10.0.1
     - pluggy==0.6.0
