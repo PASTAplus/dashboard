@@ -206,6 +206,26 @@
     </tr>
     <tr>
         <td align="center">
+            <a href="/dashboard/health/server/seo.edirepository.org">
+                EDI SEO
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['SEO'])[0] }}">
+                {{ system.server_status(servers['SEO'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/tweeter.edirepository.org">
+                EDI Tweeter
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['TWEETER'])[0] }}">
+                {{ system.server_status(servers['TWEETER'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
             <a href="/dashboard/health/server/unit.lternet.edu">
                 Unit Registry
             </a>
