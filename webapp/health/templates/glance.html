@@ -244,6 +244,16 @@
                 {{ system.server_status(servers['VOCAB'])[1] }}
         </td>
     </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/space.lternet.edu">
+                Backup Space
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['SPACE'])[0] }}">
+                {{ system.server_status(servers['SPACE'])[1] }}
+        </td>
+    </tr>
 </table>
 
 {% endblock %}
