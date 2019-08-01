@@ -11,6 +11,7 @@
 :Created:
     3/6/18
 """
+import datetime
 import time
 import json
 import os
@@ -21,8 +22,10 @@ import pendulum
 
 from webapp.config import Config
 from webapp.reports.forms import PackageIdentifier
+from webapp.reports.forms import UploadReport
 from webapp.reports.package_tracker import PackageStatus
 from webapp.reports.upload_stats import UploadStats
+from webapp.reports.upload_report_stats import upload_report_stats
 
 reports = Blueprint('reports', __name__, template_folder='templates')
 
@@ -125,8 +128,6 @@ def package_tracker():
     return render_template('package_tracker.html', form=form)
 
 
-
-
 @reports.route('/recent_uploads', methods=['GET'])
 def recent_uploads():
     days = int(request.args.get('days'))
@@ -153,3 +154,37 @@ def recent_uploads():
         result_set.append((i, pid, dt))
     return render_template('recent_uploads.html', result_set=result_set,
                            count=count, plot=plot, days=days)
+
+
+@reports.route('/upload_report', methods=['GET', 'POST'])
+def upload_report():
+    form = UploadReport()
+    if form.validate_on_submit():
+        # Process POST
+        scope = form.scope.data
+
+        start_date = form.start_date.data
+        if start_date is None:
+            # Set to PASTA birthday
+            start_date = datetime.date(2013, 1, 1)
+
+        end_date = form.end_date.data
+        if end_date is None:
+            end_date = datetime.date.today()
+
+        stats = upload_report_stats(scope, start_date, end_date)
+        result_set = list()
+        i = 0
+        for stat in stats:
+            i += 1
+            pid = stat[0]
+            doi = stat[1]
+            dt = pendulum.instance(stat[2]).to_datetime_string()
+            result_set.append((i, pid, doi, dt))
+        return render_template('upload_report_stats.html',
+                               scope=scope, start_date=start_date.isoformat(),
+                               end_date=end_date.isoformat(),
+                               result_set=result_set)
+
+    # Process GET
+    return render_template('upload_report.html', form=form)
