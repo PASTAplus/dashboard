@@ -12,11 +12,16 @@
     4/11/18
 """
 
+import daiquiri
 from flask import Blueprint, render_template
 from flask_login import login_required
 import xml.etree.ElementTree as ET
 import pendulum
 import requests
+
+
+logger = daiquiri.getLogger('upload_report: ' + __name__)
+
 
 pasta = Blueprint('pasta', __name__, template_folder='templates')
 
@@ -76,4 +81,3 @@ def working_on(base_url=None):
     except Exception as e:
         logger.error(e)
     return working_on_dict
-    
