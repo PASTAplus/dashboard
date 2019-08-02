@@ -66,11 +66,18 @@ def get_package_title(pid: str) -> str:
         return None
 
     root = etree.fromstring(eml)
-    title = (root.find('.//title')).text
+    title = flatten(root.find('.//title'))
     return title
 
 
-    pass
+def flatten(element):
+    t = ''
+    if hasattr(element, 'text'):
+        t += element.text
+    if hasattr(element, '__iter__'):
+        for e in element:
+            t += flatten(e)
+    return t
 
 
 def main():
