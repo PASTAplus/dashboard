@@ -14,6 +14,8 @@
 from datetime import date
 
 import daiquiri
+from lxml import etree
+import requests
 from sqlalchemy import create_engine
 
 from webapp.config import Config
@@ -51,6 +53,24 @@ def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
         result_set = list()
 
     return result_set
+
+
+def get_package_title(pid: str) -> str:
+    package_path = pid.replace('.', '/')
+    eml_url = f'{Config.PASTA_URL}/metadata/eml/{package_path}'
+    r = requests.get(eml_url)
+    if r.status_code == requests.codes.ok:
+        eml = r.text.encode('utf-8')
+    else:
+        logger.ERROR(f'A request to PASTA failed with a {r.status_code} code.')
+        return None
+
+    root = etree.fromstring(eml)
+    title = (root.find('.//title')).text
+    return title
+
+
+    pass
 
 
 def main():

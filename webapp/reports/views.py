@@ -26,6 +26,7 @@ from webapp.reports.forms import UploadReport
 from webapp.reports.package_tracker import PackageStatus
 from webapp.reports.upload_stats import UploadStats
 from webapp.reports.upload_report_stats import upload_report_stats
+from webapp.reports.upload_report_stats import get_package_title
 
 reports = Blueprint('reports', __name__, template_folder='templates')
 
@@ -172,6 +173,8 @@ def upload_report():
         if end_date is None:
             end_date = datetime.date.today()
 
+        show_title = form.show_title.data
+
         stats = upload_report_stats(scope, start_date, end_date)
         result_set = list()
         i = 0
@@ -180,11 +183,18 @@ def upload_report():
             pid = stat[0]
             doi = stat[1]
             dt = pendulum.instance(stat[2]).to_datetime_string()
-            result_set.append((i, pid, doi, dt))
+
+            package_title = None
+            if show_title:
+                package_title = get_package_title(pid)
+
+            result_set.append((i, pid, doi, package_title, dt))
+
         return render_template('upload_report_stats.html',
                                scope=scope, start_date=start_date.isoformat(),
                                end_date=end_date.isoformat(),
-                               result_set=result_set)
+                               result_set=result_set,
+                               show_title=show_title)
 
     # Process GET
     return render_template('upload_report.html', form=form)
