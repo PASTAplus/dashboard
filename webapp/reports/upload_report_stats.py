@@ -62,7 +62,7 @@ def get_package_title(pid: str) -> str:
     if r.status_code == requests.codes.ok:
         eml = r.text.encode('utf-8')
     else:
-        logger.error(f'A request to PASTA failed with a {r.status_code} code.')
+        logger.error(f'A request to PASTA for {pid} failed with a {r.status_code} code.')
         return None
 
     root = etree.fromstring(eml)
