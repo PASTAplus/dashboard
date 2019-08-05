@@ -187,6 +187,8 @@ def upload_report():
             package_title = None
             if show_title:
                 package_title = get_package_title(pid)
+                if package_title is None:
+                    package_title = '404 - Not allowed'
 
             result_set.append((i, pid, doi, package_title, dt))
 
