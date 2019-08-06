@@ -24,6 +24,7 @@ class Config(object):
     DOMAINS = {'edi': 'o=EDI,dc=edirepository,dc=org',
                'lter':'o=LTER,dc=ecoinformatics,dc=org',}
     STATIC = 'STATIC IMAGE DIRECTORY PATH'
+    TMP_DIR = 'TEMPORARY DIRECTORY PATH'
 
 
     # LDAP configuration

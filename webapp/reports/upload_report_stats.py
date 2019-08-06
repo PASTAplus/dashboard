@@ -49,7 +49,7 @@ def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
     try:
         result_set = connection.execute(sql).fetchall()
     except Exception as e:
-        logger.ERROR(e)
+        logger.error(e)
         result_set = list()
 
     return result_set
@@ -70,6 +70,30 @@ def get_package_title(pid: str) -> str:
     return title
 
 
+def get_scope_count(scope: str) -> int:
+
+    db = Config.DB_DRIVER + '://' + \
+         Config.DB_USER + ':' + \
+         Config.DB_PW + '@' + \
+         Config.DB_HOST + '/' + \
+         Config.DB_DB
+
+    connection = create_engine(db)
+
+    sql = ('select count(datapackagemanager.resource_registry.package_id) '
+           'from datapackagemanager.resource_registry where '
+           f'datapackagemanager.resource_registry.scope=\'{scope}\' and '
+           'datapackagemanager.resource_registry.resource_type=\'dataPackage\'')
+
+    try:
+        result_set = connection.execute(sql).fetchone()
+    except Exception as e:
+        logger.error(e)
+        result_set = list()
+
+    return result_set[0]
+
+
 def flatten(element):
     t = ''
     if hasattr(element, 'text'):
@@ -78,6 +102,29 @@ def flatten(element):
         for e in element:
             t += flatten(e)
     return t
+
+
+def solr_report_stats(scope: str, rows: int) -> dict:
+    solr_stats = dict()
+    solr_url = ('https://pasta.lternet.edu/package/search/eml?'
+                 f'defType=edismax&q=*:*&fq=scope:({scope})'
+                 f'&fl=packageid,title&debug=false&rows={rows}')
+
+    r = requests.get(solr_url)
+    if r.status_code == requests.codes.ok:
+        solr_result_set = r.text.encode('utf-8')
+    else:
+        logger.error(f'A request to PASTA for a solr query of {scope} failed with a {r.status_code} code.')
+        return solr_stats
+
+    root = etree.fromstring(solr_result_set)
+    docs = root.findall(".//document")
+    for doc in docs:
+        pid = (doc.find(".//packageid")).text
+        title = (doc.find(".//title")).text
+        solr_stats[pid] = title
+
+    return solr_stats
 
 
 def main():

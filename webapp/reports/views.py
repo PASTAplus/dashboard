@@ -16,7 +16,8 @@ import time
 import json
 import os
 
-from flask import Blueprint, flash, render_template, request, redirect, url_for
+import daiquiri
+from flask import Blueprint, flash, render_template, request, redirect, send_from_directory, url_for
 from flask_login import login_required
 import pendulum
 
@@ -25,10 +26,13 @@ from webapp.reports.forms import PackageIdentifier
 from webapp.reports.forms import UploadReport
 from webapp.reports.package_tracker import PackageStatus
 from webapp.reports.upload_stats import UploadStats
-from webapp.reports.upload_report_stats import upload_report_stats
 from webapp.reports.upload_report_stats import get_package_title
+from webapp.reports.upload_report_stats import get_scope_count
+from webapp.reports.upload_report_stats import solr_report_stats
+from webapp.reports.upload_report_stats import upload_report_stats
 
 reports = Blueprint('reports', __name__, template_folder='templates')
+logger = daiquiri.getLogger(__name__)
 
 
 @reports.route('/render_no_public', methods=['GET', 'POST'])
@@ -176,27 +180,53 @@ def upload_report():
         show_title = form.show_title.data
 
         stats = upload_report_stats(scope, start_date, end_date)
+        rows = get_scope_count(scope)
+        solr_stats = solr_report_stats(scope, rows)
         result_set = list()
         i = 0
+        j = 0
         for stat in stats:
             i += 1
             pid = stat[0]
             doi = stat[1]
             dt = pendulum.instance(stat[2]).to_datetime_string()
-
             package_title = None
             if show_title:
-                package_title = get_package_title(pid)
-                if package_title is None:
-                    package_title = '404 - Not allowed'
+                if pid in solr_stats:
+                    package_title = solr_stats[pid]
+                    j += 1
+                else:
+                    package_title = get_package_title(pid)
+                    if package_title is None:
+                        package_title = '404 - Not allowed'
 
             result_set.append((i, pid, doi, package_title, dt))
+
+        file_name = str(time.time())
+        with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
+            if show_title:
+                line = f'Count,Package ID,DOI,Title,Upload Date-Time\n'
+            else:
+                line = f'Count,Package ID,DOI,Upload Date-Time\n'
+            f.write(line)
+
+            for result in result_set:
+                if show_title:
+                    line = f'{result[0]},{result[1]},{result[2]},"{result[3]}",{result[4]}\n'
+                else:
+                    line = f'{result[0]},{result[1]},{result[2]},{result[4]}\n'
+                f.write(line)
 
         return render_template('upload_report_stats.html',
                                scope=scope, start_date=start_date.isoformat(),
                                end_date=end_date.isoformat(),
-                               result_set=result_set,
-                               show_title=show_title)
+                               result_set=result_set, show_title=show_title,
+                               count=i, solr_count=j, file_name=file_name)
 
     # Process GET
     return render_template('upload_report.html', form=form)
+
+@reports.route('/download_report/<filename>', methods=['GET'])
+def download_report(filename):
+    return send_from_directory(Config.TMP_DIR, filename, as_attachment=True,
+                               attachment_filename='upload_report.csv')
