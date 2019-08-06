@@ -38,8 +38,8 @@ def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
          'datapackagemanager.resource_registry.doi,'
          'datapackagemanager.resource_registry.date_created '
          'from datapackagemanager.resource_registry where date_created >= '
-         '\'START_DATE\' and date_created <= \'END_DATE\' and scope=\'SCOPE\' '
-         'and resource_type=\'dataPackage\' '
+         '\'START_DATE\' and date_created <= \'END_DATE 24:00\' and '
+         'scope=\'SCOPE\' and resource_type=\'dataPackage\' '
          'order by date_created asc')
 
     sql = _.replace('SCOPE', scope).\
