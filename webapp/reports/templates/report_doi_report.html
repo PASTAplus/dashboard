@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <h1>PASTAplus Resources DOI Report</h1>
+    <h4>Report Generated: {{ modification_date }}</h4>
+    <h2>Active Data Packages</h2>
+    <h3>DOI Fails to Resolve ({{ len_not_resolved_resources }})</h3>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+    </tr>
+    {% for not_resolved_dict in not_resolved_resources %}
+        <tr>
+            <td>{{ not_resolved_dict["package_id"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h3>No DOI Entry in Pasta ({{ len_missing_resources }})</h3>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+    </tr>
+    {% for missing_dict in missing_resources %}
+        <tr>
+            <td>{{ missing_dict["package_id"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <br/>
+    <h2>Deactivated Data Packages</h2>
+    <h3>DOI Fails to Resolve ({{ len_not_resolved_deactivated_resources }})</h3>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+    </tr>
+    {% for not_resolved_deactivated_dict in not_resolved_deactivated_resources %}
+        <tr>
+            <td>{{ not_resolved_deactivated_dict["package_id"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h3>No DOI Entry in Pasta ({{ len_missing_deactivated_resources }})</h3>
+    <table class="table table-striped">
+    <tr>
+        <th>Package ID</th>
+    </tr>
+    {% for missing_deactivated_dict in missing_deactivated_resources %}
+        <tr>
+            <td>{{ missing_deactivated_dict["package_id"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

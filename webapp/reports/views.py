@@ -47,6 +47,12 @@ def render_offline():
     return render_report(report_type='offline')
 
 
+@reports.route('/render_doi_report', methods=['GET', 'POST'])
+@login_required
+def render_doi_report():
+    return render_report(report_type='doi_report')
+
+
 def render_report(report_type=None):
     if report_type:
         if report_type == 'no_public':
@@ -68,6 +74,7 @@ def render_report(report_type=None):
                                    len_metadata_resources=len_metadata_resources,
                                    len_data_resources=len_data_resources,
                                    modification_date=md)
+
         elif report_type == 'offline':
             offline_resources, unparsed_resources, md = load_offline()
 
@@ -86,6 +93,40 @@ def render_report(report_type=None):
                                    unparsed_resources=unparsed_resources,
                                    len_offline_resources=len_offline_resources,
                                    len_unparsed_resources=len_unparsed_resources,
+                                   modification_date=md)
+
+        elif report_type == "doi_report":
+            not_resolved_resources, missing_resources, not_resolved_deactivated_resources, missing_deactivated_resources, md = load_doi_report()
+
+            if not_resolved_resources is None:
+                len_not_resolved_resources = 0
+            else:
+                len_not_resolved_resources = len(not_resolved_resources)
+
+            if missing_resources is None:
+                len_missing_resources = 0
+            else:
+                len_missing_resources = len(missing_resources)
+
+            if not_resolved_deactivated_resources is None:
+                len_not_resolved_deactivated_resources = 0
+            else:
+                len_not_resolved_deactivated_resources = len(not_resolved_deactivated_resources)
+
+            if missing_deactivated_resources is None:
+                len_missing_deactivated_resources = 0
+            else:
+                len_missing_deactivated_resources = len(missing_deactivated_resources)
+
+            return render_template('report_doi_report.html',
+                                   not_resolved_resources=not_resolved_resources,
+                                   missing_resources=missing_resources,
+                                   not_resolved_deactivated_resources=not_resolved_deactivated_resources,
+                                   missing_deactivated_resources=missing_deactivated_resources,
+                                   len_not_resolved_resources=len_not_resolved_resources,
+                                   len_missing_resources=len_missing_resources,
+                                   len_not_resolved_deactivated_resources=len_not_resolved_deactivated_resources,
+                                   len_missing_deactivated_resources=len_missing_deactivated_resources,
                                    modification_date=md)
 
 
@@ -109,6 +150,19 @@ def load_offline():
     fh.close()
     md = modification_date(filename)
     return (offline_resources, unparsed_resources, md)
+
+
+def load_doi_report():
+    filename = 'webapp/reports/doi_report.json'
+    with open(filename) as fh:
+        resource_dict = json.load(fh)
+        not_resolved_resources = resource_dict["not_resolved"]
+        missing_resources = resource_dict["missing"]
+        not_resolved_deactivated_resources = resource_dict["not_resolved_deactivated"]
+        missing_deactivated_resources = resource_dict["missing_deactivated"]
+    fh.close()
+    md = modification_date(filename)
+    return (not_resolved_resources, missing_resources, not_resolved_deactivated_resources, missing_deactivated_resources, md)
 
 
 def modification_date(filename):
