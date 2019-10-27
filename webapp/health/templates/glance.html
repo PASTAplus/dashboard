@@ -184,6 +184,16 @@
         <th width="20%" style="text-align: center">Service</th>
         <th style="text-align: center">Status</th>
     </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/auth.edirepository.org">
+                Authentication
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['AUTH'])[0] }}">
+                {{ system.server_status(servers['AUTH'])[1] }}
+        </td>
+    </tr>
      <tr>
         <td align="center">
             <a href="/dashboard/health/server/ldap.edirepository.org">

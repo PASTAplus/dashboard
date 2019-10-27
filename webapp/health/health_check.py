@@ -81,6 +81,8 @@ class SystemState:
             server_type = 'APACHE_TOMCAT'
         elif host in soh_Config.server_types['AUDIT']:
             server_type = 'AUDIT'
+        elif host in soh_Config.server_types['AUTH']:
+            server_type = 'AUTH'
         elif host in soh_Config.server_types['GMN']:
             server_type = 'GMN'
         elif host in soh_Config.server_types['JETTY']:
