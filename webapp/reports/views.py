@@ -149,7 +149,7 @@ def load_offline():
         unparsed_resources = resource_dict["unparsed"]
     fh.close()
     md = modification_date(filename)
-    return (offline_resources, unparsed_resources, md)
+    return offline_resources, unparsed_resources, md
 
 
 def load_doi_report():
@@ -162,7 +162,9 @@ def load_doi_report():
         missing_deactivated_resources = resource_dict["missing_deactivated"]
     fh.close()
     md = modification_date(filename)
-    return (not_resolved_resources, missing_resources, not_resolved_deactivated_resources, missing_deactivated_resources, md)
+    return not_resolved_resources, missing_resources,\
+           not_resolved_deactivated_resources, missing_deactivated_resources,\
+           md
 
 
 def modification_date(filename):
@@ -173,17 +175,18 @@ def modification_date(filename):
 
 @reports.route('/package_tracker', methods=['GET', 'POST'])
 def package_tracker():
+    package_identifier = request.args.get('pid')
     form = PackageIdentifier()
     if form.validate_on_submit():
-        # Process POST
         package_identifier = form.package_identifier.data
+    if package_identifier is not None:  # Process and return
         if len(package_identifier.split('.')) != 3:
             msg = 'should be in the form of scope.identifier.revision'
             flash(f'"{package_identifier}" {msg}')
             return redirect(url_for('reports.package_tracker'))
         package_status = PackageStatus(package_identifier)
-        return render_template('package_status.html', package_status=package_status)
-    # Process GET
+        return render_template('package_status.html',
+                               package_status=package_status)
     return render_template('package_tracker.html', form=form)
 
 
