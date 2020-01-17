@@ -60,24 +60,15 @@ class SystemState:
         self._event_timestamp = None
         # Initialize server state
         self._set_state()
+        self._is_stale = self.stale()
 
     def _set_state(self):
         if os.path.exists(soh_Config.STATUS_FILE):
             with open(soh_Config.STATUS_FILE, "rb") as f:
                 servers = pickle.load(f, encoding="utf-8")
-            self._event_timestamp = servers.pop("event_timestamp")
+            self._event_timestamp = pendulum.parse(servers.pop("timestamp"))
             for server in servers:
                 self._state[server] = servers[server]
-
-        # soh_db = SohDb()
-        # soh_db.connect_soh_db()
-        # event_id_query = soh_db.get_soh_latest_event()
-        # if event_id_query:
-        #     self._event_id = event_id_query.event_id
-        #     self._event_timestamp = event_id_query.timestamp
-        #     servers = soh_db.get_soh_status_by_event(event_id=self._event_id)
-        #     for server in servers:
-        #         self._state[server.server] = int(server.status)
 
     @property
     def state(self):
@@ -132,6 +123,13 @@ class SystemState:
                 status = status_code['text_danger']
         return status
 
+    def stale(self):
+        is_stale = False
+        dt_diff = self._event_timestamp.diff(pendulum.now('UTC')).in_minutes()
+        if dt_diff > 10:
+            is_stale = True
+        return is_stale
+
     def tier_state(self, tier=None):
 
         if tier not in tiers:
@@ -159,9 +157,8 @@ class SystemState:
     def timestamp(self, local=False):
         if local:
             tz = pendulum.now().timezone
-            dt = pendulum.parse(self._event_timestamp)
-            lt = dt.astimezone(tz)
+            lt = self._event_timestamp.astimezone(tz)
             return lt.to_day_datetime_string()
         else:
-            return self._event_timestamp
+            return self._event_timestamp.to_day_datetime_string()
 
