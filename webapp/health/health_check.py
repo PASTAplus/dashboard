@@ -11,6 +11,9 @@
 :Created:
     3/20/18
 """
+import os
+import pickle
+
 import daiquiri
 import pendulum
 
@@ -59,15 +62,23 @@ class SystemState:
         self._set_state()
 
     def _set_state(self):
-        soh_db = SohDb()
-        soh_db.connect_soh_db()
-        event_id_query = soh_db.get_soh_latest_event()
-        if event_id_query:
-            self._event_id = event_id_query.event_id
-            self._event_timestamp = event_id_query.timestamp
-            servers = soh_db.get_soh_status_by_event(event_id=self._event_id)
+        if os.path.exists(soh_Config.STATUS_FILE):
+            with open(soh_Config.STATUS_FILE, "rb") as f:
+                servers = pickle.load(f, encoding="utf-8")
+            self._event_timestamp = servers.pop("event_timestamp")
             for server in servers:
-                self._state[server.server] = int(server.status)
+                self._state[server] = servers[server]
+
+        # soh_db = SohDb()
+        # soh_db.connect_soh_db()
+        # event_id_query = soh_db.get_soh_latest_event()
+        # if event_id_query:
+        #     self._event_id = event_id_query.event_id
+        #     self._event_timestamp = event_id_query.timestamp
+        #     servers = soh_db.get_soh_status_by_event(event_id=self._event_id)
+        #     for server in servers:
+        #         self._state[server.server] = int(server.status)
+
     @property
     def state(self):
         return self._state
@@ -148,7 +159,7 @@ class SystemState:
     def timestamp(self, local=False):
         if local:
             tz = pendulum.now().timezone
-            dt = pendulum.instance(self._event_timestamp)
+            dt = pendulum.parse(self._event_timestamp)
             lt = dt.astimezone(tz)
             return lt.to_day_datetime_string()
         else:
