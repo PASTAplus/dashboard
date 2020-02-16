@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+
+<h2 align="center">Site data package report for: <b>{{ scope }}</b></h2>
+
+<h4 align="center">
+    <a href="/dashboard/reports/download_report/{{ file_name }}.csv?scope={{ scope }}">
+        Save as {{ scope }}_report.csv</a></h4>
+
+   <table align="center" class="table table-striped table-bordered">
+    <tr>
+        <th width="5%" style="text-align: center"> </th>
+        <th width="15%" style="text-align: center">Package ID</th>
+        <th width="35%" style="text-align: center">DOI</th>
+        <th width="15%" style="text-align: center">Authors</th>
+        <th width="25%" style="text-align: center">Title</th>
+        <th width="5%" style="text-align: center">PubDate</th>
+    </tr>
+    {% for pid_info in report %}
+        <tr>
+            {% set scope,identifier,revision = pid_info["pid"].split('.') %}
+            {% set href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
+            <td style="text-align: center">{{ loop.index }}</td>
+            <td style="text-align: center"><a href="{{ href }}">{{ pid_info["pid"] }}</a></td>
+            <td style="text-align: center">{{ pid_info["doi"] }}</td>
+            <td style="text-align: left">{{ pid_info["authors"] }}</td>
+            <td style="text-align: left">{{ pid_info["title"] }}</td>
+            <td style="text-align: center">{{ pid_info["pubdate"] }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}
