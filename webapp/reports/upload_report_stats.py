@@ -21,7 +21,7 @@ from sqlalchemy import create_engine
 from webapp.config import Config
 
 
-logger = daiquiri.getLogger('upload_report: ' + __name__)
+logger = daiquiri.getLogger('upload_report_stats: ' + __name__)
 
 
 def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
@@ -56,18 +56,30 @@ def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
 
 
 def get_package_title(pid: str) -> str:
+    title = ""
     package_path = pid.replace('.', '/')
     eml_url = f'{Config.PASTA_URL}/metadata/eml/{package_path}'
     r = requests.get(eml_url)
     if r.status_code == requests.codes.ok:
         eml = r.text.encode('utf-8')
+        root = etree.fromstring(eml)
+        title = flatten(root.find('.//title'))
     else:
-        logger.error(f'A request to PASTA for {pid} failed with a {r.status_code} code.')
-        return None
-
-    root = etree.fromstring(eml)
-    title = flatten(root.find('.//title'))
+        msg = f'A request to PASTA for {pid} failed with a {r.status_code} code.'
+        logger.error(msg)
     return title
+
+
+def get_scopes() -> list:
+    scopes = list()
+    scope_url = f'{Config.PASTA_URL}/eml'
+    r = requests.get(scope_url)
+    if r.status_code == requests.codes.ok:
+        scopes = [_.strip() for _ in r.text.split("\n")]
+    else:
+        msg = f'A request to PASTA for scopes failed with a {r.status_code} code.'
+        logger.error(msg)
+    return scopes
 
 
 def get_scope_count(scope: str) -> int:
@@ -125,11 +137,3 @@ def solr_report_stats(scope: str, rows: int) -> dict:
         solr_stats[pid] = title
 
     return solr_stats
-
-
-def main():
-    return 0
-
-
-if __name__ == "__main__":
-    main()
