@@ -23,8 +23,10 @@ import pendulum
 
 from webapp.config import Config
 from webapp.reports.forms import PackageIdentifier
+from webapp.reports.forms import SiteReport
 from webapp.reports.forms import UploadReport
 from webapp.reports.package_tracker import PackageStatus
+from webapp.reports.site_report_stats import get_site_report
 from webapp.reports.upload_stats import UploadStats
 from webapp.reports.upload_report_stats import get_package_title
 from webapp.reports.upload_report_stats import get_scope_count
@@ -218,6 +220,33 @@ def recent_uploads():
                            count=count, plot=plot, days=days)
 
 
+@reports.route('/site_report', methods=['GET', 'POST'])
+def site_report():
+    form = SiteReport()
+    if form.validate_on_submit():
+        # Process POST
+        scope = form.scope.data
+        report = get_site_report(scope)
+
+        file_name = str(time.time())
+        with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
+            line = f',package_id,doi,authors,title,pubdate\n'
+            f.write(line)
+            count = 1
+            for pid_info in report:
+                line = f'{count},{pid_info["pid"]},' +\
+                       f'{pid_info["doi"]},"{pid_info["authors"]}",' +\
+                       f'"{pid_info["title"]}",{pid_info["pubdate"]}\n'
+                f.write(line)
+                count += 1
+
+        return render_template('site_report_stats.html', scope=scope,
+                               report=report, file_name=file_name)
+    else:
+        # Process GET
+        return render_template('site_report.html', form=form)
+
+
 @reports.route('/upload_report', methods=['GET', 'POST'])
 def upload_report():
     form = UploadReport()
@@ -254,8 +283,6 @@ def upload_report():
                     j += 1
                 else:
                     package_title = get_package_title(pid)
-                    if package_title is None:
-                        package_title = '404 - Not allowed'
 
             result_set.append((i, pid, doi, package_title, dt))
 
@@ -279,11 +306,12 @@ def upload_report():
                                end_date=end_date.isoformat(),
                                result_set=result_set, show_title=show_title,
                                count=i, solr_count=j, file_name=file_name)
-
-    # Process GET
-    return render_template('upload_report.html', form=form)
+    else:
+        # Process GET
+        return render_template('upload_report.html', form=form)
 
 @reports.route('/download_report/<filename>', methods=['GET'])
 def download_report(filename):
+    scope = request.args.get("scope")
     return send_from_directory(Config.TMP_DIR, filename, as_attachment=True,
-                               attachment_filename='upload_report.csv')
+                               attachment_filename=f'{scope}_report.csv')
