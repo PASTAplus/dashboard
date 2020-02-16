@@ -3,7 +3,9 @@
 {% block app_content %}
 
 <h2 align="center">Upload Report for <b>{{ scope }}</b> from <b>{{ start_date }}</b> to <b>{{ end_date }}</b></h2>
-<h4 align="center"><a href="/dashboard/reports/download_report/{{ file_name }}.csv">Save as upload_report.csv</a></h4>
+<h4 align="center">
+    <a href="/dashboard/reports/download_report/{{ file_name }}.csv?scope={{ scope }}">
+        Save as {{ scope }}_report.csv</a></h4>
     <table align="center" class="table table-striped table-bordered">
     <tr>
         {% if show_title %}
