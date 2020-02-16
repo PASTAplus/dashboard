@@ -12,18 +12,19 @@
     <tr>
         <th width="5%" style="text-align: center"> </th>
         <th width="15%" style="text-align: center">Package ID</th>
-        <th width="35%" style="text-align: center">DOI</th>
+        <th width="20%" style="text-align: center">DOI</th>
         <th width="15%" style="text-align: center">Authors</th>
-        <th width="25%" style="text-align: center">Title</th>
+        <th width="40%" style="text-align: center">Title</th>
         <th width="5%" style="text-align: center">PubDate</th>
     </tr>
     {% for pid_info in report %}
         <tr>
             {% set scope,identifier,revision = pid_info["pid"].split('.') %}
-            {% set href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
+            {% set portal_href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
+            {% set doi_href = pid_info["doi"] %}
             <td style="text-align: center">{{ loop.index }}</td>
-            <td style="text-align: center"><a href="{{ href }}">{{ pid_info["pid"] }}</a></td>
-            <td style="text-align: center">{{ pid_info["doi"] }}</td>
+            <td style="text-align: center"><a href="{{ portal_href }}">{{ pid_info["pid"] }}</a></td>
+            <td style="text-align: center"><a href="{{ doi_href}}">{{ pid_info["doi"] }}</a></td>
             <td style="text-align: left">{{ pid_info["authors"] }}</td>
             <td style="text-align: left">{{ pid_info["title"] }}</td>
             <td style="text-align: center">{{ pid_info["pubdate"] }}</td>

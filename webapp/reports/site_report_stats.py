@@ -56,7 +56,8 @@ def get_site_report(scope: str) -> list:
             pid_info["id"] = int(id)
             title = (doc.find(".//title")).text
             pid_info["title"] = " ".join(title.split())
-            pid_info["doi"] = (doc.find(".//doi")).text
+            doi = (doc.find(".//doi")).text
+            pid_info["doi"] = doi.replace("doi:", "https://doi.org/")
             pid_info["pubdate"] = (doc.find(".//pubdate")).text
             authors = doc.findall(".//author")
             if authors is not None:
