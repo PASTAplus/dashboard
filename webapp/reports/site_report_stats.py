@@ -61,7 +61,7 @@ def get_site_report(scope: str) -> list:
             pid_info["pubdate"] = (doc.find(".//pubdate")).text
             authors = doc.findall(".//author")
             if authors is not None:
-                pid_info["authors"] = " AND ".join([_.text for _ in authors])
+                pid_info["authors"] = "; ".join([_.text for _ in authors])
             solr_stats.append(pid_info)
     else:
         msg = f'A request to PASTA for a solr query of {scope} failed with ' + \
