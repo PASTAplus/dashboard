@@ -34,6 +34,7 @@ class SiteReport(FlaskForm):
         choices.append((scope, scope))
 
     scope = SelectField('Site Scope', choices=choices, default="edi")
+    cite = BooleanField('Use citation format (slower)')
 
 
 class UploadReport(FlaskForm):

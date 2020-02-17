@@ -7,29 +7,64 @@
 <h4 align="center">
     <a href="/dashboard/reports/download_report/{{ file_name }}.csv?scope={{ scope }}">
         Save as {{ scope }}_report.csv</a></h4>
-
-   <table align="center" class="table table-striped table-bordered">
-    <tr>
-        <th width="5%" style="text-align: center"> </th>
-        <th width="15%" style="text-align: center">Package ID</th>
-        <th width="20%" style="text-align: center">DOI</th>
-        <th width="15%" style="text-align: center">Authors</th>
-        <th width="40%" style="text-align: center">Title</th>
-        <th width="5%" style="text-align: center">PubDate</th>
-    </tr>
-    {% for pid_info in report %}
-        <tr>
-            {% set scope,identifier,revision = pid_info["pid"].split('.') %}
-            {% set portal_href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
-            {% set doi_href = pid_info["doi"] %}
-            <td style="text-align: center">{{ loop.index }}</td>
-            <td style="text-align: center"><a href="{{ portal_href }}">{{ pid_info["pid"] }}</a></td>
-            <td style="text-align: center"><a href="{{ doi_href}}">{{ pid_info["doi"] }}</a></td>
-            <td style="text-align: left">{{ pid_info["authors"] }}</td>
-            <td style="text-align: left">{{ pid_info["title"] }}</td>
-            <td style="text-align: center">{{ pid_info["pubdate"] }}</td>
-        </tr>
-    {% endfor %}
+    <div class="table-responsive-sm">
+    <table class="table table-striped table-bordered w-auto">
+        {% if cite %}
+            <thead>
+                <tr>
+                    <th style="text-align: center"> </th>
+                    <th style="text-align: center">Package ID</th>
+                    <th style="text-align: center">Citation</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for pid_info in report %}
+                <tr>
+                    {% set scope,identifier,revision = pid_info[0].split('.') %}
+                    {% set portal_href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
+                    <td style="text-align: center">{{ loop.index }}</td>
+                    <td style="text-align: center" nowrap><a href="{{ portal_href }}">{{ pid_info[0] }}</a></td>
+                    <td style="text-align: left">{{ pid_info[1] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% else %}
+            <thead>
+                <tr>
+                    <th style="text-align: center"> </th>
+                    <th style="text-align: center">Package ID</th>
+                    <th style="text-align: center">DOI</th>
+                    <th style="text-align: center" width="50px">Authors</th>
+                    <th style="text-align: center">Title</th>
+                    <th style="text-align: center">PubDate</th>
+                    <th style="text-align: center">Temporal Coverage</th>
+                    <th style="text-align: center">Keywords</th>
+                    <th style="text-align: center">Funding</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for pid_info in report %}
+                <tr>
+                    {% set scope,identifier,revision = pid_info["pid"].split('.') %}
+                    {% set portal_href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
+                    {% set doi_href = "https://doi.org/" + pid_info["doi"] %}
+                    <td style="text-align: center">{{ loop.index }}</td>
+                    <td style="text-align: center"><a href="{{ portal_href }}">{{ pid_info["pid"] }}</a></td>
+                    <td style="text-align: center"><a href="{{ doi_href}}">{{ pid_info["doi"] }}</a></td>
+                    <td style="text-align: left">{{ pid_info["authors"] }}</td>
+                    <td style="text-align: left">{{ pid_info["title"] }}</td>
+                    <td style="text-align: center">{{ pid_info["pubdate"] }}</td>
+                    {% if pid_info["singledates"] != '' %}
+                        <td style="text-align: center">{{ pid_info["singledates"] }}</td>
+                    {% else %}
+                        <td style="text-align: center" nowrap>{{ pid_info["begindate"] }} - {{ pid_info["enddate"] }}</td>
+                    {% endif %}
+                    <td style="text-align: left">{{ pid_info["keywords"] }}</td>
+                    <td style="text-align: left">{{ pid_info["funding"] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% endif %}
     </table>
-
+    </div>
 {% endblock %}

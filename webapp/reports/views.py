@@ -20,6 +20,7 @@ import daiquiri
 from flask import Blueprint, flash, render_template, request, redirect, send_from_directory, url_for
 from flask_login import login_required
 import pendulum
+import requests
 
 from webapp.config import Config
 from webapp.reports.forms import PackageIdentifier
@@ -226,21 +227,48 @@ def site_report():
     if form.validate_on_submit():
         # Process POST
         scope = form.scope.data
+        cite = form.cite.data
+
         report = get_site_report(scope)
-
         file_name = str(time.time())
-        with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
-            line = f',package_id,doi,authors,title,pubdate\n'
-            f.write(line)
-            count = 1
-            for pid_info in report:
-                line = f'{count},{pid_info["pid"]},' +\
-                       f'{pid_info["doi"]},"{pid_info["authors"]}",' +\
-                       f'"{pid_info["title"]}",{pid_info["pubdate"]}\n'
-                f.write(line)
-                count += 1
 
-        return render_template('site_report_stats.html', scope=scope,
+        if cite:
+            citations = list()
+            for pid_info in report:
+                pid = pid_info["pid"]
+                cite_url = f"https://cite.edirepository.org/cite/{pid}"
+                headers = {"Accept": "text/plain"}
+                r = requests.get(cite_url, headers=headers)
+                if r.status_code == requests.codes.ok:
+                    citations.append((pid, r.text.strip()))
+
+            with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
+                line = f',package_id,citation\n'
+                f.write(line)
+                count = 1
+                for pid in citations:
+                    line = f'{count},{pid[0]},"{pid[1]}"\n'
+                    f.write(line)
+                    count += 1
+            report = citations
+        else:
+            with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
+                line = f',package_id,doi,authors,title,pubdate,begindate,' \
+                       f'enddate,' \
+                       f'singledates,keywords,funding\n '
+                f.write(line)
+                count = 1
+                for pid_info in report:
+                    line = f'{count},{pid_info["pid"]},' \
+                           f'https://doi.org/{pid_info["doi"]},' \
+                           f'"{pid_info["authors"]}",' \
+                           f'"{pid_info["title"]}",{pid_info["pubdate"]},' \
+                           f'{pid_info["begindate"]},{pid_info["enddate"]},' \
+                           f'{pid_info["singledates"]},' \
+                           f'"{pid_info["keywords"]}","{pid_info["funding"]}"\n'
+                    f.write(line)
+                    count += 1
+        return render_template('site_report_stats.html', scope=scope, cite=cite,
                                report=report, file_name=file_name)
     else:
         # Process GET

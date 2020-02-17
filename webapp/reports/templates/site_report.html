@@ -24,6 +24,7 @@
             <form method="POST" action="" class="form" role="form">
                 {{ form.csrf_token }}
                 {{ wtf.form_field(form.scope) }}
+                {{ wtf.form_field(form.cite) }}
                 <input class="btn btn-primary" type="submit" value="Submit"/>
                 <input class="btn btn-primary" type="reset" value="Clear"/>
             </form>
