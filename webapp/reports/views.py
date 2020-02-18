@@ -322,6 +322,7 @@ def citation_report(report: list, file_name: str) -> list:
         if os.path.exists(cache_file):
             with open(cache_file, 'r') as f:
                 citation = f.read()
+            citations.append((pid, citation))
         else:
             cite_url = f"https://cite.edirepository.org/cite/{pid}"
             headers = {"Accept": "text/plain"}
@@ -330,8 +331,7 @@ def citation_report(report: list, file_name: str) -> list:
                 citation = r.text.strip()
                 with open(f'{Config.CACHE}/{pid}.txt', 'w') as f:
                     f.write(r.text.strip())
-
-        citations.append((pid, citation))
+                citations.append((pid, citation))
 
     with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
         line = f',package_id,citation\n'
