@@ -25,6 +25,7 @@ class Config(object):
                'lter':'o=LTER,dc=ecoinformatics,dc=org',}
     STATIC = 'STATIC IMAGE DIRECTORY PATH'
     TMP_DIR = 'TEMPORARY DIRECTORY PATH'
+    CACHE = 'PERMANENT CACHE DIRECTORY PATH'
 
 
     # LDAP configuration

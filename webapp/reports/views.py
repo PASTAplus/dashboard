@@ -233,41 +233,10 @@ def site_report():
         file_name = str(time.time())
 
         if cite:
-            citations = list()
-            for pid_info in report:
-                pid = pid_info["pid"]
-                cite_url = f"https://cite.edirepository.org/cite/{pid}"
-                headers = {"Accept": "text/plain"}
-                r = requests.get(cite_url, headers=headers)
-                if r.status_code == requests.codes.ok:
-                    citations.append((pid, r.text.strip()))
-
-            with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
-                line = f',package_id,citation\n'
-                f.write(line)
-                count = 1
-                for pid in citations:
-                    line = f'{count},{pid[0]},"{pid[1]}"\n'
-                    f.write(line)
-                    count += 1
-            report = citations
+            report = citation_report(report, file_name)
         else:
-            with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
-                line = f',package_id,doi,authors,title,pubdate,begindate,' \
-                       f'enddate,' \
-                       f'singledates,keywords,funding\n '
-                f.write(line)
-                count = 1
-                for pid_info in report:
-                    line = f'{count},{pid_info["pid"]},' \
-                           f'https://doi.org/{pid_info["doi"]},' \
-                           f'"{pid_info["authors"]}",' \
-                           f'"{pid_info["title"]}",{pid_info["pubdate"]},' \
-                           f'{pid_info["begindate"]},{pid_info["enddate"]},' \
-                           f'{pid_info["singledates"]},' \
-                           f'"{pid_info["keywords"]}","{pid_info["funding"]}"\n'
-                    f.write(line)
-                    count += 1
+            solr_report(report, file_name)
+
         return render_template('site_report_stats.html', scope=scope, cite=cite,
                                report=report, file_name=file_name)
     else:
@@ -343,3 +312,53 @@ def download_report(filename):
     scope = request.args.get("scope")
     return send_from_directory(Config.TMP_DIR, filename, as_attachment=True,
                                attachment_filename=f'{scope}_report.csv')
+
+
+def citation_report(report: list, file_name: str) -> list:
+    citations = list()
+    for pid_info in report:
+        pid = pid_info["pid"]
+        cache_file = f'{Config.CACHE}/{pid}.txt'
+        if os.path.exists(cache_file):
+            with open(cache_file, 'r') as f:
+                citation = f.read()
+        else:
+            cite_url = f"https://cite.edirepository.org/cite/{pid}"
+            headers = {"Accept": "text/plain"}
+            r = requests.get(cite_url, headers=headers)
+            if r.status_code == requests.codes.ok:
+                citation = r.text.strip()
+                with open(f'{Config.CACHE}/{pid}.txt', 'w') as f:
+                    f.write(r.text.strip())
+
+        citations.append((pid, citation))
+
+    with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
+        line = f',package_id,citation\n'
+        f.write(line)
+        count = 1
+        for pid in citations:
+            line = f'{count},{pid[0]},"{pid[1]}"\n'
+            f.write(line)
+            count += 1
+
+    return citations
+
+
+def solr_report(report: list, file_name: str):
+    with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
+        line = f',package_id,doi,authors,title,pubdate,begindate,' \
+               f'enddate,' \
+               f'singledates,keywords,funding\n '
+        f.write(line)
+        count = 1
+        for pid_info in report:
+            line = f'{count},{pid_info["pid"]},' \
+                   f'https://doi.org/{pid_info["doi"]},' \
+                   f'"{pid_info["authors"]}",' \
+                   f'"{pid_info["title"]}",{pid_info["pubdate"]},' \
+                   f'{pid_info["begindate"]},{pid_info["enddate"]},' \
+                   f'{pid_info["singledates"]},' \
+                   f'"{pid_info["keywords"]}","{pid_info["funding"]}"\n'
+            f.write(line)
+            count += 1
