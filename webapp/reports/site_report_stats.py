@@ -53,7 +53,11 @@ def get_site_report(scope: str) -> list:
             pid = (doc.find(".//packageid")).text.strip()
             id = pid.split(".")[1]
             title = (doc.find(".//title")).text.strip()
-            doi = (doc.find(".//doi")).text.strip()
+            doi = (doc.find(".//doi")).text
+            if doi is not None:
+                doi = doi.strip()
+            else:
+                doi = ""
             funding = (doc.find(".//funding")).text
             if funding is not None:
                 funding = funding.strip()
