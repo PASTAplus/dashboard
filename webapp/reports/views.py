@@ -336,8 +336,8 @@ def citation_report(report: list, file_name: str) -> list:
                 r = requests.get(cite_url, headers=headers)
                 if r.status_code == requests.codes.ok:
                     citation = r.text.strip()
-                    with open(f'{Config.CACHE}/{pid}.txt', 'w') as f:
-                        f.write(r.text.strip())
+                    with open(f'{Config.CACHE}/{pid}.txt', 'w') as c:
+                        c.write(r.text.strip())
                     citations.append((pid, citation))
 
             anchor = f"<a href='https://doi.org/{doi}'>https://doi.org/{doi}</a>"
