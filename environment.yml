@@ -103,7 +103,6 @@ dependencies:
     - dominate==2.4.0
     - flask-bootstrap==3.3.7.1
     - flask-wtf==0.14.3
-    - pastaplus-soh==2020.2.7
     - python-json-logger==0.1.11
     - visitor==0.1.3
     - wtforms==2.2.1
