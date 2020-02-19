@@ -317,33 +317,33 @@ def download_report(filename):
 
 def citation_report(report: list, file_name: str) -> list:
     citations = list()
-    for pid_info in report:
-        pid = pid_info["pid"]
-        doi = pid_info["doi"]
-        cache_file = f'{Config.CACHE}/{pid}.txt'
-        if os.path.exists(cache_file):
-            with open(cache_file, 'r') as f:
-                citation = f.read()
-            citations.append((pid, citation))
-        else:
-            cite_url = f"https://cite.edirepository.org/cite/{pid}"
-            headers = {"Accept": "text/html"}
-            r = requests.get(cite_url, headers=headers)
-            if r.status_code == requests.codes.ok:
-                citation = r.text.strip()
-                with open(f'{Config.CACHE}/{pid}.txt', 'w') as f:
-                    f.write(r.text.strip())
-                citations.append((pid, citation))
-
     with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
         line = f',package_id,citation\n'
         f.write(line)
         count = 1
-        for pid in citations:
-            anchor = f'<a href=\'https://doi.org/{doi}\'>{doi}</a>'
+
+        for pid_info in report:
+            pid = pid_info["pid"]
+            doi = pid_info["doi"]
+            cache_file = f'{Config.CACHE}/{pid}.txt'
+            if os.path.exists(cache_file):
+                with open(cache_file, 'r') as c:
+                    citation = c.read()
+                citations.append((pid, citation))
+            else:
+                cite_url = f"https://cite.edirepository.org/cite/{pid}"
+                headers = {"Accept": "text/html"}
+                r = requests.get(cite_url, headers=headers)
+                if r.status_code == requests.codes.ok:
+                    citation = r.text.strip()
+                    with open(f'{Config.CACHE}/{pid}.txt', 'w') as f:
+                        f.write(r.text.strip())
+                    citations.append((pid, citation))
+
+            anchor = f"<a href='https://doi.org/{doi}'>https://doi.org/{doi}</a>"
             doi = f'https://doi.org/{doi}'
-            citaiton = pid[1].replace(anchor, doi)
-            line = f'{count},{pid[0]},"{citation}"\n'
+            citation = citation.replace(anchor, doi)
+            line = f'{count},{pid},"{citation}"\n'
             f.write(line)
             count += 1
 
