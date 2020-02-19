@@ -12,6 +12,7 @@
     3/7/18
 """
 
+
 class Config(object):
 
     # Flask app configuration
@@ -26,7 +27,6 @@ class Config(object):
     STATIC = 'STATIC IMAGE DIRECTORY PATH'
     TMP_DIR = 'TEMPORARY DIRECTORY PATH'
     CACHE = 'PERMANENT CACHE DIRECTORY PATH'
-
 
     # LDAP configuration
     LDAP = 'ldap.edirepository.org'
