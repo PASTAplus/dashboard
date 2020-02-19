@@ -24,7 +24,7 @@
                     {% set portal_href = 'https://portal.edirepository.org/nis/mapbrowse?scope=' + scope + '&identifier=' + identifier + '&revision=' + revision %}
                     <td style="text-align: center">{{ loop.index }}</td>
                     <td style="text-align: center" nowrap><a href="{{ portal_href }}">{{ pid_info[0] }}</a></td>
-                    <td style="text-align: left">{{ pid_info[1] }}</td>
+                    <td style="text-align: left">{{ pid_info[1] | safe }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

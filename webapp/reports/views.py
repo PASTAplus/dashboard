@@ -293,7 +293,8 @@ def upload_report():
 
             for result in result_set:
                 if show_title:
-                    line = f'{result[0]},{result[1]},{result[2]},"{result[3]}",{result[4]}\n'
+                    line = f'{result[0]},{result[1]},{result[2]},' \
+                           f'"{result[3]}",{result[4]}\n'
                 else:
                     line = f'{result[0]},{result[1]},{result[2]},{result[4]}\n'
                 f.write(line)
@@ -325,7 +326,7 @@ def citation_report(report: list, file_name: str) -> list:
             citations.append((pid, citation))
         else:
             cite_url = f"https://cite.edirepository.org/cite/{pid}"
-            headers = {"Accept": "text/plain"}
+            headers = {"Accept": "text/html"}
             r = requests.get(cite_url, headers=headers)
             if r.status_code == requests.codes.ok:
                 citation = r.text.strip()
