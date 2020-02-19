@@ -76,6 +76,9 @@ def get_scopes() -> list:
     r = requests.get(scope_url)
     if r.status_code == requests.codes.ok:
         scopes = [_.strip() for _ in r.text.split("\n")]
+        for too_big in ('ecotrends', 'lter-landsat', 'lter-landsat-ledaps'):
+            if too_big in scopes:
+                scopes.remove(too_big)
     else:
         msg = f'A request to PASTA for scopes failed with a {r.status_code} code.'
         logger.error(msg)
