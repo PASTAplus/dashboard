@@ -319,6 +319,7 @@ def citation_report(report: list, file_name: str) -> list:
     citations = list()
     for pid_info in report:
         pid = pid_info["pid"]
+        doi = pid_info["doi"]
         cache_file = f'{Config.CACHE}/{pid}.txt'
         if os.path.exists(cache_file):
             with open(cache_file, 'r') as f:
@@ -339,7 +340,10 @@ def citation_report(report: list, file_name: str) -> list:
         f.write(line)
         count = 1
         for pid in citations:
-            line = f'{count},{pid[0]},"{pid[1]}"\n'
+            anchor = f'<a href=\'https://doi.org/{doi}\'>{doi}</a>'
+            doi = f'https://doi.org/{doi}'
+            citaiton = pid[1].replace(anchor, doi)
+            line = f'{count},{pid[0]},"{citation}"\n'
             f.write(line)
             count += 1
 
