@@ -1,56 +1,61 @@
-asn1crypto==1.3.0
+appdirs==1.4.4
 attrs==19.3.0
-certifi==2019.11.28
+black==19.10b0
+brotlipy==0.7.0
+certifi==2020.6.20
 cffi==1.14.0
 chardet==3.0.4
-Click==7.0
-cryptography==2.8
+click==7.1.2
+cryptography==2.9.2
 cycler==0.10.0
-daiquiri==2.0.0
+daiquiri==2.1.1
 dominate==2.4.0
-Flask==1.1.1
+Flask==1.1.2
 Flask-Bootstrap==3.3.7.1
-Flask-Login==0.4.1
+Flask-Login==0.5.0
 Flask-WTF==0.14.3
-idna==2.8
+idna @ file:///tmp/build/80754af9/idna_1593446292537/work
 itsdangerous==1.1.0
-Jinja2==2.11.1
-kiwisolver==1.0.1
-ldap3==2.6.1
-lxml==4.5.0
+Jinja2==2.11.2
+kiwisolver==1.2.0
+ldap3 @ file:///tmp/build/80754af9/ldap3_1593489534195/work
+lxml==4.5.2
 MarkupSafe==1.1.1
-matplotlib==3.1.3
-mkl-fft==1.0.15
-mkl-random==1.1.0
+matplotlib @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-base_1592576119134/work
+mkl-fft==1.1.0
+mkl-random==1.1.1
 mkl-service==2.3.0
-more-itertools==8.2.0
-numpy==1.18.1
-packaging==20.1
-pastaplus.soh==2020.2.7
-pendulum==1.4.4
+more-itertools==8.4.0
+numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1596233721170/work
+packaging==20.4
+pastaplus.soh @ file:///home/servilla/git/soh/src
+pathspec==0.8.0
+pendulum==2.1.0
 pluggy==0.13.1
-psycopg2==2.8.4
-py==1.8.1
+psycopg2==2.8.5
+py @ file:///tmp/build/80754af9/py_1593446248552/work
 pyasn1==0.4.8
-pycparser==2.19
-PyNaCl==1.3.0
-pyOpenSSL==19.1.0
-pyparsing==2.4.6
+pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+PyNaCl @ file:///tmp/build/80754af9/pynacl_1595009131182/work
+pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
+pyparsing==2.4.7
 PySocks==1.7.1
-pytest==5.3.5
+pytest==5.4.3
 python-dateutil==2.8.1
 python-json-logger==0.1.11
-pytz==2019.3
 pytzdata==2019.3
-requests==2.22.0
+regex==2020.7.14
+requests @ file:///tmp/build/80754af9/requests_1592841827918/work
 sip==4.19.13
-six==1.14.0
-SQLAlchemy==1.3.13
-tornado==6.0.3
-tzlocal==2.0.0
-urllib3==1.25.8
+six==1.15.0
+sniffer @ file:///home/servilla/git/sniffer
+SQLAlchemy @ file:///tmp/build/80754af9/sqlalchemy_1593446299926/work
+toml==0.10.1
+tornado==6.0.4
+typed-ast==1.4.1
+urllib3==1.25.9
 uWSGI==2.0.18
 visitor==0.1.3
-wcwidth==0.1.8
-Werkzeug==1.0.0
-WTForms==2.2.1
+wcwidth @ file:///tmp/build/80754af9/wcwidth_1593447189090/work
+Werkzeug==1.0.1
+WTForms==2.3.1

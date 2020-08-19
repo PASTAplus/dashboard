@@ -50,4 +50,9 @@ class Config(object):
     DB_PW = 'SECRET_PASSWORD'
     DB_HOST = 'DB_HOST'
     DB_DB = 'pasta'
-    DB_DRIVER = 'postgres+psycopg2'
+    DB_DRIVER = 'postgresql+psycopg2'
+
+    # Offline database
+    OFFLINE_DB = "<PATH>/sniffer/src/sniffer/offline/offline.sqlite"
+    # Embargo database
+    EMBARGO_DB = "<PATH>/sniffer/src/sniffer/embargo/embargo.sqlite"

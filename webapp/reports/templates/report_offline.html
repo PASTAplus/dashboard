@@ -1,41 +1,26 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>PASTA Data Entities with Offline Distribution</h1>
-    <h4>Report Generated: {{ modification_date }}</h4>
-    <h2>Offline Data Resources ({{ len_offline_resources }})</h2>
+    <h1>Data Entities with Offline Distribution</h1>
+{#    <h4>Report Generated: {{ modification_date }}</h4>#}
+    <h2>Offline Data Resources ({{ offline_count }})</h2>
     <table class="table table-striped">
     <tr>
+        <th> </th>
         <th>Package ID</th>
-        <th>Resource ID</th>
         <th>Object Name</th>
         <th>Medium Name</th>
     </tr>
-    {% for offline_dict in offline_resources %}
+    {% for offline_resource in offline_resources %}
         <tr>
-            <td>{{ offline_dict["package_id"] }}</td>
-            <td>{{ offline_dict["resource_id"] }}</td>
-            <td>{{ offline_dict["object_name"] }}</td>
-            <td>{{ offline_dict["medium_name"] }}</td>
-        </tr>
-    {% endfor %}
-    </table>
-
-    <h2>Inaccessible PASTA Data Packages ({{ len_unparsed_resources }})</h2>
-    <p>Metadata for the following data packages could not be read</p>
-    <table class="table table-striped">
-    <tr>
-        <th>Package ID</th>
-        <th>Resource ID</th>
-        <th>Object Name</th>
-        <th>Medium Name</th>
-    </tr>
-    {% for unparsed_dict in unparsed_resources %}
-        <tr>
-            <td>{{ unparsed_dict["package_id"] }}</td>
-            <td>{{ unparsed_dict["resource_id"] }}</td>
-            <td>Not parsed</td>
-            <td>Not parsed</td>
+            <td>{{ loop.index }}</td>
+            <td>
+                <a href="https://portal.edirepository.org/nis/mapbrowse?packageid={{ offline_resource.pid }}">
+                    {{ offline_resource.pid }}
+                </a>
+            </td>
+            <td>{{ offline_resource.object_name }}</td>
+            <td>{{ offline_resource.medium }}</td>
         </tr>
     {% endfor %}
     </table>

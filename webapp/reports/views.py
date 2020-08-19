@@ -21,6 +21,8 @@ from flask import Blueprint, flash, render_template, request, redirect, send_fro
 from flask_login import login_required
 import pendulum
 import requests
+from sniffer.model.embargo_db import EmbargoDB
+from sniffer.model.offline_db import OfflineDB
 
 from webapp.config import Config
 from webapp.reports.forms import PackageIdentifier
@@ -41,13 +43,36 @@ logger = daiquiri.getLogger(__name__)
 @reports.route('/render_no_public', methods=['GET', 'POST'])
 @login_required
 def render_no_public():
-    return render_report(report_type='no_public')
+    embargo_db = EmbargoDB(Config.EMBARGO_DB)
+    package_embargoes = embargo_db.get_all_newest_metadata()
+    package_count = len(package_embargoes)
+    data_embargoes = embargo_db.get_all_newest_data()
+    data_count = len(data_embargoes)
+    ephemeral_embargoes = embargo_db.get_all_ephemeral()
+    ephemeral_count = len(ephemeral_embargoes)
+
+    return render_template(
+        'report_no_public.html',
+        package_embargoes=package_embargoes,
+        package_count=package_count,
+        data_embargoes=data_embargoes,
+        data_count=data_count,
+        ephemeral_embargoes=ephemeral_embargoes,
+        ephemeral_count=ephemeral_count
+    )
 
 
 @reports.route('/render_offline', methods=['GET', 'POST'])
 @login_required
 def render_offline():
-    return render_report(report_type='offline')
+    offline_db = OfflineDB(Config.OFFLINE_DB)
+    offline_resources = offline_db.get_all()
+    offline_count = len(offline_resources)
+    return render_template(
+        'report_offline.html',
+        offline_resources=offline_resources,
+        offline_count=offline_count
+    )
 
 
 @reports.route('/render_doi_report', methods=['GET', 'POST'])

@@ -1,36 +1,89 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-    <h1>PASTAplus Resources Lacking Public Read Access</h1>
-    <h4>Report Generated: {{ modification_date }}</h4>
-    <h2>Metadata Resources ({{ len_metadata_resources }})</h2>
+    <h1>Resources Denying Public Read Access</h1>
+    <h2>Metadata Resources ({{ package_count }})</h2>
     <table class="table table-striped">
     <tr>
+        <th> </th>
         <th>Package ID</th>
         <th>Resource ID</th>
-        <th>ACL XML</th>
+        <th>Embargo Type</th>
+        <th>Allows Auth Access</th>
     </tr>
-    {% for metadata_dict in metadata_resources %}
+    {% for package in package_embargoes %}
         <tr>
-            <td>{{ metadata_dict["package_id"] }}</td>
-            <td>{{ metadata_dict["resource_id"] }}</td>
-            <td>{{ metadata_dict["acl_xml"] }}</td>
+            <td>{{ loop.index }}</td>
+            <td>
+                <a href="https://portal.edirepository.org/nis/mapbrowse?packageid={{ package.pid }}">
+                    {{ package.pid }}
+                </a>
+            </td>
+            <td>{{ package.rid }}</td>
+            {% if package.type %}
+                <td>explicit</td>
+            {% else %}
+                <td>implicit</td>
+            {% endif %}
+            {% if package.auth %}
+                <td>yes</td>
+            {% else %}
+                <td>no</td>
+            {% endif %}
         </tr>
     {% endfor %}
     </table>
 
-    <h2>Data Resources ({{ len_data_resources }})</h2>
+    <h2>Data Resources ({{ data_count }})</h2>
     <table class="table table-striped">
     <tr>
+        <th> </th>
         <th>Package ID</th>
         <th>Resource ID</th>
-        <th>ACL XML</th>
+        <th>Embargo Type</th>
+        <th>Allows Auth Access</th>
     </tr>
-    {% for data_dict in data_resources %}
+    {% for data in data_embargoes %}
         <tr>
-            <td>{{ data_dict["package_id"] }}</td>
-            <td>{{ data_dict["resource_id"] }}</td>
-            <td>{{ data_dict["acl_xml"] }}</td>
+            <td>{{ loop.index }}</td>
+            <td>
+                <a href="https://portal.edirepository.org/nis/mapbrowse?packageid={{ data.pid }}">
+                    {{ data.pid }}
+                </a>
+            </td>
+            <td>{{ data.rid }}</td>
+            {% if data.type %}
+                <td>explicit</td>
+            {% else %}
+                <td>implicit</td>
+            {% endif %}
+            {% if data.auth %}
+                <td>yes</td>
+            {% else %}
+                <td>no</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </table>
+
+    <h2>Ephemeral Resources ({{ ephemeral_count }})</h2>
+    <table class="table table-striped">
+    <tr>
+        <th> </th>
+        <th>Package ID</th>
+        <th>Resource ID</th>
+        <th>Package Creation Date</th>
+    </tr>
+    {% for ephemeral in ephemeral_embargoes %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+                <a href="https://portal.edirepository.org/nis/mapbrowse?packageid={{ ephemeral.pid }}">
+                    {{ ephemeral.pid }}
+                </a>
+            </td>
+            <td>{{ ephemeral.rid }}</td>
+            <td>{{ ephemeral.date_ephemeral }} ( {{ ephemeral.days_ephemeral }} days ago)</td>
         </tr>
     {% endfor %}
     </table>
