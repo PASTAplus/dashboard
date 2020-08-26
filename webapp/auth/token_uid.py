@@ -11,7 +11,6 @@
 :Created:
     5/24/18
 """
-import base64
 import os
 
 import daiquiri
@@ -25,7 +24,7 @@ logger = daiquiri.getLogger('token_uid: ' + __name__)
 
 
 def is_expired(ttl, expiry):
-    timestamp = pendulum.fromtimestamp(float(ttl))
+    timestamp = pendulum.from_timestamp(float(ttl))
     future = timestamp.add(minutes=expiry).timestamp()
     now = pendulum.now().timestamp()
     return future <= now
