@@ -17,7 +17,10 @@ import json
 import os
 
 import daiquiri
-from flask import Blueprint, flash, render_template, request, redirect, send_from_directory, url_for
+from flask import (
+    Blueprint, flash, render_template, request, redirect,
+    send_from_directory, url_for
+)
 from flask_login import login_required
 import pendulum
 import requests
@@ -25,12 +28,12 @@ from sniffer.model.embargo_db import EmbargoDB
 from sniffer.model.offline_db import OfflineDB
 
 from webapp.config import Config
+from webapp.reports import upload_stats
 from webapp.reports.forms import PackageIdentifier
 from webapp.reports.forms import SiteReport
 from webapp.reports.forms import UploadReport
 from webapp.reports.package_tracker import PackageStatus
 from webapp.reports.site_report_stats import get_site_report
-from webapp.reports.upload_stats import UploadStats
 from webapp.reports.upload_report_stats import get_package_title
 from webapp.reports.upload_report_stats import get_scope_count
 from webapp.reports.upload_report_stats import solr_report_stats
@@ -224,26 +227,23 @@ def recent_uploads():
     if days is None:
         days = 7
     scope = request.args.get('scope')
-    stats = UploadStats(hours_in_past=days * 24, scope=scope)
-    count = stats.count
-
-    # Create webapp static directory if not exists
-    if not os.path.exists(Config.STATIC):
-        os.makedirs(Config.STATIC)
-
-    file_name = str(stats.now_as_integer) + '.png'
-    file_path = Config.STATIC + '/' + file_name
-    plot = '/static/' + file_name
-    stats.plot(file_path=file_path)
+    stats = upload_stats.get_recent_uploads(days, scope)
+    count = len(stats)
+    plot = "/static/" + upload_stats.plot(days, stats)
     result_set = []
     i = 0
-    for result in stats.result_set:
+    for result in stats:
         i += 1
         pid = result[0]
         dt = pendulum.instance(result[1]).to_datetime_string()
         result_set.append((i, pid, dt))
-    return render_template('recent_uploads.html', result_set=result_set,
-                           count=count, plot=plot, days=days)
+    return render_template(
+        'recent_uploads.html',
+        result_set=result_set,
+        count=count,
+        plot=plot,
+        days=days
+    )
 
 
 @reports.route('/site_report', methods=['GET', 'POST'])
