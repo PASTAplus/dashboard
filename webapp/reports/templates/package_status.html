@@ -5,90 +5,101 @@
 <h1 align="left">Data Package Status: {{ package_status.package_identifier }}</h1>
 
 {% if package_status.is_real %}
-    <h3 align="left">PASTA</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th width="25%" style="text-align: center">Attribute</th>
-            <th style="text-align: center">Value</th>
-        </tr>
-        <tr>
-            <td align="right">
-                Package Identifier:
-            </td>
-            <td>
-                {{ package_status.package_resources[-1] }}
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                DOI:
-            </td>
-            <td>
-                {{ package_status.package_resources[-2] }}
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                Created:
-            </td>
-            <td>
-                {{ package_status.date_created_utc }}<br/>
-                {{ package_status.date_created_mt }}
-            </td>
-        </tr>
-        <tr>
-            <td align="right">
-                Package resources:
-            </td>
-            <td>
-                {% for resource in package_status.package_resources[:-2] %}
-                    {{ resource }} <br/>
+    <div class="container">
+        <h3 align="left">EDI PASTA+</h3>
+        <table class="table table-bordered">
+            <tr>
+                <th width="25%" style="text-align: center">Attribute</th>
+                <th style="text-align: center">Value</th>
+            </tr>
+            <tr>
+                <td align="right">
+                    Package Identifier:
+                </td>
+                <td>
+                    {{ package_status.package_resources[-1] }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    DOI:
+                </td>
+                <td>
+                    {{ package_status.package_resources[-2] }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Created:
+                </td>
+                <td>
+                    {{ package_status.date_created_utc }}<br/>
+                    {{ package_status.date_created_mt }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    Package resources:
+                </td>
+                <td>
+                    {% for resource in package_status.package_resources[:-2] %}
+                        {{ resource }} <br/>
+                    {% endfor %}
+                 </td>
+            </tr>
+        </table>
+        <h4>Package Resources and Downloads (since May 2018)</h4>
+        <ul>
+            {% for resource in package_status.resource_downloads %}
+                <li>{{ resource }}: {{ package_status.resource_downloads[resource] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="container">
+        <a href="#dataone_gmn" data-toggle="collapse"><h3 align="left">DataONE</h3></a>
+        <div id="dataone_gmn" class="collapse">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th style="text-align: center">{{ package_status.gmn_host }} Generic Member Node (GMN)</th>
+                    <th style="text-align: center">Created</th>
+                </tr>
+                {% for resource in package_status.gmn_resources %}
+                    <tr>
+                        <td align="center">
+                             {{ resource }}
+                        </td>
+                        <td align="center">
+                            {{ package_status.gmn_resources[resource] }}
+                        </td>
+                    </tr>
                 {% endfor %}
-             </td>
-        </tr>
-    </table>
+            </table>
 
-    <h3 align="left">GMN ({{ package_status.gmn_url }})</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th style="text-align: center">Resource</th>
-            <th style="text-align: center">Created</th>
-        </tr>
-        {% for resource in package_status.gmn_resources %}
-            <tr>
-                <td align="center">
-                     {{ resource }}
-                </td>
-                <td align="center">
-                    {{ package_status.gmn_resources[resource] }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th style="text-align: center">Coordinating Node (CN)</th>
+                    <th style="text-align: center">Synchronized</th>
+                </tr>
+                {% for resource in package_status.cn_sync_times %}
+                    <tr>
+                        <td align="center">
+                             {{ resource }}
+                        </td>
+                        <td align="center">
+                            {{ package_status.cn_sync_times[resource] }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% if package_status.cn_index_status %}
+                DataONE Solr index status: <span class="text-success"><strong>INDEXED</strong></span>
+            {% else %}
+                DataONE Solr index status: <span class="text-danger"><strong>NOT INDEXED</strong></span>
+            {% endif %}
+        </div>
+    </div>
 
-    <h3 align="left">DataONE CN ({{ package_status.cn_url }})</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th style="text-align: center">Resource</th>
-            <th style="text-align: center">Synchronized</th>
-        </tr>
-        {% for resource in package_status.cn_sync_times %}
-            <tr>
-                <td align="center">
-                     {{ resource }}
-                </td>
-                <td align="center">
-                    {{ package_status.cn_sync_times[resource] }}
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    {% if package_status.cn_index_status %}
-        The data package metadata IS indexed
-    {% else %}
-        The data package metadata IS NOT indexed
-    {% endif %}
 {% else %}
         Data package was not found in PASTA
 {% endif %}
