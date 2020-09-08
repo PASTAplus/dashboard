@@ -102,8 +102,7 @@ def get_resource_counts(rid: str, start: str = None, end: str = None) -> int:
     if end is not None:
         sql += f" AND entrytime <= '{end}'"
 
-    audit = "audit.lternet.edu:5432"
-    rs = query(audit, sql)
+    rs = query(Config.DB_HOST_AUDIT, sql)
     return rs[0][0]
 
 
@@ -132,8 +131,7 @@ def get_resource_downloads(rid: str, start: str = None, end: str = None):
 
     sql += "ORDER BY entrytime ASC"
 
-    audit = "audit.lternet.edu:5432"
-    rs = query(audit, sql)
+    rs = query(Config.DB_HOST_AUDIT, sql)
     return rs
 
 
@@ -181,13 +179,13 @@ def is_real_package(pid: list, pasta_url: str, auth: tuple):
     return is_real
 
 
-def plot(stats: List):
+def plot(stats: List) -> str:
     first_download = stats[0][0]
     now = pendulum.now()
     delta = now - first_download.astimezone(tz=ABQ_TZ)
     days = int(delta.total_days())
     _ = pendulum.datetime(
-        year=now.year, month=now.month, day=now.day, hour=now.hour
+        year=now.year, month=now.month, day=now.day
     )
 
     dt_tbl = {}
@@ -195,8 +193,8 @@ def plot(stats: List):
         dt_tbl[_.subtract(days=day)] = 0
 
     for result in stats:
-        p = pendulum.instance(result[1])
-        _ = pendulum.datetime(year=p.year, month=p.month, day=p.day, hour=p.hour)
+        p = pendulum.instance(result[0])
+        _ = pendulum.datetime(year=p.year, month=p.month, day=p.day)
         dt_tbl[_] += 1
 
     dt = []
@@ -212,9 +210,10 @@ def plot(stats: List):
     file_name = f"{now.timestamp()}.png"
     file_path = p / file_name
 
+    plt.figure(figsize=(8.0, 2.4), tight_layout=True)
     plt.plot(dt, count, "g")
-    plt.xlabel("Date")
-    plt.ylabel("Uploads")
+    # plt.xlabel("Date")
+    plt.ylabel("Downloads")
     plt.gca().set_ylim(bottom=0.0)
     plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
     if sum(count) == 0:
@@ -224,7 +223,7 @@ def plot(stats: List):
     plt.savefig(file_path)
     plt.close()
 
-    return file_name
+    return f"/static/{file_name}"
 
 
 def query(host: str, sql: str):
@@ -395,6 +394,6 @@ class PackageStatus(object):
         for resource in self._package_resources[:-2]:
             count = get_resource_counts(resource)
             series = get_resource_downloads(resource)
-            # plot_name = plot(series)
-            resource_downloads[resource] = count
+            plot_name = plot(series)
+            resource_downloads[resource] = (count, plot_name)
         return resource_downloads

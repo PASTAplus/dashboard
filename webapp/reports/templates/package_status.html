@@ -20,14 +20,17 @@
         <div style="padding-left: 1em; padding-bottom: 0.25em">
             <strong>Package Resources and Downloads:</strong>
         </div>
-        <ul>
-            {% for resource in package_status.resource_downloads %}
-                <li>
-                    {{ resource }}: <span class="text-success">
-                    <strong>{{ package_status.resource_downloads[resource] }}</strong></span>
-                </li>
-            {% endfor %}
-        </ul>
+        {% for resource in package_status.resource_downloads %}
+                 <div class="container" style="padding-left: 2em;">
+                   {{ resource }}: <strong>{{ package_status.resource_downloads[resource][0] }}</strong>
+                   <a href="#{{ loop.index }}" data-toggle="collapse">
+                    (plot)
+                   </a>
+                    <div id="{{ loop.index }}" class="collapse">
+                        <img class="left-block" src="{{ package_status.resource_downloads[resource][1] }}" />
+                    </div>
+                </div>
+        {% endfor %}
     </div>
 
     <div class="container">
@@ -35,7 +38,7 @@
         <div id="dataone_gmn" class="collapse">
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th style="text-align: center">{{ package_status.gmn_host }} Generic Member Node (GMN)</th>
+                    <th style="text-align: center; width: 60em;">{{ package_status.gmn_host }} Generic Member Node (GMN)</th>
                     <th style="text-align: center">Created</th>
                 </tr>
                 {% for resource in package_status.gmn_resources %}
@@ -52,7 +55,7 @@
 
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th style="text-align: center">Coordinating Node (CN)</th>
+                    <th style="text-align: center; width: 60em;">Coordinating Node (CN)</th>
                     <th style="text-align: center">Synchronized</th>
                 </tr>
                 {% for resource in package_status.cn_sync_times %}
