@@ -48,7 +48,8 @@ class Config(object):
     # PASTA database connection
     DB_USER = 'DB_USER'
     DB_PW = 'SECRET_PASSWORD'
-    DB_HOST = 'DB_HOST'
+    DB_HOST_PACKAGE = 'HOST'
+    DB_HOST_AUDIT = 'HOST'
     DB_DB = 'pasta'
     DB_DRIVER = 'postgresql+psycopg2'
 
