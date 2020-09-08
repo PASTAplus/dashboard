@@ -2,56 +2,30 @@
 
 {% block app_content %}
 
-<h1 align="left">Data Package Status: {{ package_status.package_identifier }}</h1>
+<h2 align="left">Data Package Status</h2>
 
 {% if package_status.is_real %}
     <div class="container">
-        <h3 align="left">EDI PASTA+</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th width="25%" style="text-align: center">Attribute</th>
-                <th style="text-align: center">Value</th>
-            </tr>
-            <tr>
-                <td align="right">
-                    Package Identifier:
-                </td>
-                <td>
-                    {{ package_status.package_resources[-1] }}
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    DOI:
-                </td>
-                <td>
-                    {{ package_status.package_resources[-2] }}
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    Created:
-                </td>
-                <td>
-                    {{ package_status.date_created_utc }}<br/>
-                    {{ package_status.date_created_mt }}
-                </td>
-            </tr>
-            <tr>
-                <td align="right">
-                    Package resources:
-                </td>
-                <td>
-                    {% for resource in package_status.package_resources[:-2] %}
-                        {{ resource }} <br/>
-                    {% endfor %}
-                 </td>
-            </tr>
-        </table>
-        <h4>Package Resources and Downloads (since May 2018)</h4>
+        <h3 align="left">Package ID: {{ package_status.package_identifier }}</h3>
+        <div style="padding-left: 1em; padding-bottom: 0.25em">
+            <strong>PASTA+ Identifier:</strong> {{ package_status.package_resources[-1] }}
+        </div>
+        <div style="padding-left: 1em; padding-bottom: 0.25em">
+            <strong>DOI:</strong> {{ package_status.package_resources[-2] }}
+        </div>
+        <div style="padding-left: 1em; padding-bottom: 0.25em">
+            <strong>Date published:</strong> {{ package_status.date_created_utc }}
+            ({{ package_status.date_created_mt }} Mountain Time)
+        </div>
+        <div style="padding-left: 1em; padding-bottom: 0.25em">
+            <strong>Package Resources and Downloads:</strong>
+        </div>
         <ul>
             {% for resource in package_status.resource_downloads %}
-                <li>{{ resource }}: {{ package_status.resource_downloads[resource] }}</li>
+                <li>
+                    {{ resource }}: <span class="text-success">
+                    <strong>{{ package_status.resource_downloads[resource] }}</strong></span>
+                </li>
             {% endfor %}
         </ul>
     </div>

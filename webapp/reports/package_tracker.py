@@ -11,11 +11,26 @@
 :Created:
     1/6/19
 """
+from datetime import datetime
+from dateutil import tz
+from pathlib import Path
+from typing import List
 from urllib.parse import quote
 
+import daiquiri
 from lxml import etree
-import requests
+import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 import pendulum
+import requests
+from sqlalchemy import create_engine
+from sqlalchemy.orm.exc import NoResultFound
+
+from webapp.config import Config
+
+
+logger = daiquiri.getLogger(__name__)
+ABQ_TZ = tz.gettz("America/Denver")
 
 
 def get_d1_date_uploaded(sysmeta_xml: str) -> str:
@@ -64,6 +79,64 @@ def get_d1_sysmeta(pid: str, d1_url: str) -> tuple:
         return False, f'Unknown error with status code: {r.status_code}'
 
 
+def get_resource_counts(rid: str, start: str = None, end: str = None) -> int:
+    sql = (
+        "SELECT COUNT(*) FROM auditmanager.eventlog "
+        "WHERE servicemethod='<SERVICE_METHOD>' AND statuscode=200 "
+        "AND userid NOT LIKE '%%robot%%' AND resourceid='<RID>'"
+    )
+
+    if "/metadata/eml/" in rid:
+        service_method = "readMetadata"
+    elif "/report/eml/" in rid:
+        service_method = "readDataPackageReport"
+    else:
+        service_method = "readDataEntity"
+
+    sql = sql.replace("<SERVICE_METHOD>", service_method)
+    sql = sql.replace("<RID>", rid)
+
+    if start is not None:
+        sql += f" AND entrytime >= '{start}'"
+
+    if end is not None:
+        sql += f" AND entrytime <= '{end}'"
+
+    audit = "audit.lternet.edu:5432"
+    rs = query(audit, sql)
+    return rs[0][0]
+
+
+def get_resource_downloads(rid: str, start: str = None, end: str = None):
+    sql = (
+        "SELECT entrytime FROM auditmanager.eventlog "
+        "WHERE servicemethod='<SERVICE_METHOD>' AND statuscode=200 "
+        "AND userid NOT LIKE '%%robot%%' AND resourceid='<RID>' "
+    )
+
+    if "/metadata/eml/" in rid:
+        service_method = "readMetadata"
+    elif "/report/eml/" in rid:
+        service_method = "readDataPackageReport"
+    else:
+        service_method = "readDataEntity"
+
+    sql = sql.replace("<SERVICE_METHOD>", service_method)
+    sql = sql.replace("<RID>", rid)
+
+    if start is not None:
+        sql += f"AND entrytime >= '{start}' "
+
+    if end is not None:
+        sql += f"AND entrytime <= '{end}' "
+
+    sql += "ORDER BY entrytime ASC"
+
+    audit = "audit.lternet.edu:5432"
+    rs = query(audit, sql)
+    return rs
+
+
 def get_package_doi(pid: list, pasta_url: str, auth: tuple) -> str:
     url = pasta_url + f'/doi/eml/{pid[0]}/{pid[1]}/{pid[2]}'
     r = requests.get(url=url, auth=auth)
@@ -108,6 +181,74 @@ def is_real_package(pid: list, pasta_url: str, auth: tuple):
     return is_real
 
 
+def plot(stats: List):
+    first_download = stats[0][0]
+    now = pendulum.now()
+    delta = now - first_download.astimezone(tz=ABQ_TZ)
+    days = int(delta.total_days())
+    _ = pendulum.datetime(
+        year=now.year, month=now.month, day=now.day, hour=now.hour
+    )
+
+    dt_tbl = {}
+    for day in range(days + 2):
+        dt_tbl[_.subtract(days=day)] = 0
+
+    for result in stats:
+        p = pendulum.instance(result[1])
+        _ = pendulum.datetime(year=p.year, month=p.month, day=p.day, hour=p.hour)
+        dt_tbl[_] += 1
+
+    dt = []
+    count = []
+    for _ in dt_tbl:
+        dt.append(datetime.strptime(_.to_datetime_string(), "%Y-%m-%d %H:%M:%S"))
+        count.append(dt_tbl[_])
+
+    p = Path(Config.STATIC)
+    if not p.exists():
+        p.mkdir(parents=True)
+
+    file_name = f"{now.timestamp()}.png"
+    file_path = p / file_name
+
+    plt.plot(dt, count, "g")
+    plt.xlabel("Date")
+    plt.ylabel("Uploads")
+    plt.gca().set_ylim(bottom=0.0)
+    plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))
+    if sum(count) == 0:
+        plt.gca().set_yticks([0.0, 1.0])
+    plt.gca().grid(True)
+    plt.gcf().autofmt_xdate()
+    plt.savefig(file_path)
+    plt.close()
+
+    return file_name
+
+
+def query(host: str, sql: str):
+    rs = None
+    db = (
+        f"{Config.DB_DRIVER}://"
+        f"{Config.DB_USER}:"
+        f"{Config.DB_PW}@"
+        f"{host}/"
+        f"{Config.DB_DB}"
+    )
+    engine = create_engine(db)
+    try:
+        with engine.connect() as connection:
+            rs = connection.execute(sql).fetchall()
+    except NoResultFound as e:
+        logger.warning(e)
+        rs = list()
+    except Exception as e:
+        logger.error(e)
+        raise e
+    return rs
+
+
 class PackageStatus(object):
 
     def __init__(self, package_identifier: str):
@@ -119,6 +260,8 @@ class PackageStatus(object):
         if self._is_real:
             self._date_created_mt, self._date_created_utc = self.get_pasta_create_date()
             self._package_resources = self.get_pasta_resources()
+            self._package_resource_downloads = self.get_resource_downloads()
+            self._gmn_host = self.get_gmn_host()
             self._gmn_url = self.get_gmn_url()
             self._gmn_resources = self.get_gmn_resource_times()
             self._cn_url = 'https://cn.dataone.org/cn/v2'
@@ -150,6 +293,10 @@ class PackageStatus(object):
         return self._gmn_resources
 
     @property
+    def gmn_host(self):
+        return self._gmn_host
+
+    @property
     def gmn_url(self):
         return self._gmn_url
 
@@ -164,6 +311,10 @@ class PackageStatus(object):
     @property
     def package_resources(self):
         return self._package_resources
+
+    @property
+    def resource_downloads(self):
+        return self._package_resource_downloads
 
     def get_cn_sync_times(self):
         resources = dict()
@@ -201,14 +352,19 @@ class PackageStatus(object):
                 resources[resource] = response
         return resources
 
+    def get_gmn_host(self):
+        if self._pid[0] == 'edi':
+            gmn_host = 'EDI'
+        else:
+            gmn_host = 'LTER'
+        return gmn_host
+
     def get_gmn_url(self):
         if self._pid[0] == 'edi':
             gmn_host = 'edirepository.org'
         else:
             gmn_host = 'lternet.edu'
-
         return f'https://gmn.{gmn_host}/mn/v2'
-
 
     def get_pasta_create_date(self):
         xml = get_resource_metadata(self._pid, self._pasta_url, self._auth)
@@ -229,6 +385,16 @@ class PackageStatus(object):
         if success:
             resources = response.strip().split('\n')
             resources.append(resources[-1])
-            resources[-2] = get_package_doi(self._pid, self._pasta_url,
-                                            self._auth)
+            resources[-2] = get_package_doi(
+                self._pid, self._pasta_url, self._auth
+            )
         return resources
+
+    def get_resource_downloads(self):
+        resource_downloads = dict()
+        for resource in self._package_resources[:-2]:
+            count = get_resource_counts(resource)
+            series = get_resource_downloads(resource)
+            # plot_name = plot(series)
+            resource_downloads[resource] = count
+        return resource_downloads
