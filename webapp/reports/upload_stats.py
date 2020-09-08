@@ -48,7 +48,7 @@ def get_recent_uploads(days: int, scope: str):
         f"{Config.DB_DRIVER}://"
         f"{Config.DB_USER}:"
         f"{Config.DB_PW}@"
-        f"{Config.DB_HOST}/"
+        f"{Config.DB_HOST_PACKAGE}/"
         f"{Config.DB_DB}"
     )
 

@@ -29,7 +29,7 @@ def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
     db = Config.DB_DRIVER + '://' + \
          Config.DB_USER + ':' + \
          Config.DB_PW + '@' + \
-         Config.DB_HOST + '/' + \
+         Config.DB_HOST_PACKAGE + '/' + \
          Config.DB_DB
 
     connection = create_engine(db)
@@ -90,7 +90,7 @@ def get_scope_count(scope: str) -> int:
     db = Config.DB_DRIVER + '://' + \
          Config.DB_USER + ':' + \
          Config.DB_PW + '@' + \
-         Config.DB_HOST + '/' + \
+         Config.DB_HOST_PACKAGE + '/' + \
          Config.DB_DB
 
     connection = create_engine(db)
