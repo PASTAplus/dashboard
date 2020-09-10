@@ -33,6 +33,10 @@ logger = daiquiri.getLogger(__name__)
 ABQ_TZ = tz.gettz("America/Denver")
 
 
+def clean(text):
+    return " ".join(text.split())
+
+
 def get_d1_date_uploaded(sysmeta_xml: str) -> str:
     root = etree.fromstring(sysmeta_xml.encode('utf-8'))
     date_uploaded = root.find('.//dateUploaded')
@@ -135,8 +139,18 @@ def get_resource_downloads(rid: str, start: str = None, end: str = None):
     return rs
 
 
-def get_package_doi(pid: list, pasta_url: str, auth: tuple) -> str:
-    url = pasta_url + f'/doi/eml/{pid[0]}/{pid[1]}/{pid[2]}'
+def get_entity_name(dataset, rid: str):
+    name = None
+    urls = dataset.findall("./physical/distribution/online/url")
+    for url in urls:
+        if rid == url.text.strip():
+            name = dataset.find("./entityName").text.strip()
+            break
+    return name
+
+
+def get_package_doi(pid: list, auth: tuple = None) -> str:
+    url = Config.PASTA_URL + f'/doi/eml/{pid[0]}/{pid[1]}/{pid[2]}'
     r = requests.get(url=url, auth=auth)
     if r.status_code == requests.codes.ok:
         return r.text
@@ -150,15 +164,22 @@ def get_resource_create_date(resource_xml: str) -> str:
     return date_created.text
 
 
-def get_resource_metadata(pid: list, pasta_url: str, auth: tuple) -> str:
-    url = pasta_url + f'/rmd/eml/{pid[0]}/{pid[1]}/{pid[2]}'
+def get_package_eml(pid: list, auth: tuple = None) -> str:
+    url = Config.PASTA_URL + f'/metadata/eml/{pid[0]}/{pid[1]}/{pid[2]}'
     r = requests.get(url=url, auth=auth)
     r.raise_for_status()
     return r.text
 
 
-def get_resources(pid: list, pasta_url: str, auth: tuple) -> tuple:
-    url = pasta_url + f'/eml/{pid[0]}/{pid[1]}/{pid[2]}'
+def get_resource_metadata(pid: list, auth: tuple = None) -> str:
+    url = Config.PASTA_URL + f'/rmd/eml/{pid[0]}/{pid[1]}/{pid[2]}'
+    r = requests.get(url=url, auth=auth)
+    r.raise_for_status()
+    return r.text
+
+
+def get_resources(pid: list, auth: tuple = None) -> tuple:
+    url = Config.PASTA_URL + f'/eml/{pid[0]}/{pid[1]}/{pid[2]}'
     r = requests.get(url=url, auth=auth)
     if r.status_code == requests.codes.ok:
         return True, r.text
@@ -170,9 +191,9 @@ def get_resources(pid: list, pasta_url: str, auth: tuple) -> tuple:
         return False, f'Unknown error with status code: {r.status_code}'
 
 
-def is_real_package(pid: list, pasta_url: str, auth: tuple):
+def is_real_package(pid: list, auth: tuple = None):
     is_real = False
-    url = pasta_url + f'/rmd/eml/{pid[0]}/{pid[1]}/{pid[2]}'
+    url = Config.PASTA_URL + f'/rmd/eml/{pid[0]}/{pid[1]}/{pid[2]}'
     r = requests.get(url=url, auth=auth)
     if r.status_code == requests.codes.ok:
         is_real = True
@@ -253,10 +274,10 @@ class PackageStatus(object):
     def __init__(self, package_identifier: str):
         self._package_identifier = package_identifier.strip()
         self._pid = self._package_identifier.split('.')
-        self._pasta_url = 'https://pasta.lternet.edu/package'
-        self._auth = None
-        self._is_real = is_real_package(self._pid, self._pasta_url, self._auth)
+        self._is_real = is_real_package(self._pid)
         if self._is_real:
+            eml = get_package_eml(self._pid)
+            self._eml = etree.fromstring(eml.encode("utf-8"))
             self._date_created_mt, self._date_created_utc = self.get_pasta_create_date()
             self._package_resources = self.get_pasta_resources()
             self._package_resource_downloads = self.get_resource_downloads()
@@ -266,6 +287,12 @@ class PackageStatus(object):
             self._cn_url = 'https://cn.dataone.org/cn/v2'
             self._cn_sync_times = self.get_cn_sync_times()
             self._cn_index_status = self.get_cn_indexed_status()
+            self._title = self._get_title()
+
+
+    @property
+    def title(self):
+        return self._title
 
     @property
     def cn_index_status(self):
@@ -339,6 +366,10 @@ class PackageStatus(object):
                     status = True
         return status
 
+    def _get_title(self) -> str:
+        title = clean(self._eml.find("./dataset/title").xpath("string()"))
+        return title
+
     def get_gmn_resource_times(self):
         resources = dict()
         for resource in self._package_resources[:-1]:
@@ -366,7 +397,7 @@ class PackageStatus(object):
         return f'https://gmn.{gmn_host}/mn/v2'
 
     def get_pasta_create_date(self):
-        xml = get_resource_metadata(self._pid, self._pasta_url, self._auth)
+        xml = get_resource_metadata(self._pid)
         date_created_raw = get_resource_create_date(xml)
         local_tz = 'America/Denver'
         utc_tz = pendulum.timezone('UTC')
@@ -379,14 +410,11 @@ class PackageStatus(object):
 
     def get_pasta_resources(self):
         resources = list()
-        success, response = get_resources(self._pid, self._pasta_url,
-                                          self._auth)
+        success, response = get_resources(self._pid)
         if success:
             resources = response.strip().split('\n')
             resources.append(resources[-1])
-            resources[-2] = get_package_doi(
-                self._pid, self._pasta_url, self._auth
-            )
+            resources[-2] = get_package_doi(self._pid)
         return resources
 
     def get_resource_downloads(self):
@@ -395,5 +423,33 @@ class PackageStatus(object):
             count = get_resource_counts(resource)
             series = get_resource_downloads(resource)
             plot_name = plot(series)
-            resource_downloads[resource] = (count, plot_name)
+            if "/data/eml/" in resource:
+                name = self.get_entity_name(resource)
+            elif "/metadata/eml/" in resource:
+                name = "EML Metadata"
+            elif "/report/eml/" in resource:
+                name = "Quality Report"
+            else:
+                name = ""
+            resource_downloads[resource] = (count, plot_name, name)
         return resource_downloads
+
+    def get_entity_name(self, rid: str) -> str:
+        name = None
+        datatables = self._eml.findall("./dataset/dataTable")
+        for datatable in datatables:
+            name = get_entity_name(datatable, rid)
+            if name is not None: return name
+        otherentities = self._eml.findall("./dataset/otherEntity")
+        for otherentity in otherentities:
+            name = get_entity_name(otherentity, rid)
+            if name is not None: return name
+        spatialrasters = self._eml.findall("./dataset/spatialRaster")
+        for spatialraster in spatialrasters:
+            name = get_entity_name(spatialraster, rid)
+            if name is not None: return name
+        spatialvectors = self._eml.findall("./dataset/spatialVector")
+        for spatialvector in spatialvectors:
+            name = get_entity_name(spatialvector, rid)
+        return name
+

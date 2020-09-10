@@ -4,9 +4,12 @@
 
 <h2 align="left">Data Package Status</h2>
 
+<h3 align="left">Package ID: {{ package_status.package_identifier }}</h3>
 {% if package_status.is_real %}
     <div class="container">
-        <h3 align="left">Package ID: {{ package_status.package_identifier }}</h3>
+        <div style="padding-left: 1em; padding-bottom: 0.25em">
+            <strong>Title:</strong> {{ package_status.title }}
+        </div>
         <div style="padding-left: 1em; padding-bottom: 0.25em">
             <strong>PASTA+ Identifier:</strong> {{ package_status.package_resources[-1] }}
         </div>
@@ -20,61 +23,64 @@
         <div style="padding-left: 1em; padding-bottom: 0.25em">
             <strong>Package Resources and Downloads:</strong>
         </div>
+        <ul>
         {% for resource in package_status.resource_downloads %}
-                 <div class="container" style="padding-left: 2em;">
-                   {{ resource }}: <strong>{{ package_status.resource_downloads[resource][0] }}</strong>
+            <li>
+{#                 <div class="container" style="padding-left: 2em;">#}
+                   {{ package_status.resource_downloads[resource][2] }} ({{ resource }}):
+                     <strong>{{ package_status.resource_downloads[resource][0] }}</strong>
                    <a href="#{{ loop.index }}" data-toggle="collapse">
                     (plot)
                    </a>
                     <div id="{{ loop.index }}" class="collapse">
                         <img class="left-block" src="{{ package_status.resource_downloads[resource][1] }}" />
                     </div>
-                </div>
+{#                </div>#}
+            </li>
         {% endfor %}
+        </ul>
     </div>
 
-    <div class="container">
-        <a href="#dataone_gmn" data-toggle="collapse"><h3 align="left">DataONE</h3></a>
-        <div id="dataone_gmn" class="collapse">
-            <table class="table table-bordered table-striped">
+    <a href="#dataone" data-toggle="collapse"><h4>DataONE Status</h4></a>
+    <div id="dataone"  class="collapse" style="padding-left: 2em;">
+        <table class="table table-bordered table-striped" style="width: 70em">
+            <tr>
+                <th style="text-align: center; width: 50em;">{{ package_status.gmn_host }} Generic Member Node (GMN)</th>
+                <th style="text-align: center">Created</th>
+            </tr>
+            {% for resource in package_status.gmn_resources %}
                 <tr>
-                    <th style="text-align: center; width: 60em;">{{ package_status.gmn_host }} Generic Member Node (GMN)</th>
-                    <th style="text-align: center">Created</th>
+                    <td align="center">
+                         {{ resource }}
+                    </td>
+                    <td align="center">
+                        {{ package_status.gmn_resources[resource] }}
+                    </td>
                 </tr>
-                {% for resource in package_status.gmn_resources %}
-                    <tr>
-                        <td align="center">
-                             {{ resource }}
-                        </td>
-                        <td align="center">
-                            {{ package_status.gmn_resources[resource] }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
+            {% endfor %}
+        </table>
 
-            <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped" style="width: 70em">
+            <tr>
+                <th style="text-align: center; width: 50em;">Coordinating Node (CN)</th>
+                <th style="text-align: center">Synchronized</th>
+            </tr>
+            {% for resource in package_status.cn_sync_times %}
                 <tr>
-                    <th style="text-align: center; width: 60em;">Coordinating Node (CN)</th>
-                    <th style="text-align: center">Synchronized</th>
+                    <td align="center">
+                         {{ resource }}
+                    </td>
+                    <td align="center">
+                        {{ package_status.cn_sync_times[resource] }}
+                    </td>
                 </tr>
-                {% for resource in package_status.cn_sync_times %}
-                    <tr>
-                        <td align="center">
-                             {{ resource }}
-                        </td>
-                        <td align="center">
-                            {{ package_status.cn_sync_times[resource] }}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-            {% if package_status.cn_index_status %}
-                DataONE Solr index status: <span class="text-success"><strong>INDEXED</strong></span>
-            {% else %}
-                DataONE Solr index status: <span class="text-danger"><strong>NOT INDEXED</strong></span>
-            {% endif %}
-        </div>
+            {% endfor %}
+        </table>
+        {% if package_status.cn_index_status %}
+            DataONE Solr index status: <span class="text-success"><strong>INDEXED</strong></span>
+        {% else %}
+            DataONE Solr index status: <span class="text-danger"><strong>NOT INDEXED</strong></span>
+        {% endif %}
     </div>
 
 {% else %}
