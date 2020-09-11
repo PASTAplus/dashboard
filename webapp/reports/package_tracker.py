@@ -125,7 +125,7 @@ def get_resource_downloads(rid: str, start: str = None, end: str = None):
         service_method = "readDataEntity"
 
     sql = sql.replace("<SERVICE_METHOD>", service_method)
-    sql = sql.replace("<RID>", rid)
+    sql = sql.replace("<RID>", rid.replace("%", "%%"))
 
     if start is not None:
         sql += f"AND entrytime >= '{start}' "
