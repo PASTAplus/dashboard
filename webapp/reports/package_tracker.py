@@ -98,7 +98,7 @@ def get_resource_counts(rid: str, start: str = None, end: str = None) -> int:
         service_method = "readDataEntity"
 
     sql = sql.replace("<SERVICE_METHOD>", service_method)
-    sql = sql.replace("<RID>", rid)
+    sql = sql.replace("<RID>", rid.replace("%", "%%"))
 
     if start is not None:
         sql += f" AND entrytime >= '{start}'"
@@ -264,6 +264,7 @@ def query(host: str, sql: str):
         logger.warning(e)
         rs = list()
     except Exception as e:
+        logger.error(sql)
         logger.error(e)
         raise e
     return rs
