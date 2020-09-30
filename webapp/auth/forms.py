@@ -20,10 +20,10 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 class LoginForm(FlaskForm):
-    domain_choices = [('edi', 'EDI'), ('lter', 'LTER')]
+    # domain_choices = [('edi', 'EDI'), ('lter', 'LTER')]
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    domain = SelectField('Domain', choices=domain_choices)
+    # domain = SelectField('Domain', choices=domain_choices)
     submit = SubmitField('Sign In')
 
 

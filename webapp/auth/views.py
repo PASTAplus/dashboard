@@ -48,7 +48,8 @@ def login():
     # Process POST
     form = LoginForm()
     if form.validate_on_submit():
-        domain = form.domain.data # Never None
+        # domain = form.domain.data # Never None
+        domain = "edi"
         user_dn = 'uid=' + form.username.data + ',' + Config.DOMAINS[domain]
         password = form.password.data
         user = None
