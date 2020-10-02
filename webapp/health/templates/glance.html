@@ -207,6 +207,16 @@
                 {{ system.server_status(servers['LDAP_EDI'])[1] }}
         </td>
     </tr>
+     <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/ezeml.edirepository.org">
+                EZEML
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['EZEML'])[0] }}">
+                {{ system.server_status(servers['EZEML'])[1] }}
+        </td>
+    </tr>
 {#    <tr>#}
 {#        <td align="center">#}
 {#            <a href="/dashboard/health/server/ldap.lternet.edu">#}
