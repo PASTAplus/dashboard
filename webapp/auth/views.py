@@ -288,8 +288,7 @@ def delete_ldap_user():
 @auth.route('/list_ldap_users')
 @login_required
 def list_ldap_users():
-    ldap_directory = LdapDirectory()
-    users_list = ldap_directory.list_ldap_users()
+    users_list = LdapDirectory.list_ldap_users()
     return render_template('list_ldap_users.html', users_list=users_list)
 
 
