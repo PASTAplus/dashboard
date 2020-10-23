@@ -6,9 +6,22 @@
     <div class="row">
         <div class="col-md-4">
             <table class="table table-striped">
-                {% for user in users_list %}
+                <thead>
                 <tr>
-                    <td>{{ user }}</td>
+                    <th> </th>
+                    <th align="center">LDAP DN</th>
+                    <th align="center">Surname</th>
+                    <th align="center">Given Name</th>
+                    <th align="center">EMAIL</th>
+                </tr>
+                </thead>
+                {% for uid, user in users_list.items() %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user["dn"] }}</td>
+                    <td>{{ user["sn"] }}</td>
+                    <td>{{ user["givenName"] }}</td>
+                    <td>{{ user["mail"] }}</td>
                 </tr>
                 {% endfor %}
             </table>

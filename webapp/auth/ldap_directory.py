@@ -14,36 +14,49 @@
 """
 import daiquiri
 
-from ldap3 import Server, Connection, ALL
+from ldap3 import Server, Connection, ALL, Reader, ObjectDef
 from ldap3.core.exceptions import LDAPCursorError
 
 from webapp.config import Config
 
-logger = daiquiri.getLogger('ldap_user: ' + __name__)
+logger = daiquiri.getLogger("ldap_user: " + __name__)
 
-#
-# Class to search the LDAP directory for users
-#
+
 class LdapDirectory(object):
-
     def __init__(self):
         pass
 
-    def list_ldap_users(self):
-        results = []
+    @staticmethod
+    def list_ldap_users():
+        users = dict()
         server = Server(Config.LDAP, use_ssl=True, get_info=ALL)
-
+        person = ObjectDef('inetOrgPerson')
         try:
-            conn = Connection(server=server, user=Config.LDAP_ADMIN,
-                              password=Config.LDAP_ADMIN_PASSWORD,
-                              auto_bind=True, receive_timeout=30)
-            conn.search('dc=edirepository,dc=org', '(objectclass=person)')
-            for e in sorted(conn.entries):
-                results.append(e.entry_dn)
-            conn.unbind()
+            with Connection(
+                server=server,
+                user=Config.LDAP_ADMIN,
+                password=Config.LDAP_ADMIN_PASSWORD,
+                auto_bind=True,
+                receive_timeout=30,
+            ) as conn:
+                conn.search(
+                    search_base="dc=edirepository,dc=org",
+                    search_filter="(objectclass=person)",
+                    attributes=["cn", "sn", "uid", "givenName", "mail"]
+                )
+                for e in sorted(conn.entries):
+                    dn = e.entry_dn
+                    user = {
+                        "dn": e.entry_dn,
+                        "cn": e.cn[0],
+                        "sn": e.sn[0],
+                        "givenName": e.givenName[0],
+                        "mail": e.mail[0],
+                    }
+                    users[e.uid[0]] = user
         except Exception as e:
             logger.error(e)
-        return results
+        return users
 
 
 def main():
