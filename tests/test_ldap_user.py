@@ -29,6 +29,7 @@ sn = 'Duck'
 email = 'dduck@edirepository.org'
 passwd = 'ducksoup'
 
+
 class TestLdapUser(unittest.TestCase):
 
     def setUp(self):
