@@ -1,0 +1,24 @@
+name: dashboard
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - matplotlib
+  - lxml
+  - libiconv
+  - uwsgi
+  - sqlalchemy
+  - pytest
+  - requests
+  - ldap3
+  - psycopg2
+  - flask
+  - flask-login
+  - pendulum
+  - pynacl
+  - flask-wtf
+  - flask-bootstrap
+  - wtforms
+  - daiquiri
+prefix: /home/servilla/anaconda3/envs/dashboard
