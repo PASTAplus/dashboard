@@ -16,6 +16,7 @@ import pickle
 
 import daiquiri
 import pendulum
+from pendulum import timezone
 
 from soh.config import Config as soh_Config
 from soh.model.soh_db import SohDb
@@ -156,8 +157,8 @@ class SystemState:
 
     def timestamp(self, local=False):
         if local:
-            tz = pendulum.now().timezone
-            lt = self._event_timestamp.astimezone(tz)
+            mtn = timezone("America/Denver")
+            lt = mtn.convert(self._event_timestamp)
             return lt.to_day_datetime_string()
         else:
             return self._event_timestamp.to_day_datetime_string()
