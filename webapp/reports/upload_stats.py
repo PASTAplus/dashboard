@@ -19,6 +19,7 @@ import daiquiri
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import pendulum
+from pendulum import timezone
 from sqlalchemy import create_engine
 from sqlalchemy.orm.exc import NoResultFound
 
@@ -39,7 +40,8 @@ def get_recent_uploads(days: int, scope: str):
     if scope is not None:
         sql += f"AND scope = '{scope}' "
 
-    now = pendulum.now()
+    mtn = timezone("America/Denver")
+    now = mtn.convert(pendulum.now())
     past = now.subtract(days=days)
     sql += f"AND date_created > '{past.to_iso8601_string()}' "
     sql += "ORDER BY date_created DESC"
