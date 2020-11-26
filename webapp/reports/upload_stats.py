@@ -79,8 +79,9 @@ def plot(days: int, stats: List):
         dt_tbl[_.subtract(hours=hour)] = 0
 
     for result in stats:
-        p = pendulum.instance(result[1])
-        _ = pendulum.datetime(year=p.year, month=p.month, day=p.day, hour=p.hour)
+        mtn = timezone("America/Denver")
+        p = mtn.convert(pendulum.instance(result[1]))
+        _ = pendulum.datetime(year=p.year, month=p.month, day=p.day, hour=p.hour, tz=mtn)
         dt_tbl[_] += 1
 
     dt = []
