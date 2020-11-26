@@ -41,8 +41,8 @@ def get_recent_uploads(days: int, scope: str):
         sql += f"AND scope = '{scope}' "
 
     mtn = timezone("America/Denver")
-    now = mtn.convert(pendulum.now())
-    past = now.subtract(days=days)
+    now = pendulum.now()
+    past = mtn.convert(now.subtract(days=days))
     sql += f"AND date_created > '{past.to_iso8601_string()}' "
     sql += "ORDER BY date_created DESC"
 
