@@ -11,13 +11,17 @@
 :Created:
     4/11/18
 """
-
+import daiquiri
 from flask import Blueprint, render_template
 from flask_login import login_required
 import xml.etree.ElementTree as ET
 import pendulum
 from pendulum import timezone
 import requests
+
+
+logger = daiquiri.getLogger(__name__)
+
 
 reservations = Blueprint('reservations', __name__, template_folder='templates')
 
