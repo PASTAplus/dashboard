@@ -16,6 +16,7 @@ from flask import Blueprint, render_template
 from flask_login import login_required
 import xml.etree.ElementTree as ET
 import pendulum
+from pendulum import timezone
 import requests
 
 reservations = Blueprint('reservations', __name__, template_folder='templates')
@@ -35,8 +36,9 @@ def render_reservations():
 
 
 def get_datetime_str():
-    now = pendulum.now()
-    return now.to_day_datetime_string()
+    mtn = timezone("America/Denver")
+    lt = mtn.convert(pendulum.now())
+    return lt.to_day_datetime_string()
                            
           
 def request_reservations(base_url=None):
