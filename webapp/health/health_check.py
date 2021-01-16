@@ -105,20 +105,19 @@ class SystemState:
 
         if host in self._state and server_type is not None:
             for assertion in soh_Config.server_assertions[server_type]:
-                assertions[assertion] = self._state[host] & \
-                                        soh_Config.assertions[assertion]
+                assertions[assertion] = self._state[host][0] & soh_Config.assertions[assertion]
         return assertions
 
     def server_state(self, host=None):
         if host in self._state:
-            return self._state[host]
+            return self._state[host][0]
         else:
             return None
 
     def server_status(self, host=None):
         status = status_code['text_muted']
         if host in self._state:
-            if self._state[host] == soh_Config.UP:
+            if self._state[host][0] == soh_Config.UP:
                 status = status_code['text_success']
             else:
                 status = status_code['text_danger']
@@ -139,7 +138,7 @@ class SystemState:
         state = 0
         for server in tiers[tier][2]:
             if server in self._state:
-                state = state | self._state[server]
+                state = state | self._state[server][0]
             else:
                 return None
 

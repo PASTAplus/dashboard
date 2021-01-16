@@ -19,14 +19,25 @@
     </tr>
 
     {%  for assertion in system.server_assertions(server) %}
-    <tr>
-        <td align="center">{{ assertion }}</td>
-        {% if system.server_assertions(server)[assertion] %}
-            <td class="text-danger">True</td>
+        {% if assertion == "LOAD_HIGH" %}
+            <tr>
+                <td align="center">{{ assertion }}</td>
+                {% if system.server_assertions(server)[assertion] %}
+                    <td class="text-danger">True - {{ system.state[server][1] }}</td>
+                {% else %}
+                    <td class="text-success">False - {{ system.state[server][1] }}</td>
+                {% endif %}
+            </tr>
         {% else %}
-            <td class="text-success">False</td>
+            <tr>
+                <td align="center">{{ assertion }}</td>
+                {% if system.server_assertions(server)[assertion] %}
+                    <td class="text-danger">True</td>
+                {% else %}
+                    <td class="text-success">False</td>
+                {% endif %}
+            </tr>
         {% endif %}
-    </tr>
     {% endfor %}
 
 </table>
