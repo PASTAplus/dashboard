@@ -277,6 +277,16 @@
                 {{ system.server_status(servers['SPACE'])[1] }}
         </td>
     </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/josh.lternet.edu">
+                Backup Josh
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['JOSH'])[0] }}">
+                {{ system.server_status(servers['JOSH'])[1] }}
+        </td>
+    </tr>
 </table>
 
 {% endblock %}
