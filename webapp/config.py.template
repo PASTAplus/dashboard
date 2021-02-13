@@ -21,6 +21,7 @@ class Config(object):
 
     # Webapp configuration
     PASTA_URL = 'https://pasta.lternet.edu/package'
+    AUTH_URL = 'https://auth.edirepository.org/auth/login/pasta'
     USERS = ('USER_DN')
     DOMAINS = {'edi': 'o=EDI,dc=edirepository,dc=org',
                'lter':'o=LTER,dc=ecoinformatics,dc=org',}
