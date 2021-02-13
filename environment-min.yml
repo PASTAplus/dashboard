@@ -18,7 +18,6 @@ dependencies:
   - pendulum
   - pynacl
   - flask-wtf
+  - email_validator
   - flask-bootstrap
-  - wtforms
-  - daiquiri
 prefix: /home/servilla/anaconda3/envs/dashboard
