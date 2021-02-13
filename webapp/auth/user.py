@@ -22,6 +22,7 @@ from webapp.config import Config
 
 logger = daiquiri.getLogger('user.py: ' + __name__)
 
+
 class User(UserMixin):
 
     def __init__(self, auth_token=None):
@@ -30,7 +31,7 @@ class User(UserMixin):
     @staticmethod
     def authenticate(user_dn=None, password=None):
         auth_token = None
-        r = requests.get(Config.PASTA_URL, auth=(user_dn, password))
+        r = requests.get(Config.AUTH_URL, auth=(user_dn, password))
         if r.status_code == requests.codes.ok:
             auth_token = r.cookies['auth-token']
         return auth_token
