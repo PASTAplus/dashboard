@@ -11,37 +11,33 @@
 :Created:
     5/29/18
 """
-import os
-import sys
-import unittest
+import pytest
 
 import daiquiri
 
 from webapp.auth import token_uid
 
-sys.path.insert(0, os.path.abspath('../src'))
-logger = daiquiri.getLogger('test_token_uid: ' + __name__)
+
+logger = daiquiri.getLogger(__name__)
+
 
 uid = 'dduck'
 
-class TestTokenUid(unittest.TestCase):
 
-    def setUp(self):
-        self.token = token_uid.to_token(uid=uid)
+@pytest.fixture()
+def user_token():
+    token = token_uid.to_token(uid=uid)
+    yield token
+    token_uid.remove_token(token=token.decode())
 
-    def tearDown(self):
-        token_uid.remove_token(token=self.token.decode())
 
-    def test_token(self):
-        token = token_uid.to_token(uid=uid)
-        self.assertIsNotNone(token)
-        token_uid.remove_token(token=token.decode())
+def test_token(user_token):
+    user_token = token_uid.to_token(uid=uid)
+    assert user_token is not None
 
-    def test_is_valid(self):
-        token = self.token.decode()
-        uid, ttl = token_uid.decode_token(token=token)
-        self.assertIsNotNone(uid)
-        self.assertIsNotNone(ttl)
 
-if __name__ == '__main__':
-    unittest.main()
+def test_is_valid(user_token):
+    token = user_token.decode()
+    uid, ttl = token_uid.decode_token(token=token)
+    assert uid is not None
+    assert ttl is not None

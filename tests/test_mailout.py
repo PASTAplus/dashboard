@@ -11,34 +11,22 @@
 :Created:
     5/29/18
 """
-import os
-import sys
-import unittest
-
 import daiquiri
 
 from webapp.auth.ldap_user import LdapUser
 from webapp import mailout
 
-sys.path.insert(0, os.path.abspath('../src'))
-logger = daiquiri.getLogger('test_mailout: ' + __name__)
+
+logger = daiquiri.getLogger(__name__)
 
 
-class TestMailOut(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-    def test_mailout(self):
+def test_mailout():
         uid = 'chase'
         ldap_user = LdapUser(uid=uid)
         subject = 'EDI account password reset...'
         msg = reset_password_mail_body(ldap_user=ldap_user, url='https://dashboard.edirepository.org/dashboard/auth/deadlink')
         to = ldap_user.email
-        self.assertTrue(mailout.send_mail(subject=subject, msg=msg, to=to))
+        assert mailout.send_mail(subject=subject, msg=msg, to=to)
 
 
 def reset_password_mail_body(ldap_user=None, url=None):
@@ -53,7 +41,3 @@ def reset_password_mail_body(ldap_user=None, url=None):
           'please ignore.\n\nSincerely,\nThe EDI Team'
 
     return msg
-
-
-if __name__ == '__main__':
-    unittest.main()

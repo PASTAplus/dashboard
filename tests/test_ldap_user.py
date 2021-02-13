@@ -11,17 +11,14 @@
 :Created:
     5/22/18
 """
-import os
-import sys
-import unittest
-
 import daiquiri
+import pytest
 
 from webapp.auth.ldap_user import LdapUser
 
 
-sys.path.insert(0, os.path.abspath('../webapp'))
 logger = daiquiri.getLogger(__name__)
+
 
 uid = 'dduck'
 gn = 'Daffy'
@@ -30,45 +27,45 @@ email = 'dduck@edirepository.org'
 passwd = 'ducksoup'
 
 
-class TestLdapUser(unittest.TestCase):
-
-    def setUp(self):
-        self.ldap_user = LdapUser(uid=None)
-        self.ldap_user.uid = uid
-        self.ldap_user.gn = gn
-        self.ldap_user.sn = sn
-        self.ldap_user.email = email
-        self.ldap_user.create()
-
-    def tearDown(self):
-        self.ldap_user.delete()
-
-    def test_create(self):
-        self.ldap_user.delete()
-        self.assertTrue(self.ldap_user.create())
-
-    def test_change_password(self):
-        self.ldap_user.change_password(new_password=passwd)
-        self.ldap_user.password = passwd
-        self.assertTrue(self.ldap_user._valid_password())
-
-    def test_delete(self):
-        self.assertTrue(self.ldap_user.delete())
-
-    def test_existing_user(self):
-        ldap_user = LdapUser(uid='dduck')
-        self.assertTrue(ldap_user.email == email)
-
-    def test_modify(self):
-        self.ldap_user.gn = 'Quack'
-        self.ldap_user.email = 'quacker@edirepository.org'
-        self.assertTrue(self.ldap_user.modify())
-
-    def test_reset_password(self):
-        self.ldap_user.password = passwd
-        self.ldap_user.reset_password()
-        self.assertTrue(self.ldap_user._valid_password())
+@pytest.fixture()
+def ldap_user():
+    user = LdapUser()
+    user.uid = uid
+    user.gn = gn
+    user.sn = sn
+    user.email = email
+    user.create()
+    yield user
+    user.delete()
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_create(ldap_user):
+    ldap_user.delete()
+    assert ldap_user.create()
+
+
+def test_change_password(ldap_user):
+    ldap_user.change_password(new_password=passwd)
+    ldap_user.password = passwd
+    assert ldap_user._valid_password()
+
+
+def test_delete(ldap_user):
+    assert ldap_user.delete()
+
+
+def test_existing_user(ldap_user):
+    user = LdapUser(uid='dduck')
+    assert user.email == email
+
+
+def test_modify(ldap_user):
+    ldap_user.gn = 'Quack'
+    ldap_user.email = 'quacker@edirepository.org'
+    ldap_user.modify()
+
+
+def test_reset_password(ldap_user):
+    ldap_user.password = passwd
+    ldap_user.reset_password()
+    assert ldap_user._valid_password()

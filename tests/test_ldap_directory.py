@@ -12,9 +12,12 @@
 :Created:
     10/23/20
 """
-import pytest
+import daiquiri
 
 from webapp.auth.ldap_directory import LdapDirectory
+
+
+logger = daiquiri.getLogger(__name__)
 
 
 def test_list_users():
