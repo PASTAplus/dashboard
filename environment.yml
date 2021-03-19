@@ -143,5 +143,4 @@ dependencies:
   - zstd=1.4.9
   - pip:
     - install==1.3.3
-    - pastaplus-soh==2021.1.15
 prefix: /home/servilla/anaconda3/envs/dashboard
