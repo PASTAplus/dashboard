@@ -20,4 +20,5 @@ dependencies:
   - flask-wtf
   - email_validator
   - flask-bootstrap
+  - urllib3=1.26.5
 prefix: /home/servilla/anaconda3/envs/dashboard
