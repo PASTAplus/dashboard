@@ -21,4 +21,5 @@ dependencies:
   - email_validator
   - flask-bootstrap
   - urllib3
+  - daiquiri
 prefix: /home/servilla/anaconda3/envs/dashboard
