@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block app_content %}
+
+    <h2>Data Package Embargo Management</h2>
+    <h3 style="padding-left: 20px;">Public access status for: {{ pid }}</h3>
+    <ul>
+        {% for resource in resources %}
+            <li style="font-size: 1.25em">
+                {{ resource[0] }}: {{ resource[2] }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <form method="POST" action="/dashboard/pasta/embargo-toggle" class="form" role="form" style="padding-left: 20px;">
+        <input type="hidden" id="pid" name="pid" value="{{ pid }}">
+        <button class="btn btn-primary" name="action" type="submit" value="set">Set Embargo</button>
+        <button class="btn btn-primary" name="action" type="submit" value="clear">Clear Embargo</button>
+    </form>
+
+{% endblock %}
