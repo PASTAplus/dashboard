@@ -48,8 +48,9 @@ def embargo_toggle():
     package_identifier = request.form.get("pid")
     toggle = request.form.get("action")
     if package_identifier is not None:
+        pid = package_identifier.strip()
         try:
-            embargo = Embargo(package_identifier)
+            embargo = Embargo(pid)
             if toggle == "set":
                 embargo.set_embargo()
             else:
@@ -57,9 +58,9 @@ def embargo_toggle():
             resources = embargo.get_status()
         except ValueError as ex:
             msg = 'should be in the form of scope.identifier.revision'
-            flash(f'"{package_identifier}" {msg}')
+            flash(f'"{pid}" {msg}')
             return redirect(url_for('pasta.embargo_management'))
-        return render_template('embargo-status.html', pid=package_identifier, resources=resources)
+        return render_template('embargo-status.html', pid=pid, resources=resources)
 
 
 @pasta.route('/embargo-management', methods=['GET', 'POST'])
@@ -70,14 +71,15 @@ def embargo_management():
     if form.validate_on_submit():
         package_identifier = form.package_identifier.data
     if package_identifier is not None:
+        pid = package_identifier.strip()
         try:
-            embargo = Embargo(package_identifier)
+            embargo = Embargo(pid)
             resources = embargo.get_status()
         except ValueError as ex:
             msg = 'should be in the form of scope.identifier.revision'
-            flash(f'"{package_identifier}" {msg}')
+            flash(f'"{pid}" {msg}')
             return redirect(url_for('pasta.embargo_management'))
-        return render_template('embargo-status.html', pid=package_identifier, resources=resources)
+        return render_template('embargo-status.html', pid=pid, resources=resources)
     return render_template('embargo-management.html', form=form)
 
 
