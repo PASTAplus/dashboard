@@ -27,6 +27,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm.exc import NoResultFound
 
 from webapp.config import Config
+import webapp.db as db
 
 
 logger = daiquiri.getLogger(__name__)
@@ -106,7 +107,7 @@ def get_resource_counts(rid: str, start: str = None, end: str = None) -> int:
     if end is not None:
         sql += f" AND entrytime <= '{end}'"
 
-    rs = query(Config.DB_HOST_AUDIT, sql)
+    rs = db.select_all(Config.DB_HOST_AUDIT, sql)
     return rs[0][0]
 
 
@@ -135,7 +136,7 @@ def get_resource_downloads(rid: str, start: str = None, end: str = None):
 
     sql += "ORDER BY entrytime ASC"
 
-    rs = query(Config.DB_HOST_AUDIT, sql)
+    rs = db.select_all(Config.DB_HOST_AUDIT, sql)
     return rs
 
 

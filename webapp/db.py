@@ -25,7 +25,7 @@ from webapp.config import Config
 logger = daiquiri.getLogger(__name__)
 
 
-def select(host: str, sql: str) -> ResultProxy:
+def select_all(host: str, sql: str) -> ResultProxy:
     db = Config.DB_DRIVER + '://' + \
          Config.DB_USER + ':' + \
          urllib.parse.quote_plus(Config.DB_PW) + '@' + \
@@ -41,6 +41,29 @@ def select(host: str, sql: str) -> ResultProxy:
     except OperationalError as ex:
         logger.warning(ex)
     except Exception as ex:
+        logger.error(sql)
+        logger.error(ex)
+        raise ex
+    return rs
+
+
+def select_one(host: str, sql: str) -> ResultProxy:
+    db = Config.DB_DRIVER + '://' + \
+         Config.DB_USER + ':' + \
+         urllib.parse.quote_plus(Config.DB_PW) + '@' + \
+         host + '/' + \
+         Config.DB_DB
+
+    connection = create_engine(db)
+    rs = None
+    try:
+        rs = connection.execute(sql).fetchone()
+    except NoResultFound as ex:
+        logger.warning(ex)
+    except OperationalError as ex:
+        logger.warning(ex)
+    except Exception as ex:
+        logger.error(sql)
         logger.error(ex)
         raise ex
     return rs
@@ -62,6 +85,7 @@ def update(host: str, sql: str):
     except OperationalError as ex:
         logger.warning(ex)
     except Exception as ex:
+        logger.error(sql)
         logger.error(ex)
         raise ex
     return rs

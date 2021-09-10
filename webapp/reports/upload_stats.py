@@ -24,6 +24,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm.exc import NoResultFound
 
 from webapp.config import Config
+import webapp.db as db
 
 
 logger = daiquiri.getLogger(__name__)
@@ -46,24 +47,8 @@ def get_recent_uploads(days: int, scope: str):
     sql += f"AND date_created > '{past.to_iso8601_string()}' "
     sql += "ORDER BY date_created DESC"
 
-    db = (
-        f"{Config.DB_DRIVER}://"
-        f"{Config.DB_USER}:"
-        f"{Config.DB_PW}@"
-        f"{Config.DB_HOST_PACKAGE}/"
-        f"{Config.DB_DB}"
-    )
+    rs = db.select_all(Config.DB_HOST_PACKAGE, sql)
 
-    try:
-        engine = create_engine(db)
-        with engine.connect() as connection:
-            rs = connection.execute(sql).fetchall()
-    except NoResultFound as e:
-        logger.warning(e)
-        rs = list()
-    except Exception as e:
-        logger.error(e)
-        raise e
     return rs
 
 

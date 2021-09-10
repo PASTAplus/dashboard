@@ -37,7 +37,7 @@ class Embargo:
             f"'%%/package/data/eml/{self._scope}/{self._identifier}/{self._revision}/%%'"
             "AND principal='public' ORDER BY resource_id ASC;"
         )
-        rs = db.select(Config.DB_HOST_PACKAGE, sql)
+        rs = db.select_all(Config.DB_HOST_PACKAGE, sql)
         return rs
 
     def get_status(self) -> list:

@@ -19,21 +19,12 @@ import requests
 from sqlalchemy import create_engine
 
 from webapp.config import Config
-
+import webapp.db as db
 
 logger = daiquiri.getLogger('upload_report_stats: ' + __name__)
 
 
 def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
-
-    db = Config.DB_DRIVER + '://' + \
-         Config.DB_USER + ':' + \
-         Config.DB_PW + '@' + \
-         Config.DB_HOST_PACKAGE + '/' + \
-         Config.DB_DB
-
-    connection = create_engine(db)
-
     _ = ('select datapackagemanager.resource_registry.package_id,'
          'datapackagemanager.resource_registry.doi,'
          'datapackagemanager.resource_registry.date_created '
@@ -42,17 +33,12 @@ def upload_report_stats(scope: str, start_date: date, end_date: date) -> list:
          'scope=\'SCOPE\' and resource_type=\'dataPackage\' '
          'order by date_created asc')
 
-    sql = _.replace('SCOPE', scope).\
-            replace('START_DATE', start_date.isoformat()).\
-            replace('END_DATE', end_date.isoformat())
+    sql = _.replace('SCOPE', scope). \
+        replace('START_DATE', start_date.isoformat()). \
+        replace('END_DATE', end_date.isoformat())
 
-    try:
-        result_set = connection.execute(sql).fetchall()
-    except Exception as e:
-        logger.error(e)
-        result_set = list()
-
-    return result_set
+    rs = db.select_all(Config.DB_HOST_PACKAGE, sql)
+    return rs
 
 
 def get_package_title(pid: str) -> str:
@@ -86,27 +72,13 @@ def get_scopes() -> list:
 
 
 def get_scope_count(scope: str) -> int:
-
-    db = Config.DB_DRIVER + '://' + \
-         Config.DB_USER + ':' + \
-         Config.DB_PW + '@' + \
-         Config.DB_HOST_PACKAGE + '/' + \
-         Config.DB_DB
-
-    connection = create_engine(db)
-
     sql = ('select count(datapackagemanager.resource_registry.package_id) '
            'from datapackagemanager.resource_registry where '
            f'datapackagemanager.resource_registry.scope=\'{scope}\' and '
            'datapackagemanager.resource_registry.resource_type=\'dataPackage\'')
 
-    try:
-        result_set = connection.execute(sql).fetchone()
-    except Exception as e:
-        logger.error(e)
-        result_set = list()
-
-    return result_set[0]
+    rs = db.select_one(Config.DB_HOST_PACKAGE, sql)
+    return rs[0]
 
 
 def flatten(element):
@@ -122,8 +94,8 @@ def flatten(element):
 def solr_report_stats(scope: str, rows: int) -> dict:
     solr_stats = dict()
     solr_url = ('https://pasta.lternet.edu/package/search/eml?'
-                 f'defType=edismax&q=*:*&fq=scope:({scope})'
-                 f'&fl=packageid,title&debug=false&rows={rows}')
+                f'defType=edismax&q=*:*&fq=scope:({scope})'
+                f'&fl=packageid,title&debug=false&rows={rows}')
 
     r = requests.get(solr_url)
     if r.status_code == requests.codes.ok:
