@@ -13,13 +13,15 @@
 """
 
 import daiquiri
-from flask import Blueprint, render_template
+from flask import Blueprint, flash, render_template, request, redirect, url_for
 from flask_login import login_required
 import xml.etree.ElementTree as ET
 import pendulum
 from pendulum import timezone
 import requests
 
+from webapp.pasta.embargo import Embargo
+from webapp.pasta.forms import PackageIdentifier
 
 logger = daiquiri.getLogger('upload_report: ' + __name__)
 
@@ -38,6 +40,45 @@ def render_working_on():
                             staging_dict=staging_dict, 
                             development_dict=development_dict,
                             datetime_str=datetime_str)
+
+
+@pasta.route('/embargo-toggle', methods=['POST'])
+@login_required
+def embargo_toggle():
+    package_identifier = request.form.get("pid")
+    toggle = request.form.get("action")
+    if package_identifier is not None:
+        try:
+            embargo = Embargo(package_identifier)
+            if toggle == "set":
+                embargo.set_embargo()
+            else:
+                embargo.clear_embargo()
+            resources = embargo.get_status()
+        except ValueError as ex:
+            msg = 'should be in the form of scope.identifier.revision'
+            flash(f'"{package_identifier}" {msg}')
+            return redirect(url_for('pasta.embargo_management'))
+        return render_template('embargo-status.html', pid=package_identifier, resources=resources)
+
+
+@pasta.route('/embargo-management', methods=['GET', 'POST'])
+@login_required
+def embargo_management():
+    package_identifier = request.args.get('pid')
+    form = PackageIdentifier()
+    if form.validate_on_submit():
+        package_identifier = form.package_identifier.data
+    if package_identifier is not None:
+        try:
+            embargo = Embargo(package_identifier)
+            resources = embargo.get_status()
+        except ValueError as ex:
+            msg = 'should be in the form of scope.identifier.revision'
+            flash(f'"{package_identifier}" {msg}')
+            return redirect(url_for('pasta.embargo_management'))
+        return render_template('embargo-status.html', pid=package_identifier, resources=resources)
+    return render_template('embargo-management.html', form=form)
 
 
 def get_datetime_str():
