@@ -214,8 +214,7 @@ def modify_ldap_user_init():
         except Exception as e:
             abort(500)
         if is_valid:
-            return redirect(url_for('auth.modify_ldap_user', uid=uid, 
-                                                            password=password))
+            return redirect(url_for('auth.modify_ldap_user', uid=uid))
         else:
             msg = 'User ID "{0}" could not be updated'.format(ldap_user.uid)
             flash(msg)
