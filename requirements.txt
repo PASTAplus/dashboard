@@ -36,7 +36,7 @@ packaging==21.0
 pastaplus.soh==2021.5.20
 pathspec==0.9.0
 pendulum==2.1.2
-Pillow==8.3.2
+Pillow==9.0.1
 pip==21.2.4
 platformdirs==2.3.0
 pluggy==0.13.1
