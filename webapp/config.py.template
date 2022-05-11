@@ -37,8 +37,12 @@ class Config(object):
     LDAP_UID = 'EDIUSER'
 
     # Email configuration
-    HOVER_MAIL = 'SUPPORT_EMAIL_ADDRESS'
-    HOVER_PASSWORD = 'SUPPORT_EMAIL_PASSWORD'
+    RELAY_HOST = 'RELAY_HOST'
+    RELAY_PASSWORD = 'RELAY_PASSWORD'
+    RELAY_USER = 'RELAY_USER'
+    RELAY_TLS_PORT = 587
+    FROM = 'support@edirepository.org'
+    FROM_NAME = "EDI Support"
 
     # Test attributes
     TEST_USER_DN = 'USER_DN'

@@ -33,7 +33,7 @@ from webapp.auth.ldap_user import LdapUser
 from webapp.auth.ldap_user import AttributeError, UidError
 from webapp.auth.user import User
 from webapp.config import Config
-from webapp import mailout
+from webapp import mimemail
 
 
 logger = daiquiri.getLogger('views: ' + __name__)
@@ -103,7 +103,7 @@ def create_ldap_user():
               url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
         msg = reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
-        sent = mailout.send_mail(subject=subject, msg=msg, to=ldap_user.email)
+        sent = mimemail.send_mail(subject=subject, msg=msg, to=ldap_user.email)
         if not sent:
             abort(500)
         return redirect(url_for('auth.user_created', uid=ldap_user.uid))
@@ -122,7 +122,7 @@ def reset_password_init():
               url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
         msg = reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
-        sent = mailout.send_mail(subject=subject, msg=msg, to=ldap_user.email)
+        sent = mimemail.send_mail(subject=subject, msg=msg, to=ldap_user.email)
         if not sent:
             abort(500)
         return redirect(url_for('auth.password_reset', uid=ldap_user.uid))
