@@ -423,17 +423,18 @@ class PackageStatus(object):
         resource_downloads = dict()
         for resource in self._package_resources[:-2]:
             count = get_resource_counts(resource)
-            series = get_resource_downloads(resource)
-            plot_name = plot(series)
-            if "/data/eml/" in resource:
-                name = self.get_entity_name(resource)
-            elif "/metadata/eml/" in resource:
-                name = "EML Metadata"
-            elif "/report/eml/" in resource:
-                name = "Quality Report"
-            else:
-                name = ""
-            resource_downloads[resource] = (count, plot_name, name)
+            if count > 0:
+                series = get_resource_downloads(resource)
+                plot_name = plot(series)
+                if "/data/eml/" in resource:
+                    name = self.get_entity_name(resource)
+                elif "/metadata/eml/" in resource:
+                    name = "EML Metadata"
+                elif "/report/eml/" in resource:
+                    name = "Quality Report"
+                else:
+                    name = ""
+                resource_downloads[resource] = (count, plot_name, name)
         return resource_downloads
 
     def get_entity_name(self, rid: str) -> str:
