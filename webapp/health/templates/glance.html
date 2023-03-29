@@ -88,44 +88,6 @@
     </tr>
 </table>
 
-{#<h3 align="left">LTER Portals</h3>#}
-{#<table class="table table-bordered">#}
-{#    <tr>#}
-{#        <th width="20%" style="text-align: center">Tier</th>#}
-{#        <th style="text-align: center">Status</th>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td align="center">#}
-{#            <a href="/dashboard/health/server/portal.lternet.edu">#}
-{#                Production#}
-{#            </a>#}
-{#        </td>#}
-{#        <td class="{{ system.server_status(servers['PORTAL_LTER'])[0] }}">#}
-{#                {{ system.server_status(servers['PORTAL_LTER'])[1] }}#}
-{#        </td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td align="center">#}
-{#            <a href="/dashboard/health/server/portal-s.lternet.edu">#}
-{#                Staging#}
-{#            </a>#}
-{#        </td>#}
-{#        <td class="{{ system.server_status(servers['PORTAL_S_LTER'])[0] }}">#}
-{#                {{ system.server_status(servers['PORTAL_S_LTER'])[1] }}#}
-{#        </td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td align="center">#}
-{#            <a href="/dashboard/health/server/portal-d.lternet.edu">#}
-{#                Development#}
-{#            </a>#}
-{#        </td>#}
-{#        <td class="{{ system.server_status(servers['PORTAL_D_LTER'])[0] }}">#}
-{#                {{ system.server_status(servers['PORTAL_D_LTER'])[1] }}#}
-{#        </td>#}
-{#    </tr>#}
-{#</table>#}
-
 <h3 align="left">EDI GMN</h3>
 <table class="table table-bordered">
     <tr>
@@ -217,16 +179,6 @@
                 {{ system.server_status(servers['EZEML'])[1] }}
         </td>
     </tr>
-{#    <tr>#}
-{#        <td align="center">#}
-{#            <a href="/dashboard/health/server/ldap.lternet.edu">#}
-{#                LTER LDAP#}
-{#            </a>#}
-{#        </td>#}
-{#        <td class="{{ system.server_status(servers['LDAP_LTER'])[0] }}">#}
-{#                {{ system.server_status(servers['LDAP_LTER'])[1] }}#}
-{#        </td>#}
-{#    </tr>#}
     <tr>
         <td align="center">
             <a href="/dashboard/health/server/seo.edirepository.org">
