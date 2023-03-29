@@ -88,6 +88,44 @@
     </tr>
 </table>
 
+<h3 align="left">EZEML</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/ezeml.edirepository.org">
+                Production
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['EZEML'])[0] }}">
+                {{ system.server_status(servers['EZEML'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/ezeml-s.edirepository.org">
+                Staging
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['EZEML_S'])[0] }}">
+                {{ system.server_status(servers['EZEML_S'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/ezeml-d.edirepository.org">
+                Development
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['EZEML_D'])[0] }}">
+                {{ system.server_status(servers['EZEML_D'])[1] }}
+        </td>
+    </tr>
+</table>
+
 <h3 align="left">EDI GMN</h3>
 <table class="table table-bordered">
     <tr>
