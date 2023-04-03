@@ -181,41 +181,76 @@
     </tr>
 </table>
 
-<h3 align="left">Related Services</h3>
+<h3 align="left">AUTHENTICATION</h3>
 <table class="table table-bordered">
     <tr>
-        <th width="20%" style="text-align: center">Service</th>
+        <th width="20%" style="text-align: center">Tier</th>
         <th style="text-align: center">Status</th>
     </tr>
     <tr>
         <td align="center">
             <a href="/dashboard/health/server/auth.edirepository.org">
-                Authentication
+                Production
             </a>
         </td>
         <td class="{{ system.server_status(servers['AUTH'])[0] }}">
                 {{ system.server_status(servers['AUTH'])[1] }}
         </td>
     </tr>
-     <tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/auth-d.edirepository.org">
+                Development
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['AUTH_D'])[0] }}">
+                {{ system.server_status(servers['AUTH_D'])[1] }}
+        </td>
+    </tr>
+</table>
+
+<h3 align="left">EDI LDAP</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
         <td align="center">
             <a href="/dashboard/health/server/ldap.edirepository.org">
-                EDI LDAP
+                Production
             </a>
         </td>
         <td class="{{ system.server_status(servers['LDAP_EDI'])[0] }}">
                 {{ system.server_status(servers['LDAP_EDI'])[1] }}
         </td>
     </tr>
-     <tr>
+    <tr>
         <td align="center">
-            <a href="/dashboard/health/server/ezeml.edirepository.org">
-                EZEML
+            <a href="/dashboard/health/server/ldap2.edirepository.org">
+                Mirror
             </a>
         </td>
-        <td class="{{ system.server_status(servers['EZEML'])[0] }}">
-                {{ system.server_status(servers['EZEML'])[1] }}
+        <td class="{{ system.server_status(servers['LDAP2_EDI'])[0] }}">
+                {{ system.server_status(servers['LDAP2_EDI'])[1] }}
         </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/ldap-d.edirepository.org">
+                Development
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['LDAP_D'])[0] }}">
+                {{ system.server_status(servers['LDAP_D'])[1] }}
+        </td>
+    </tr>
+</table>
+<h3 align="left">Related Services</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Service</th>
+        <th style="text-align: center">Status</th>
     </tr>
     <tr>
         <td align="center">
@@ -225,6 +260,16 @@
         </td>
         <td class="{{ system.server_status(servers['SEO'])[0] }}">
                 {{ system.server_status(servers['SEO'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/nis.lternet.edu">
+               EML SCHEMA
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['SCHEMA'])[0] }}">
+                {{ system.server_status(servers['SCHEMA'])[1] }}
         </td>
     </tr>
     <tr>
