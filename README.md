@@ -18,7 +18,7 @@ Thanks to Digital Oceans' community tutorials for tips on deploying [Nginx with 
 1. Install LetsEncrypt - see above
 1. Install git
 1. Create the main user - generally _**pasta**_
-1. Download and install [_**anaconda**_](https://www.anaconda.com/download)
+1. Download and install [_**miniconda**_](https://docs.conda.io/en/latest/miniconda.html)
 1. Using the _**conda**_ package manager, create three new Python virtual environments:
   * `conda env create -n pastaplus_utilities python=3.7 --no-default-packages`
   * `conda env create -n soh python=3.7 --no-default-packages`
