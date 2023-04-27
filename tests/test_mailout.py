@@ -14,7 +14,7 @@
 import daiquiri
 
 from webapp.auth.ldap_user import LdapUser
-from webapp import mailout
+from webapp import mimemail
 
 
 logger = daiquiri.getLogger(__name__)
@@ -26,7 +26,7 @@ def test_mailout():
         subject = 'EDI account password reset...'
         msg = reset_password_mail_body(ldap_user=ldap_user, url='https://dashboard.edirepository.org/dashboard/auth/deadlink')
         to = ldap_user.email
-        assert mailout.send_mail(subject=subject, msg=msg, to=to)
+        assert mimemail.send_mail(subject=subject, msg=msg, to=to)
 
 
 def reset_password_mail_body(ldap_user=None, url=None):
