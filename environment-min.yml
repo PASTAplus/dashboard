@@ -3,23 +3,23 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.8
-  - matplotlib
-  - lxml
+  - sqlalchemy=1.4.46
+  - flask
+  - urllib3
+  - pendulum
+  - flask-wtf
+  - psycopg2
   - libiconv
-  - uwsgi
-  - sqlalchemy
+  - python=3.11
   - pytest
+  - daiquiri
+  - flask-bootstrap
+  - uwsgi
+  - matplotlib
   - requests
   - ldap3
-  - psycopg2
-  - flask
-  - flask-login
-  - pendulum
-  - pynacl
-  - flask-wtf
   - email_validator
-  - flask-bootstrap
-  - urllib3
-  - daiquiri
+  - pynacl
+  - flask-login
+  - lxml
 prefix: /home/servilla/anaconda3/envs/dashboard
