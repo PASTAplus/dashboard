@@ -51,7 +51,7 @@ pytest==7.3.1
 python-dateutil==2.8.2
 python-json-logger==2.0.7
 pytzdata==2020.1
-requests==2.29.0
+requests==2.31.0
 setuptools==67.7.2
 sip==6.7.9
 six==1.16.0
