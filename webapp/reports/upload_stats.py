@@ -41,8 +41,10 @@ def get_recent_uploads(days: int, scope: str):
     if scope is not None:
         sql += f"AND scope = '{scope}' "
 
-    mtn = timezone("America/Denver")
-    now = mtn.convert(pendulum.now())
+    # mtn = timezone("America/Denver")
+    # now = mtn.convert(pendulum.now())
+    utc = timezone("UTC")
+    now = utc.convert(pendulum.now())
     past = now.subtract(days=days)
     sql += f"AND date_created > '{past.to_iso8601_string()}' "
     sql += "ORDER BY date_created DESC"
@@ -54,7 +56,9 @@ def get_recent_uploads(days: int, scope: str):
 
 def plot(days: int, stats: List):
     mtn = timezone("America/Denver")
-    now = mtn.convert(pendulum.now())
+    # now = mtn.convert(pendulum.now())
+    utc = timezone("UTC")
+    now = utc.convert(pendulum.now())
     _ = pendulum.datetime(
         year=now.year, month=now.month, day=now.day, hour=now.hour
     )
@@ -67,7 +71,8 @@ def plot(days: int, stats: List):
     for result in stats:
         p = pendulum.instance(result[1])
         _ = pendulum.datetime(year=p.year, month=p.month, day=p.day, hour=p.hour)
-        dt_tbl[_] += 1
+        if _ in dt_tbl:
+            dt_tbl[_] += 1
 
     dt = []
     count = []
