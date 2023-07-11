@@ -333,11 +333,15 @@ def upload_report():
         # Process GET
         return render_template('upload_report.html', form=form)
 
+
 @reports.route('/download_report/<filename>', methods=['GET'])
 def download_report(filename):
     scope = request.args.get("scope")
-    return send_from_directory(Config.TMP_DIR, filename, as_attachment=True,
-                               attachment_filename=f'{scope}_report.csv')
+    return send_from_directory(
+        directory=Config.TMP_DIR,
+        path=filename,
+        download_name=f'{scope}_report.csv',
+        as_attachment=True)
 
 
 def citation_report(report: list, file_name: str) -> list:
