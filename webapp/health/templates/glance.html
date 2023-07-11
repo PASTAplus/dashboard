@@ -209,6 +209,34 @@
     </tr>
 </table>
 
+<h3 align="left">DATA EXPLORER</h3>
+<table class="table table-bordered">
+    <tr>
+        <th width="20%" style="text-align: center">Tier</th>
+        <th style="text-align: center">Status</th>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/dex.edirepository.org">
+                Production
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['DEX'])[0] }}">
+                {{ system.server_status(servers['DEX'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="/dashboard/health/server/dex-d.edirepository.org">
+                Development
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['DEX_D'])[0] }}">
+                {{ system.server_status(servers['DEX_D'])[1] }}
+        </td>
+    </tr>
+</table>
+
 <h3 align="left">EDI LDAP</h3>
 <table class="table table-bordered">
     <tr>
@@ -270,16 +298,6 @@
         </td>
         <td class="{{ system.server_status(servers['SCHEMA'])[0] }}">
                 {{ system.server_status(servers['SCHEMA'])[1] }}
-        </td>
-    </tr>
-    <tr>
-        <td align="center">
-            <a href="/dashboard/health/server/tweeter.edirepository.org">
-                EDI Tweeter
-            </a>
-        </td>
-        <td class="{{ system.server_status(servers['TWEETER'])[0] }}">
-                {{ system.server_status(servers['TWEETER'])[1] }}
         </td>
     </tr>
     <tr>
