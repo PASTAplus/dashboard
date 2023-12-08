@@ -327,7 +327,7 @@ def user_deleted(uid=None):
 
 def reset_password_mail_body(ldap_user=None, url=None):
     msg = 'Hello ' + ldap_user.cn + ',\n\n' + \
-          'A user account with the identifier "' + ldap_user.uid + \
+          'An account with the user name "' + ldap_user.uid + \
           '" was created on your behalf for you to access the ' + \
           'Environmental Data Initiative data repository, namely through ' + \
           'the EDI Data Portal. Please use the following URL to set ' + \
