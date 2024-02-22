@@ -120,7 +120,7 @@ def reset_password_init():
         try:
             ldap_user = LdapUser(uid=form.uid.data)
         except UidError as e:
-            flash(f'User ID "{form.uid.data}" is not valid.', 'error')
+            flash(f'User ID "{form.uid.data}" is not valid - please enter a valid User ID', 'alert-danger')
             return redirect(url_for('auth.reset_password_init'))
         url = request.host_url + url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
         msg = reset_password_mail_body(ldap_user=ldap_user, url=url)
