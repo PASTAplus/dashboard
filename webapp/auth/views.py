@@ -117,9 +117,12 @@ def reset_password_init():
     form = ResetPasswordInit()
     # Process POST
     if form.validate_on_submit():
-        ldap_user = LdapUser(uid=form.uid.data)
-        url = request.host_url + \
-              url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
+        try:
+            ldap_user = LdapUser(uid=form.uid.data)
+        except UidError as e:
+            flash(f'User ID "{form.uid.data}" is not valid.', 'error')
+            return redirect(url_for('auth.reset_password_init'))
+        url = request.host_url + url_for('auth.reset_password', token=ldap_user.token.decode())[1:]
         msg = reset_password_mail_body(ldap_user=ldap_user, url=url)
         subject = 'EDI reset password...'
         sent = mimemail.send_mail(subject=subject, msg=msg, to=ldap_user.email)
