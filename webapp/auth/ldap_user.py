@@ -25,7 +25,6 @@ from webapp.auth import token_uid
 logger = daiquiri.getLogger('ldap_user: ' + __name__)
 
 
-
 class LdapUser(object):
 
     def __init__(self, uid=None):
