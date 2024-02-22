@@ -5,6 +5,7 @@ channels:
 dependencies:
   - sqlalchemy=1.4.46
   - pillow=10.2.0
+  - cryptography>=42.0.4
   - werkzeug<3
   - flask
   - urllib3
