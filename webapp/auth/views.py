@@ -12,12 +12,12 @@
 :Created:
     3/6/18
 """
+from urllib.parse import urlparse
+
 import daiquiri
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask import abort
 from flask_login import current_user, login_user, logout_user, login_required
-
-from werkzeug.urls import url_parse
 
 from webapp.auth import token_uid
 from webapp.auth.forms import CreateLdapUser
@@ -59,7 +59,7 @@ def login():
                 user = User(auth_token=auth_token)
                 login_user(user)
                 next_page = request.args.get('next')
-                if not next_page or url_parse(next_page).netloc != '':
+                if not next_page or urlparse(next_page).netloc != '':
                     next_page = url_for('home.index')
                 return redirect(next_page)
         flash('Invalid username or password')
