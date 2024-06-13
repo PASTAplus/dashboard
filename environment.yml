@@ -5,7 +5,7 @@ channels:
 dependencies:
   - _libgcc_mutex=0.1
   - _openmp_mutex=4.5
-  - alsa-lib=1.2.11
+  - alsa-lib=1.2.12
   - attr=2.5.1
   - blinker=1.8.2
   - brotli=1.1.0
@@ -106,7 +106,7 @@ dependencies:
   - libpq=16.3
   - libsndfile=1.2.2
   - libsodium=1.0.18
-  - libsqlite=3.45.3
+  - libsqlite=3.46.0
   - libstdcxx-ng=13.2.0
   - libsystemd0=255
   - libtiff=4.6.0
@@ -134,7 +134,7 @@ dependencies:
   - numpy=1.26.4
   - openjpeg=2.5.2
   - openssl=3.3.1
-  - packaging=24.0
+  - packaging=24.1
   - pcre=8.45
   - pcre2=10.43
   - pendulum=3.0.0
