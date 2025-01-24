@@ -345,12 +345,11 @@ def download_report(filename):
 
 
 def citation_report(report: list, file_name: str) -> list:
-    citations = list()
+    citations = []
     with open(f'{Config.TMP_DIR}/{file_name}.csv', 'w') as f:
         line = f',package_id,citation\n'
         f.write(line)
         count = 1
-
         for pid_info in report:
             pid = pid_info["pid"]
             doi = pid_info["doi"]
@@ -361,21 +360,21 @@ def citation_report(report: list, file_name: str) -> list:
                 citations.append((pid, citation))
             else:
                 cite_url = f"https://cite.edirepository.org/cite/{pid}"
-                headers = {"Accept": "text/html"}
+                headers = {"Accept": "text/html", "Referer": Config.REFERER}
                 r = requests.get(cite_url, headers=headers)
                 if r.status_code == requests.codes.ok:
                     citation = r.text.strip()
-                    with open(f'{Config.CACHE}/{pid}.txt', 'w') as c:
-                        c.write(r.text.strip())
-                    citations.append((pid, citation))
-
+                else:
+                    citation = "Error retrieving citation"
+                with open(f'{Config.CACHE}/{pid}.txt', 'w') as c:
+                    c.write(r.text.strip())
+                citations.append((pid, citation))
             anchor = f"<a href='https://doi.org/{doi}'>https://doi.org/{doi}</a>"
             doi = f'https://doi.org/{doi}'
             citation = citation.replace(anchor, doi)
             line = f'{count},{pid},"{citation}"\n'
             f.write(line)
             count += 1
-
     return citations
 
 
