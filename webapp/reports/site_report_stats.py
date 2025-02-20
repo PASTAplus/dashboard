@@ -70,7 +70,7 @@ def get_site_report(scope: str) -> list:
                 pubdate = ""
             single_dates = doc.findall(".//singledate")
             if single_dates is not None:
-                single_dates = "; ".join([_.text.strip() for _ in single_dates])
+                single_dates = "; ".join([_.text.strip() for _ in single_dates if _.text is not None])
             begin_date = (doc.find(".//begindate")).text
             if begin_date is not None:
                 begin_date = begin_date.strip()
@@ -83,10 +83,10 @@ def get_site_report(scope: str) -> list:
                 end_date = ""
             authors = doc.findall(".//author")
             if authors is not None:
-                authors = "; ".join([_.text.strip() for _ in authors])
+                authors = "; ".join([_.text.strip() for _ in authors if _.text is not None])
             keywords = doc.findall(".//keyword")
             if keywords is not None:
-                keywords = ", ".join([_.text.strip() for _ in keywords])
+                keywords = ", ".join([_.text.strip() for _ in keywords if _.text is not None])
 
             pid_info["pid"] = pid
             pid_info["id"] = int(id)
