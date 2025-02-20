@@ -132,15 +132,6 @@
                 {{ system.server_status(servers['GMN_EDI'])[1] }}
         </td>
     </tr>
-    <tr>
-        <td align="center">
-            <a href="/dashboard/health/server/gmn-s.edirepository.org">
-                Staging</a>
-        </td>
-        <td class="{{ system.server_status(servers['GMN_S_EDI'])[0] }}">
-                {{ system.server_status(servers['GMN_S_EDI'])[1] }}
-        </td>
-    </tr>
 </table>
 
 <h3 align="left">LTER GMN</h3>
@@ -157,16 +148,6 @@
         </td>
         <td class="{{ system.server_status(servers['GMN_LTER'])[0] }}">
                 {{ system.server_status(servers['GMN_LTER'])[1] }}
-        </td>
-    </tr>
-    <tr>
-        <td align="center">
-            <a href="/dashboard/health/server/gmn-s.lternet.edu">
-                Staging
-            </a>
-        </td>
-        <td class="{{ system.server_status(servers['GMN_S_LTER'])[0] }}">
-                {{ system.server_status(servers['GMN_S_LTER'])[1] }}
         </td>
     </tr>
 </table>
