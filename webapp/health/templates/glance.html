@@ -170,6 +170,16 @@
     </tr>
     <tr>
         <td align="center">
+            <a href="/dashboard/health/server/auth-s.edirepository.org">
+                Staging
+            </a>
+        </td>
+        <td class="{{ system.server_status(servers['AUTH'])[0] }}">
+                {{ system.server_status(servers['AUTH'])[1] }}
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
             <a href="/dashboard/health/server/auth-d.edirepository.org">
                 Development
             </a>
