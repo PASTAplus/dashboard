@@ -2,29 +2,55 @@
 {% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
-    <h1>Directory of EDI LDAP Users</h1>
-    <div class="row">
-        <div class="col-md-4">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th> </th>
-                    <th align="center">LDAP DN</th>
-                    <th align="center">Surname</th>
-                    <th align="center">Given Name</th>
-                    <th align="center">EMAIL</th>
-                </tr>
-                </thead>
-                {% for uid, user in users_list.items() %}
-                <tr>
-                    <td>{{ loop.index }}</td>
-                    <td>{{ user["dn"] }}</td>
-                    <td>{{ user["sn"] }}</td>
-                    <td>{{ user["givenName"] }}</td>
-                    <td>{{ user["mail"] }}</td>
-                </tr>
-                {% endfor %}
-            </table>
+    <style>
+    .scrollable-list-container {
+        height: 80vmin;
+        width: min-content;
+        overflow-y: auto;
+    }
+    {##}
+    {#ul {#}
+    {#    list-style: none;#}
+    {#    padding: 0;#}
+    {#    margin: 0;#}
+    {#}#}
+    {##}
+    {#li {#}
+    {#    padding: 8px 5px;#}
+    {#    border-bottom: 1px solid #eee;#}
+    {#}#}
+    {##}
+    {#li:last-child {#}
+    {#    border-bottom: none;#}
+    {#}#}
+</style>
+    <div  style="margin-bottom: 100px">
+        <h1>Directory of EDI LDAP Users</h1>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="scrollable-list-container">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th> </th>
+                            <th align="center">LDAP DN</th>
+                            <th align="center">Surname</th>
+                            <th align="center">Given Name</th>
+                            <th align="center">EMAIL</th>
+                        </tr>
+                        </thead>
+                        {% for uid, user in users_list.items() %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ user["dn"] }}</td>
+                            <td>{{ user["sn"] }}</td>
+                            <td>{{ user["givenName"] }}</td>
+                            <td>{{ user["mail"] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
