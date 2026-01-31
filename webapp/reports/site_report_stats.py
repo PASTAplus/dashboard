@@ -24,7 +24,7 @@ logger = daiquiri.getLogger('site_report_stats: ' + __name__)
 
 
 def get_site_report(scope: str) -> list:
-    solr_stats = list()
+    solr_stats = []
     solr_url = ('https://pasta.lternet.edu/package/search/eml?'
                 f'defType=edismax&q=*:*&fq=scope:({scope})'
                 f'&fl=id,packageid,title,doi,author,pubdate,funding,'
