@@ -35,6 +35,7 @@ from webapp.reports.forms import UploadReport
 from webapp.reports.package_tracker import PackageStatus
 from webapp.reports.site_report_stats import get_site_report
 from webapp.reports.upload_report_stats import get_package_title
+from webapp.reports.upload_report_stats import get_scopes
 from webapp.reports.upload_report_stats import get_scope_count
 from webapp.reports.upload_report_stats import solr_report_stats
 from webapp.reports.upload_report_stats import upload_report_stats
@@ -249,6 +250,7 @@ def recent_uploads():
 @reports.route('/site_report', methods=['GET', 'POST'])
 def site_report():
     form = SiteReport()
+    form.scope.choices = get_scopes()
     if form.validate_on_submit():
         # Process POST
         scope = form.scope.data
@@ -272,6 +274,7 @@ def site_report():
 @reports.route('/upload_report', methods=['GET', 'POST'])
 def upload_report():
     form = UploadReport()
+    form.scope.choices = get_scopes()
     if form.validate_on_submit():
         # Process POST
         scope = form.scope.data

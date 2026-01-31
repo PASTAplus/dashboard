@@ -28,21 +28,13 @@ class PackageIdentifier(FlaskForm):
 
 
 class SiteReport(FlaskForm):
-    scopes = get_scopes()
-    choices = list()
-    for scope in scopes:
-        choices.append((scope, scope))
-
+    choices = []
     scope = SelectField('Site Scope', choices=choices, default="edi")
     cite = BooleanField('Use citation format (slower)')
 
 
 class UploadReport(FlaskForm):
-    scopes = get_scopes()
-    choices = list()
-    for scope in scopes:
-        choices.append((scope, scope))
-
+    choices = []
     scope = SelectField('Package Scope', choices=choices, default="edi")
     start_date = DateField('Start Date', validators=[Optional()], description='YYYY-MM-DD (defaults to 2013-01-01)')
     end_date = DateField('End Date', validators=[Optional()], description='YYYY-MM-DD (defaults to today)')
