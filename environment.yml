@@ -20,7 +20,7 @@ dependencies:
   - click=8.3.1
   - colorama=0.4.6
   - contourpy=1.3.3
-  - cryptography=46.0.3
+  - cryptography=46.0.5
   - cycler=0.12.1
   - cyrus-sasl=2.1.28
   - daiquiri=3.0.0
@@ -47,7 +47,7 @@ dependencies:
   - graphite2=1.3.14
   - greenlet=3.3.1
   - h2=4.3.0
-  - harfbuzz=12.3.0
+  - harfbuzz=12.3.2
   - hpack=4.1.0
   - hyperframe=6.1.0
   - icu=78.2
@@ -61,7 +61,7 @@ dependencies:
   - kiwisolver=1.4.9
   - krb5=1.21.3
   - lcms2=2.18
-  - ld_impl_linux-64=2.45
+  - ld_impl_linux-64=2.45.1
   - ldap3=2.9.1
   - lerc=4.0.0
   - libblas=3.11.0
@@ -99,7 +99,7 @@ dependencies:
   - libopenblas=0.3.30
   - libopengl=1.7.0
   - libpciaccess=0.18
-  - libpng=1.6.54
+  - libpng=1.6.55
   - libpq=18.1
   - libsodium=1.0.20
   - libsqlite=3.51.2
@@ -107,7 +107,7 @@ dependencies:
   - libstdcxx-ng=15.2.0
   - libtiff=4.7.1
   - libuuid=2.41.3
-  - libvulkan-loader=1.4.328.1
+  - libvulkan-loader=1.4.341.0
   - libwebp-base=1.6.0
   - libxcb=1.17.0
   - libxcrypt=4.4.36
@@ -122,15 +122,15 @@ dependencies:
   - matplotlib-base=3.10.8
   - munkres=1.1.4
   - ncurses=6.5
-  - numpy=2.4.1
+  - numpy=2.4.2
   - openjpeg=2.5.4
   - openldap=2.6.10
-  - openssl=3.6.0
+  - openssl=3.6.1
   - packaging=26.0
   - pcre2=10.47
-  - pendulum=3.1.0
-  - pillow=12.1.0
-  - pip=25.3
+  - pendulum=3.2.0
+  - pillow=12.1.1
+  - pip=26.0.1
   - pixman=0.46.4
   - pluggy=1.6.0
   - psycopg2=2.9.11
@@ -140,7 +140,7 @@ dependencies:
   - pygments=2.19.2
   - pynacl=1.6.2
   - pyparsing=3.3.2
-  - pyside6=6.10.1
+  - pyside6=6.10.2
   - pysocks=1.7.1
   - pytest=9.0.2
   - python=3.11.14
@@ -148,14 +148,14 @@ dependencies:
   - python-json-logger=2.0.7
   - python_abi=3.11
   - qhull=2020.2
-  - qt6-main=6.10.1
+  - qt6-main=6.10.2
   - readline=8.3
   - requests=2.32.5
-  - setuptools=80.10.1
+  - setuptools=82.0.0
   - six=1.17.0
   - sniffio=1.3.1
   - sqlalchemy=1.4.46
-  - time-machine=3.2.0
+  - time-machine=2.19.0
   - tk=8.6.13
   - tomli=2.4.0
   - tornado=6.5.4
@@ -178,21 +178,40 @@ dependencies:
   - xkeyboard-config=2.46
   - xorg-libice=1.1.2
   - xorg-libsm=1.2.6
-  - xorg-libx11=1.8.12
+  - xorg-libx11=1.8.13
   - xorg-libxau=1.0.12
-  - xorg-libxcomposite=0.4.6
+  - xorg-libxcomposite=0.4.7
   - xorg-libxcursor=1.2.3
   - xorg-libxdamage=1.1.6
   - xorg-libxdmcp=1.1.5
-  - xorg-libxext=1.3.6
+  - xorg-libxext=1.3.7
   - xorg-libxfixes=6.0.2
   - xorg-libxi=1.8.2
-  - xorg-libxrandr=1.5.4
+  - xorg-libxrandr=1.5.5
   - xorg-libxrender=0.9.12
   - xorg-libxtst=1.2.5
-  - xorg-libxxf86vm=1.1.6
+  - xorg-libxxf86vm=1.1.7
   - yaml=0.2.5
   - zipp=3.23.0
-  - zlib-ng=2.3.2
+  - zlib-ng=2.3.3
   - zstd=1.5.7
+  - pip:
+      - aiodns==4.0.0
+      - aiohappyeyeballs==2.6.1
+      - aiohttp==3.13.3
+      - aiosignal==1.4.0
+      - asyncssh==2.22.0
+      - attrs==25.4.0
+      - bcrypt==5.0.0
+      - faust-cchardet==2.1.19
+      - frozenlist==1.8.0
+      - invoke==2.2.1
+      - multidict==6.7.1
+      - paramiko==4.0.0
+      - propcache==0.4.1
+      - pycares==5.0.1
+      - pytzdata==2020.1
+      - sniffer==2020.8.4
+      - soh==2025.3.18
+      - yarl==1.22.0
 prefix: /home/servilla/miniconda3/envs/dashboard
