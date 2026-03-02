@@ -401,13 +401,9 @@ class PackageStatus(object):
     def get_pasta_create_date(self):
         xml = get_resource_metadata(self._pid)
         date_created_raw = get_resource_create_date(xml)
-        local_tz = 'America/Denver'
-        utc_tz = pendulum.timezone('UTC')
-        dt_mt = pendulum.parse(date_created_raw, tz=local_tz)
-        dt_utc = pendulum.instance(utc_tz.convert(dt_mt))
-        date_created_mt = dt_mt.to_iso8601_string()
-        date_created_utc = pendulum.parse(
-            dt_utc.to_iso8601_string()).to_iso8601_string()
+        dt = pendulum.parse(date_created_raw)
+        date_created_mt = dt.in_timezone("America/Denver").to_iso8601_string()
+        date_created_utc = dt.to_iso8601_string()
         return date_created_mt, date_created_utc
 
     def get_pasta_resources(self):
