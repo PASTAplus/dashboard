@@ -110,3 +110,6 @@ docs/
 .pytest_cache
 tokens/
 cache
+# pixi environments
+.pixi/*
+!.pixi/config.toml
