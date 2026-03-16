@@ -161,7 +161,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/time-machine-2.19.0-py311haee01d2_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h366c992_103.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tomli-2.4.0-pyhcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.3-py311h49ec1c0_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.4-py311h41d9c34_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.15.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/unicodedata2-17.0.1-py311h49ec1c0_0.conda
@@ -351,7 +351,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/time-machine-2.19.0-py311had3b7ee_2.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tk-8.6.13-noxft_h0dc03b3_103.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tomli-2.4.0-pyhcf101f3_0.conda
-      - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tornado-6.5.3-py311hb9158a3_0.conda
+      - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tornado-6.5.4-py311h5afb018_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.15.0-pyhcf101f3_0.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/tzdata-2025c-hc9c84f9_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-aarch64/unicodedata2-17.0.1-py311h19352d5_0.conda
@@ -3902,24 +3902,11 @@ packages:
   - pkg:pypi/tomli?source=compressed-mapping
   size: 21453
   timestamp: 1768146676791
-- conda: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.3-py311h49ec1c0_0.conda
-  sha256: 0d5c53a3ae7531ddf6bc28fb95edded05f1908f3ccffe5ab820f5992b81e5418
-  md5: a0d8cab7384ccfca582b952d9c8c619a
+- conda: https://conda.anaconda.org/conda-forge/linux-64/tornado-6.5.4-py311h41d9c34_0.conda
+  sha256: 76c9c641a12bf437e3c9dcc07e96f0f5ded4f98446c56409ce5d5693893f2660
+  md5: 7d56e213f07942f954061a904236ef17
   depends:
-  - __glibc >=2.17,<3.0.a0
-  - libgcc >=14
-  - python >=3.11,<3.12.0a0
-  - python_abi 3.11.* *_cp311
-  license: Apache-2.0
-  license_family: Apache
-  purls:
-  - pkg:pypi/tornado?source=compressed-mapping
-  size: 871254
-  timestamp: 1765458944370
-- conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tornado-6.5.3-py311hb9158a3_0.conda
-  sha256: 39206f1480950c381de14cf4a6e054afc74ba1f3debf7cf4ee13d3366334b034
-  md5: e3afe76a49a1a9f85e0c5cd42a408e68
-  depends:
+  - __glibc >=2.34,<3.0.a0
   - libgcc >=14
   - python >=3.11,<3.12.0a0
   - python_abi 3.11.* *_cp311
@@ -3927,8 +3914,22 @@ packages:
   license_family: Apache
   purls:
   - pkg:pypi/tornado?source=hash-mapping
-  size: 873603
-  timestamp: 1765460813948
+  size: 871744
+  timestamp: 1765836510517
+- conda: https://conda.anaconda.org/conda-forge/linux-aarch64/tornado-6.5.4-py311h5afb018_0.conda
+  sha256: 99089d932c3053e541399629e967155a613fb49914725f810a48148ee93a5a7b
+  md5: 27c880456782c12b86eb2f1c404431cc
+  depends:
+  - __glibc >=2.34,<3.0.a0
+  - libgcc >=14
+  - python >=3.11,<3.12.0a0
+  - python_abi 3.11.* *_cp311
+  license: Apache-2.0
+  license_family: Apache
+  purls:
+  - pkg:pypi/tornado?source=hash-mapping
+  size: 873510
+  timestamp: 1765838505564
 - conda: https://conda.anaconda.org/conda-forge/noarch/typing_extensions-4.15.0-pyhcf101f3_0.conda
   sha256: 032271135bca55aeb156cee361c81350c6f3fb203f57d024d7e5a1fc9ef18731
   md5: 0caa1af407ecff61170c9437a808404d
